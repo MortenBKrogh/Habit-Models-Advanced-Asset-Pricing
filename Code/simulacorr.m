@@ -1,6 +1,6 @@
 function [stsim vtsim lndctsim lnrfsim]=simulacorr(rho)
 
-global ncalc gamma sig g phi beta B s_bar seedval
+global ncalc gamma sig g phi delta B s_bar seedval
 
 %% Smulando choques do processo de consumo com correlação controlada rho
 
@@ -26,6 +26,6 @@ end
 
 %% Log de Rf variante no tempo
 
-lnrfsim = -log(beta)+gamma*g-(gamma*(1-phi)-B)/2-B*(stsim-s_bar); 
+lnrfsim = -log(delta)+gamma*g-(gamma*(1-phi)-B)/2-B .*(stsim-s_bar); 
 
 end
