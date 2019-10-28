@@ -50,9 +50,7 @@
     to create quarterly observations of annual averages
     use horizon = 4, frequency = 1, offset = 0
  %}
-function [ro] = chgfreq(rm,k,f,o);
-    global bigr i T mask ro;
-    T = rows(rm);
+    T = size(rm,1);
     ro = rm;
 
     if k > 1;
@@ -63,7 +61,7 @@ function [ro] = chgfreq(rm,k,f,o);
             i = i+1;
         end
         ro = cat(1,(-99*ones(k-1,1))*ones(1,size(bigr,2)),bigr);
-    endif;
+    end;
 
     if f > 1;
         mask = zeros(size(ro,1),1);
@@ -74,8 +72,7 @@ function [ro] = chgfreq(rm,k,f,o);
             end;
             i = i+1;
             end;
-        
+    end        
         ro = selectif(ro,mask);
- end
     return(ro);
-endp;
+end
