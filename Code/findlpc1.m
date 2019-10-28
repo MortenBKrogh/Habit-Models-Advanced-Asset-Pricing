@@ -20,7 +20,8 @@ end
 lnpca = zeros(size(sg,1),1); % Estamos começando com P/C = 1 lnpc = lnpca;
 newlnpc = lnpc;
 
-%% Loop: achar ln(P/C) a partir do grid de s iter = 1;
+%% Loop: achar ln(P/C) a partir do grid de s 
+iter = 1;
 
 erro = 1;
 
