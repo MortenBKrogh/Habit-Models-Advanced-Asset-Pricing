@@ -4,8 +4,8 @@
 clear all
 format long
 tic
-%% Escolha do método de solução de P/C (Ponto Fixo ou Séries)
-method = 0; % Escolha: 0 método por ponto fixo;
+%% Escolha do m?todo de solu??o de P/C (Ponto Fixo ou S?ries)
+method = 0; % Escolha: 0 m?todo por ponto fixo;
 % Escolha: 1 Wachter 2005
 % 2: comparative
 % Calibrering
@@ -20,7 +20,7 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 %resumo=zeros(13,100);
 % for loop=1:100
 
-% Parâmetros para b>0
+% Par?metros para b>0
 if calib == 0;
     tsc = 4; % Interval 4 = quarter
     g=0.0228/tsc;
@@ -95,8 +95,8 @@ maxcb = max(bondsel);
 seedval = 123;
 chk = 1;
 
-flag1 = 0; % Simulará dados fictícios.
-flag2 = 1; % 1 simulará dados anuais. 0 seria trimestral
+flag1 = 0; % Simular? dados fict?cios.
+flag2 = 1; % 1 simular? dados anuais. 0 seria trimestral
 
 %ann = 0; % 1 anualiza dados de consumo e risk-free
 
@@ -113,27 +113,27 @@ if method == 0 || method == 2
 end
 lnpca_pf=lnpca;
 
-%% Encontrando o valor de P/C e das perpetuidades pelo método de séries
+%% Encontrando o valor de P/C e das perpetuidades pelo m?todo de s?ries
 if method == 1 || method == 2
     [W_PC_ratio]=WfindFn(sig,sg); plot(S,W_PC_ratio/tsc,'k'); lnpca_s=log(W_PC_ratio); lnpca=lnpca_s;
 end
-% Comparando gráficos dos dois métodos
+% Comparando gr?ficos dos dois m?todos
 if method == 2
     plot(S,W_PC_ratio/tsc,'r',S,PC_ratio/tsc,'g'); legend('Series method','Fixed-point method',2); xlabel('Consumption surplus ratio (S{t})'); ylabel('Price-consumption ratio (P{t}/C{t})'); comp=max(abs((W_PC_ratio-PC_ratio)./PC_ratio));
 end
 
 %% Encontrando os retornos esperados e desvios condicionais do consumption claim
 verd=0;
-% Pelo método de ponto fixo
+% Pelo m?todo de ponto fixo
 if method == 0 || method == 2
     [er_pf elnr_pf sdr_pf sdlnr_pf lnrf_pf lnrf1_pf lny_pf elnrcb_pf sdlnrcb_pf slpmv_pf] = finders(sg);
 end
-% Pelo método de Séries
+% Pelo m?todo de S?ries
 if method == 1 || method == 2
     [er_s elnr_s sdr_s sdlnr_s lnrf_s lnrf1_s lny_s elnrcb_s sdlnrcb_s slpmv_s] = finders(sg);
 end
 %%
-%% Ajustando o input para a simulação
+%% Ajustando o input para a simula??o
 if flag1 == 0 && flag2 == 0
     % [qlnc,qlndc,qvwret,qvwretx,qlnrf]=loadqdata;
     dc = 0;
@@ -147,22 +147,22 @@ elseif flag1 == 1 && flag2 == 1
     % [alnc,alndc,avwret,avwretx,alnrf]=loadadata;
     dc = exp(alndc);
 end
-%% Simulando séries temporais
+%% Simulando s?ries temporais
 if method == 0 || method == 2
-    randn('seed',seedval); % Ajustando o seed randômico
+    randn('seed',seedval); % Ajustando o seed rand?mico
     [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
         alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf]=annvars(dc,...
         lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 end
-% Pelo método de Séries
+% Pelo m?todo de S?ries
 if method == 1 || method == 2
-    randn('seed',seedval); % Ajustando o seed randômico
+    randn('seed',seedval); % Ajustando o seed rand?mico
     [alndctsim_s astsim_s alnpctsim_s alnrtsim_s alnrfsim_s sdlnrtsim_s alnchpsim_s ...
         alnysim_s aelnrcbsim_s asdlnrcbsim_s atesterfsim_s]=annvars(dc,lnpca_s,er_s,elnr_s,sdr_s,...
         sdlnr_s,elnrcb_s,sdlnrcb_s,lny_s,lnrf1_s);
 end
 
-%% Criando as estatísticas de interesse
+%% Criando as estat?sticas de interesse
 if method == 0 || method == 2
     if ann == 1
         Edc_pf = tsc*mean(alndctsim_pf);
@@ -172,7 +172,7 @@ if method == 0 || method == 2
         Stdc_pf = std(alndctsim_pf);
     end
     
-    Erf_pf = mean(alnrfsim_pf); % Esperança do log da taxa livre de risco
+    Erf_pf = mean(alnrfsim_pf); % Esperan?a do log da taxa livre de risco
     Stdrf_pf = std(alnrfsim_pf); % Desvio do log da taxa livre de risco
     Erfinterp_pf = mean(atesterfsim_pf);
     Stdrfinterp_pf = std(atesterfsim_pf);
@@ -180,16 +180,16 @@ if method == 0 || method == 2
     exrett_pf = alnrtsim_pf - alnrfsim_pf; % Excesso de retonos
     exrettinterp_pf = alnrtsim_pf - atesterfsim_pf;
     
-    Shpr_pf = mean(exrett_pf)/std(exrett_pf); % Razão de Sharpe para log dos retornos
+    Shpr_pf = mean(exrett_pf)/std(exrett_pf); % Raz?o de Sharpe para log dos retornos
     ShpR_pf = mean(exp(alnrtsim_pf)-exp(alnrfsim_pf))/std(exp(alnrtsim_pf)- exp(alnrfsim_pf));
     Shprinterp_pf = mean(exrettinterp_pf)/std(exrettinterp_pf);
     ShpRinterp_pf = mean(exp(alnrtsim_pf)- exp(atesterfsim_pf))/std(exp(alnrtsim_pf)-exp(atesterfsim_pf));
-    Eexrett_pf = mean(exrett_pf); % Média do excesso de retornos (em log)
+    Eexrett_pf = mean(exrett_pf); % M?dia do excesso de retornos (em log)
     Stdexrett_pf = std(exrett_pf); % Desvio do excesso de retornos (em log)
     Eexrettinterp_pf = mean(exrettinterp_pf);
     Stdexrettinterp_pf = std(exrettinterp_pf);
-    Ep_d_pf = mean(alnpctsim_pf); % Média do log da razão preço-consumo simulada
-    Stdp_d_pf = std(alnpctsim_pf); % Desvio do log da razão preço-consumo simulada
+    Ep_d_pf = mean(alnpctsim_pf); % M?dia do log da raz?o pre?o-consumo simulada
+    Stdp_d_pf = std(alnpctsim_pf); % Desvio do log da raz?o pre?o-consumo simulada
     
     table = zeros(13,1);
     table(1,1) = Edc_pf;
@@ -223,18 +223,18 @@ if method == 1 || method == 2
     
     exrett_s = alnrtsim_s - alnrfsim_s; % Excesso de retonos
     exrettinterp_s = alnrtsim_s - atesterfsim_s;
-    Shpr_s = mean(exrett_s)/std(exrett_s); % Razão de Sharpe para log dos retornos
+    Shpr_s = mean(exrett_s)/std(exrett_s); % Raz?o de Sharpe para log dos retornos
     ShpR_s = mean(exp(alnrtsim_s)-exp(alnrfsim_s))/std(exp(alnrtsim_s)- exp(alnrfsim_s));
     Shprinterp_s = mean(exrettinterp_s)/std(exrettinterp_s);
     ShpRinterp_s = mean(exp(alnrtsim_s)-exp(atesterfsim_s))/std(exp(alnrtsim_s)- exp(atesterfsim_s));
     
-    Eexrett_s = mean(exrett_s); % Média do excesso de retornos (em log)
+    Eexrett_s = mean(exrett_s); % M?dia do excesso de retornos (em log)
     Stdexrett_s = std(exrett_s); % Desvio do excesso de retornos (em log)
     Eexrettinterp_s = mean(exrettinterp_s);
     Stdexrettinterp_s = std(exrettinterp_s);
     
-    Ep_d_s = mean(alnpctsim_s); % Média do log da razão preço-consumo simulada
-    Stdp_d_s = std(alnpctsim_s); % Desvio do log da razão preço-consumo simulada
+    Ep_d_s = mean(alnpctsim_s); % M?dia do log da raz?o pre?o-consumo simulada
+    Stdp_d_s = std(alnpctsim_s); % Desvio do log da raz?o pre?o-consumo simulada
     
     table = zeros(13,1);
     table(1,1) = Edc_s;
@@ -271,14 +271,14 @@ end
 %%
 % resumo(:,loop)=table;
 % end
-% Tentativa de Simulação dos SDF's
+% Tentativa de Simula??o dos SDF's
 
 if method == 0 || method == 2
     randn('seed',seedval);
     [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
         sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
         simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
-    % Fator estocástico de desconto dos USA
+    % Fator estoc?stico de desconto dos USA
     SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim))...
         -stsim(1:length(stsim)-1)));
     
@@ -292,9 +292,9 @@ if method == 0 || method == 2
         lnrfsimx(:,k)=lnrfx;
     end
     
-    %% Encontrando as taxas de câmbio real
+    %% Encontrando as taxas de c?mbio real
     deltaq = log(SDFx) - kron(ones(1,size(SDFx,2)),log(SDFus));
-    %% Regressões da UIP
+    %% Regress?es da UIP
     if con == 1
         for k=1:length(rho)
             diff(:,k)=lnrfsim-lnrfsimx(:,k); regressor=cat(2,ones(length(diff(:,k)),1),diff(:,k));
@@ -326,7 +326,7 @@ if method == 0 || method == 2
 end
 %%
 if method == 1 || method == 2
-    randn('seed',seedval); % Ajustando o seed randômico
+    randn('seed',seedval); % Ajustando o seed rand?mico
     [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
         sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
         simvars(dc,lnpca_s,er_s,elnr_s,sdr_s,sdlnr_s,elnrcb_s,sdlnrcb_s,lny_s,lnrf1_s );

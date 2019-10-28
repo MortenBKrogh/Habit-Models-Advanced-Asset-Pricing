@@ -1,14 +1,14 @@
 function [er elnr sdr sdlnr lnrf lnrf1 lny elnrcb sdlnrcb slpmv] = finders(sg)
 
 % Procedimento que calcula os retornos esperados dos ativos de consumo. ele
-% nos fornecerá E(R), SD(R), lnrf, a curvatura da fronteira média variância
-% dada pela variável (slpmv) e integrará a razão de Sharpe do vetor de    %
+% nos fornecer? E(R), SD(R), lnrf, a curvatura da fronteira m?dia vari?ncia
+% dada pela vari?vel (slpmv) e integrar? a raz?o de Sharpe do vetor de    %
 % ativos de consumo.                                                      %
 % ----------------------------------------------------------------------- %
 
 global g gamma sig phi s maxcb s_bar delta tsc lnpcb matur
 
-% Inclinação da Fronteira de Média-Variância                              %
+% Inclina??o da Fronteira de M?dia-Vari?ncia                              %
 %                                                                         %
 % slpmv = (exp((gamma*sig)^2.*(1+lambda(sg)).^2)-1).^.5                   %
 % ----------------------------------------------------------------------- %
@@ -19,16 +19,15 @@ slpmv = (exp((gamma*sig)^2*(1+lambda(sg)).^2)-1).^(0.5);
 %                                                                         %
 % lnrf = -ln(delta) + gamma*g -                                           %
 % gamma*(1-phi)*(s{t}-s_bar)-.5((gamma*sig)^2)*(1+lambda(s{t}))^2
-% - B*(sg - s_bar) --> Variável no estado
+% - B*(sg - s_bar) --> Vari?vel no estado
 % ----------------------------------------------------------------------- %
 
 lnrf = -log(delta) + gamma*g - gamma*(1-phi)*(sg-s_bar)...
     - 0.5*(gamma*sig*(1+lambda(sg))).^2;
 
 %% Bonds
-% Matriz de todos os preços dos títulos. Sua dimensão será                %
-
-N(sg) x (maxcb*tsc)
+% Matriz de todos os pre?os dos t?tulos. Sua dimens?o ser?                
+% N(sg) x (maxcb*tsc)
 lnpcb = [];
 lnpcb(:,1) = -lnrf;
 
@@ -46,7 +45,7 @@ end
 lny = - ...
     lnpcb./kron(ones(size(sg,1),1),linspace(1/tsc,(maxcb*tsc)/tsc,(maxcb*tsc)));
 
-%% Retornos e Desvios Padrão Esperados                                    %
+%% Retornos e Desvios Padr?o Esperados                                    %
 % ----------------------------------------------------------------------- %
 
 lnrf1 = zeros(size(sg,1),1);
