@@ -9,7 +9,7 @@ method = 0; % Escolha: 0 método por ponto fixo;
 % Escolha: 1 Wachter 2005
 % 2: comparative
 % Calibrering
-calib=1;    % 0 - b>0
+calib=2;    % 0 - b>0
 % 1 - b<0
 % 2 - Campbell Cochrane (1999)
 % 3 - Paper Wachter (2005)

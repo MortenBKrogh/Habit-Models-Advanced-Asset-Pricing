@@ -1,4 +1,4 @@
-function [lnpca ctrindx]=findlpc(sig,g,s_bar)
+function [lnpca ctrindx]=findlpc1(sig,g,s_bar)
 
 % Este é o procedimento que irá calcular o ponto fixo P/C.                %
 % ----------------------------------------------------------------------- %
