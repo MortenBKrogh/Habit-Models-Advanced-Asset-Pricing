@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 function [lnpca, ctrindx]=findlpc(sig,g,s_bar)
 % This is the procedure that will calculate the fixed point P / C. %
 % ----------------------------------------------------------------------- %
@@ -37,6 +38,8 @@ iter = iter + 1;
 end
 lnpca = lnpc;
 =======
+=======
+>>>>>>> 776d6f25bdaddaf60dfe43ccc5d8949fe61b9992
 function [lnpca ctrindx]=findlpc(sig,g,s_bar)
 
 % Este é o procedimento que irá calcular o ponto fixo P/C. %
@@ -73,5 +76,8 @@ while iter < 10000 && erro > 1e-6
     iter = iter + 1;
 end
 lnpca = lnpc;
+<<<<<<< HEAD
+>>>>>>> 776d6f25bdaddaf60dfe43ccc5d8949fe61b9992
+=======
 >>>>>>> 776d6f25bdaddaf60dfe43ccc5d8949fe61b9992
 end
