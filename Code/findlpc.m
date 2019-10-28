@@ -76,8 +76,4 @@ while iter < 10000 && erro > 1e-6
     iter = iter + 1;
 end
 lnpca = lnpc;
-<<<<<<< HEAD
->>>>>>> 776d6f25bdaddaf60dfe43ccc5d8949fe61b9992
-=======
->>>>>>> 776d6f25bdaddaf60dfe43ccc5d8949fe61b9992
 end
