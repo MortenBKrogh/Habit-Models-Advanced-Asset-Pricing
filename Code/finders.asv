@@ -36,9 +36,8 @@ lnp = zeros(size(sg,1),1);
 for j = 2:(maxcb*tsc)
     for i = 1:length(sg)
         s = sg(i);
-        lnp(i) = log(GaussLegendre(@intpcb,abs(sig)*(-8),abs(sig)*8,40));
-        %      lnp(i) = log(GaussLegendre(@intpcb,abs(sig)*(-8),abs(sig)*8));
-        % newlnpc(i) = log(GaussLegendre(     @pdint,abs(sig)*(-8),abs(sig)*8));
+              lnp(i) = log(intgl1(@intpcb,abs(sig)*(-8),abs(sig)*8));
+        % newlnpc(i) = log(intgl1(@pdint,abs(sig)*(-8),abs(sig)*8));
         % newlnpc(i)=log(GaussLegendre(@pdint,abs(sig)*(-8),abs(sig)*8,40)  );
     end
     lnpcb = cat(2,lnpcb,lnp);
@@ -64,19 +63,19 @@ for i=1:size(sg,1)
     s = sg(i);
     
     
-    lnrf1(i)= - log(GaussLegendre(@intemrs,abs(sig)*(-8),abs(sig)*8,40));
-    er(i)= GaussLegendre(@inter,abs(sig)*(-8),abs(sig)*8,40);
-    elnr(i)= GaussLegendre(@intelnr,abs(sig)*(-8),abs(sig)*8,40);
-    sdr(i) = GaussLegendre(@inter2,abs(sig)*(-8),abs(sig)*8,40);
+    lnrf1(i)= - log(intgl1(@intemrs,abs(sig)*(-8),abs(sig)*8));
+    er(i)= intgl1(@inter,abs(sig)*(-8),abs(sig)*8);
+    elnr(i)= intgl1(@intelnr,abs(sig)*(-8),abs(sig)*8);
+    sdr(i) = intgl1(@inter2,abs(sig)*(-8),abs(sig)*8);
     sdr(i) = (sdr(i) - er(i).^2).^(.5);
-    sdlnr(i) = GaussLegendre(@intelnr2,abs(sig)*(-8),abs(sig)*8,40);
+    sdlnr(i) = intgl1(@intelnr2,abs(sig)*(-8),abs(sig)*8);
     
     % Bonds
     matur = maxcb*tsc; elnrcb(i,1) = lnrf(i);
     
     for k = 2:matur
-        elnrcb(i,k) = GaussLegendre(@intelnrcb,abs(sig)*(-8),abs(sig)*8, 40); 
-        sdlnrcb(i,k) = GaussLegendre(@intelnrt2,abs(sig)*(-8),abs(sig)*8, 40); 
+        elnrcb(i,k) = intgl1(@intelnrcb,abs(sig)*(-8),abs(sig)*8); 
+        sdlnrcb(i,k) = intgl1(@intelnrt2,abs(sig)*(-8),abs(sig)*8); 
         sdlnrcb(i,k) = (sdlnrcb(i,k) - elnrcb(i,k).^2).^(.5);
     end
     

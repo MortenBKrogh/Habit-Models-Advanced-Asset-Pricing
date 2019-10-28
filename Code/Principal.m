@@ -115,7 +115,9 @@ lnpca_pf=lnpca;
 
 %% Encontrando o valor de P/C e das perpetuidades pelo m?todo de s?ries
 if method == 1 || method == 2
-    [W_PC_ratio]=WfindFn(sig,sg); plot(S,W_PC_ratio/tsc,'k'); lnpca_s=log(W_PC_ratio); lnpca=lnpca_s;
+    [W_PC_ratio]=WfindFn(sig,sg); plot(S,W_PC_ratio/tsc,'k');
+    lnpca_s=log(W_PC_ratio);
+    lnpca=lnpca_s;
 end
 % Comparando gr?ficos dos dois m?todos
 if method == 2
