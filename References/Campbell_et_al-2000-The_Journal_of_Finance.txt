@@ -1,0 +1,14 @@
+@article{Campbell_et_al-2000-The_Journal_of_Finance,
+author = {Campbell, John Y. and Cochrane, John H.},
+title = {Explaining the Poor Performance of Consumption-based Asset Pricing Models},
+journal = {The Journal of Finance},
+volume = {55},
+number = {6},
+pages = {2863-2878},
+doi = {10.1111/0022-1082.00310},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/0022-1082.00310},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/0022-1082.00310},
+abstract = {We show that the external habit-formation model economy of Campbell and Cochrane (1999) can explain why the Capital Asset Pricing Model (CAPM) and its extensions are betterapproximate asset pricing models than is the standard onsumption-based model. The model economy produces time-varying expected eturns, tracked by the dividend–price ratio. Portfolio-based models capture some of this variation in state variables, which a state-independent function of consumption cannot capture. Therefore, though the consumption-based model and CAPM are both perfect conditional asset pricing models, the portfolio-based models are better approximate unconditional asset pricing models.},
+year = {2000}
+}
+

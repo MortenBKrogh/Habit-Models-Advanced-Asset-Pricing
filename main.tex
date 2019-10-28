@@ -1,0 +1,167 @@
+\input{preamble}
+\bibliographystyle{jf.sty}
+%%
+
+
+\begin{document}
+
+\setlist{noitemsep}  % Reduce space between list items (itemize, enumerate, etc.)
+\onehalfspacing      % Use 1.5 spacing
+% Use endnotes instead of footnotes - redefine \footnote command
+\renewcommand{\footnote}{\endnote}  % Endnotes instead of footnotes
+
+\author{Rasmus M. Jensen \& Morten B. Krogh\thanks{\rm Jensen \& Krogh are both \textbf{ELITE} Master Students at Aarhus School of Business and Social Sciences, Aarhus University. We thank our suporvisor Stig Vinther Møller for making this project possible with inspirational guidance.}}
+
+\title{\Large \bf A Very Inspiring Study of Habit formation Models}
+
+\date{}              % No date for final submission
+
+% Create title page with no page number
+
+\maketitle
+\thispagestyle{empty}
+
+\input{Formalities/Abstract}
+
+\clearpage
+
+\input{Content/1-Introduction}
+\input{Content/2-Data}
+\input{Content/3-Methodology}
+\input{Content/4-Analysis}
+\input{Content/5-Conclusion}
+
+\clearpage
+
+\appendix
+\input{Content/6-Appendix}
+
+
+\clearpage
+
+% Bibliography.
+
+%\begin{doublespacing}   % Double-space the bibliography
+%\bibliography{bibliography}
+% \bibliography{Bibliography}
+%\end{doublespacing}
+
+% Bibliography.
+
+
+\begin{doublespacing}   % Double-space the bibliography
+\bibliographystyle{jf}
+\bibliography{bibliography}
+\end{doublespacing}
+
+
+
+\clearpage
+
+% Print end notes
+\renewcommand{\enotesize}{\normalsize}
+% \begin{doublespacing}
+% \theendnotes
+% \end{doublespacing}
+
+
+\end{document}
+\begin{comment}
+% Figures and tables, showing how to structure captions
+\clearpage
+
+\ 
+\vfill
+\begin{figure}[!htb]
+\centerline{
+%\includegraphics[width=7in]{Figure1}
+\rule{7in}{3in} % added by Karol Kozioł
+}
+  \caption{{\bf Structure of model: capital can be invested in a bank sector and an equity sector.} An intermediary has the expertise to reallocate capital between the sectors and to monitor bank capital against bank crashes.} \label{fig:0}
+\end{figure}
+\vfill
+\ 
+
+
+
+
+
+\input{preamble}
+
+\begin{document}
+
+\pagestyle{projekt}
+\pdfbookmark[0]{Table of contents}{Contents}
+
+\include{Formalities/Frontpage}
+
+\tableofcontents*\label{toc}
+
+\include{Content/1-Introduction}
+\include{Content/2-Data}
+\include{Content/3-Methodology}
+\include{Content/4-Empirical_Analysis}
+\include{Content/5-Conclusion}
+
+
+% \bibliography{Bibliography}
+% Vil gerne bruge det her så bibliografien har den rette formatering i forhold til jurnal of Finance
+% Bibliography. haha.. Men det virker bare ikke :/ 
+
+\begin{doublespacing}   % Double-space the bibliography
+\bibliography{bibliography}
+\end{doublespacing}
+
+
+%Appendix
+\appendix
+\phantomsection
+\input{Content/6-Appendix}
+\pdfbookmark[0] {Appendix}{appendix}
+
+\end{document}
+\end{comment}
+
+
+% how to use this JF template
+\begin{comment}
+\noindent Note that the JF doesn't want the first section to be titled, and the text here is not indented.\footnote{Here's a sample footnote (endnote).} Let's put in some sections and subsections to see how they get formatted.
+
+\section{The Model} \label{sec:Model}
+
+There's not actually a model here as it's not really a paper, but this is about where a model might go. Note that the first sentence of this section is indented (as required by the JF) using the \texttt{indentfirst} package.
+
+\subsection{A Subsection}
+
+Note that subsections in JF are just labeled with letters.  When referring to them in the text, you need to add the section number back, e.g., Section~\ref{sec:subsec} or~\ref{sec:subsub}. This is taken care of in \texttt{jf.sty}. Let's also add some parenthetical citations (see~\cite{Stanton:95}, \cite{CarpenterStantonWallace:12}, \cite{Campbell:03}). 
+
+To justify adding a subsection here, from now on, we'll assume
+\begin{condition}\label{cond:rates}
+$0 <  \hat{\mu} < \gamma\sigma^2$.
+\vspace{3mm}
+\end{condition}
+This condition might be useful if there was a model. 
+
+\subsection{Another Subsection, With a Figure}
+\label{sec:subsec}
+
+Figures get put at the end, with a note marking where they should go in the text, like this:
+
+\bigskip
+\centerline{\bf [Place Figure~\ref{fig:0} about here]}
+\bigskip
+
+\subsubsection{A Subsubsection with a Proposition}
+\label{sec:subsub}
+
+Let's put a proposition here.
+\begin{proposition} \label{prop:3}
+If Condition~\ref{cond:rates} is satisfied,  a solution to the central
+planner's problem, $V(B,D,t) \in C^2\left( {\mathbb R}_{+}^2 \times
+  [0,T] \right)$, with control $a:[0,1]\times[0,T]\rightarrow [-\lambda,\lambda]$
+ if  $\gamma>1$ is
+\begin{equation} \label{eq:valuea}
+V(B,D,t) =  - \frac{(B+D)^{1-\gamma}}{1-\gamma}   w\left(\frac{B}{B+D},t\right).
+\end{equation}
+\end{proposition}
+\end{comment}

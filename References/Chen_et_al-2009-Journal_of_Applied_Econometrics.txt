@@ -1,0 +1,14 @@
+@article{Chen_et_al-2009-Journal_of_Applied_Econometrics,
+author = {Chen, Xiaohong and Ludvigson, Sydney C.},
+title = {Land of addicts? an empirical investigation of habit-based asset pricing models},
+journal = {Journal of Applied Econometrics},
+volume = {24},
+number = {7},
+pages = {1057-1093},
+doi = {10.1002/jae.1091},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/jae.1091},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/jae.1091},
+abstract = {Abstract This paper studies the ability of a general class of habit-based asset pricing models to match the conditional moment restrictions implied by asset pricing theory. We treat the functional form of the habit as unknown, and estimate it along with the rest of the model's finite dimensional parameters. Using quarterly data on consumption growth, assets returns and instruments, our empirical results indicate that the estimated habit function is nonlinear, that habit formation is better described as internal rather than external, and the estimated time-preference parameter and the power utility parameter are sensible. In addition, the estimated habit function generates a positive stochastic discount factor (SDF) proxy and performs well in explaining cross-sectional stock return data. We find that an internal habit SDF proxy can explain a cross-section of size and book-market sorted portfolio equity returns better than (i) the Fama and French (1993) three-factor model, (ii) the Lettau and Ludvigson (2001b) scaled consumption CAPM model, (iii) an external habit SDF proxy, (iv) the classic CAPM, and (v) the classic consumption CAPM. Copyright © 2009 John Wiley \& Sons, Ltd.},
+year = {2009}
+}
+

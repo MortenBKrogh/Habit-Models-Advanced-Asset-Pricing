@@ -1,0 +1,6 @@
+@book {Campbell (2018),
+	title = {Financial Decisions and Markets: A Course in Asset Pricing},
+	year = {Forthcoming},
+	url = {http://press.princeton.edu/titles/11177.html},
+	author = {John Y. Campbell}
+}

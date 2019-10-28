@@ -1,0 +1,32 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@article{Verdelhan (2010),
+author = {VERDELHAN, ADRIEN},
+title = {A Habit-Based Explanation of the Exchange Rate Risk Premium},
+journal = {The Journal of Finance},
+volume = {65},
+number = {1},
+pages = {123-146},
+doi = {10.1111/j.1540-6261.2009.01525.x},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-6261.2009.01525.x},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1540-6261.2009.01525.x},
+abstract = {ABSTRACT This paper presents a model that reproduces the uncovered interest rate parity puzzle. Investors have preferences with external habits. Countercyclical risk premia and procyclical real interest rates arise endogenously. During bad times at home, when domestic consumption is close to the habit level, the representative investor is very risk averse. When the domestic investor is more risk averse than her foreign counterpart, the exchange rate is closely tied to domestic consumption growth shocks. The domestic investor therefore expects a positive currency excess return. Because interest rates are low in bad times, expected currency excess returns increase with interest rate differentials.},
+year = {2010}
+}
+
