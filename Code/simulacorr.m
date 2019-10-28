@@ -1,13 +1,13 @@
 function [stsim vtsim lndctsim lnrfsim]=simulacorr(rho)
 
-global ncalc gamma sigma g phi beta B s_bar seedval
+global ncalc gamma sig g phi beta B s_bar seedval
 
 %% Smulando choques do processo de consumo com correlação controlada rho
 
 T=ncalc;
 randn('seed',seedval);
-x = sigma*randn(T,1);
-y = sigma*randn(T,1);
+x = sig*randn(T,1);
+y = sig*randn(T,1);
 
 vtsim = rho*x + sqrt(1-rho^2)*y; % Controlando a correlação dos processos de consumo.
 lndctsim = g + vtsim;
