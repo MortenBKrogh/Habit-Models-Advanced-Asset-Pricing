@@ -5,7 +5,7 @@ clear all
 format long
 tic
 %% Escolha do método de solução de P/C (Ponto Fixo ou Séries)
-method = 1; % Escolha: 0 método por ponto fixo;
+method = 0; % Escolha: 0 método por ponto fixo;
 % Escolha: 1 Wachter 2005
 % 2: comparative
 % Calibrering
