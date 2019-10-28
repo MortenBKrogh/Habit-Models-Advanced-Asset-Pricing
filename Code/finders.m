@@ -76,7 +76,7 @@ for i=1:size(sg,1)
     
     for k = 2:matur
         elnrcb(i,k) = GaussLegendre(@intelnrcb,abs(sig)*(-8),abs(sig)*8, 40); 
-        sdlnrcb(i,k) = GaussLegendre(@intelnrt2,abs(sig)*(-8),abs(sig)*8, 40); 
+        sdlnrcb(i,k) = GaussLegendre(@intelnr2,abs(sig)*(-8),abs(sig)*8, 40); 
         sdlnrcb(i,k) = (sdlnrcb(i,k) - elnrcb(i,k).^2).^(.5);
     end
     

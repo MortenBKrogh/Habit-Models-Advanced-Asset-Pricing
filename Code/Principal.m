@@ -153,8 +153,7 @@ end
 if method == 0 || method == 2
     randn('seed',seedval); % Ajustando o seed rand?mico
     [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
-        alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf]=annvars(dc,...
-        lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
+        alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf]=annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 end
 % Pelo m?todo de S?ries
 if method == 1 || method == 2
@@ -285,7 +284,7 @@ if method == 0 || method == 2
         -stsim(1:length(stsim)-1)));
     
     for k=1:length(rho)
-        [stx vtx lndctx lnrfx]=simulacorr(rho(k),lnrf1_pf);
+        [stx vtx lndctx lnrfx]=simulacorr(rho(k));
         SDFx(:,k)= delta*exp(-g*gamma)*exp(-gamma*vtx).*exp(- gamma*(stx(2:length(stx))...
             -stx(1:length(stx)-1)));
         stsimx(:,k)=stx;
