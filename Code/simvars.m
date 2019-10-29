@@ -16,7 +16,7 @@ function [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim.
 %                                                                         %
 
 global ncalc gamma sig g phi delta s_max s_bar sg maxcb tsc bondsel
-%% Ajustando o input do programa de simulação dos dados Americanos
+%% initialization
 if dc == 0 
     T=ncalc;           
     
@@ -36,7 +36,7 @@ else
     vtsim = lndctsim - g; 
 end
 
-%% Simular variável de estado log(S)
+%% Simulation of log(S_t)
 
 stsim = zeros(T+1,1);
 
@@ -52,23 +52,23 @@ for i=2:T+1
     end
 end
 
-%% Simulando a razão P/C                                                  % 
+%% PC ratio                                           % 
 
 lnpctsim = interp(stsim,sg,lnpca)';
 
-%% Retornos ex-post                                                       %
+%% ex-post Returns                                                        %
 %                                                                         % 
 %                        R = (C'/C){(1+(P/C)')/(P/C)}                     % 
 % ----------------------------------------------------------------------- %
 
 lnrtsim = log(1+exp(lnpctsim(2:T+1))) - lnpctsim(1:T) + lndctsim;
 
-%% Log de Rf variante no tempo
+%% potential time varying RF-rate
 
 lnrfsim = -log(delta) + gamma*g - gamma*(1-phi)*(stsim-s_bar)... 
     - 0.5*(gamma*sig*(1+lambda(stsim))).^2;
 
-%% Retornos esperados e desvio condicional 
+%% Expected Returns and Expected deviations 
 
 testerf = interp(stsim,sg,lnrf1)';
 ertsim = interp(stsim,sg,er)';
@@ -76,9 +76,9 @@ elnrtsim = interp(stsim,sg,elnr)';
 sdrtsim = interp(stsim,sg,sdr)'; 
 sdlnrtsim = interp(stsim,sg,sdlnr)';
 
-%% Retornos esperados das T-Bill 90
+%% Treasury Bill return 90 days
 
-elnrcbsim = interp(stsim,sg,elnrcb(:,1))'; % Retornos esperados do bonds
+elnrcbsim = interp(stsim,sg,elnrcb(:,1))'; % Expected Returns on Tbill
 sdlnrcbsim = interp(stsim,sg,sdlnrcb(:,1))'; 
 lnysim = interp(stsim,sg,lny(:,1))';       % Bond yields
 lny2sim = zeros(size(lnysim,1),1);
@@ -94,7 +94,7 @@ for i = 2:(maxcb*tsc)
     end
 end
 
-% Retornos das maturidades ajustadas em bondsel = [1 2 4 8 12 16 20] 
+% Returns on bonds with maturities = [1 2 4 8 12 16 20] 
 
 lnrcbsim = cat(1,0,lnysim(1:T-1,1));
 for i = 2:length(bondsel)

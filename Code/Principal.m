@@ -10,7 +10,7 @@ method = 0; % Method: 0 Fixed point
             % Method: 1 Wachter 2005
             % Method: 2 comparative
 % Calibration Choice
-calib=4;    % 0 - b>0
+calib=2;    % 0 - b>0
             % 1 - b<0
             % 2 - Campbell Cochrane (1999)
             % 3 - Paper Wachter (2005)
@@ -278,7 +278,16 @@ if method == 0 || method == 2
         lndctsimx(:,k)=lndctx;
         lnrfsimx(:,k)=lnrfx;
     end
-    
+    %% 
+    ts1 = struct();
+    ts1.DCRatio       = alndctsim_pf;
+    ts1.PCratio       = alnpctsim_pf;
+    ts1.ExPostReturns = alnrtsim_pf;
+    ts1.RiskFreeRate  = alnrfsim_pf;
+    ts1.Prices        = alnchpsim_pf;
+    ts1.stdReturns    = asdlnrtsim_pf;
+    ts1 = struct2table(ts1);
+    writetable(ts1)
     %% Real FX-rates
     deltaq = log(SDFx) - kron(ones(1,size(SDFx,2)),log(SDFus));
     %% Regression
@@ -367,17 +376,18 @@ if method == 2
     Intervalo = cat(2,Interv_pf,NaN*ones(size(Interv_pf,1),1));
     Intervalo = cat(2,Intervalo,Interv_s);
 end
-
+%{
 bn=zeros(length(bondsel)-1,2);
 bnconf=zeros(length(bondsel)-1,4);
 for i=2:length(bondsel)
     chgyield=lnysim(2:size(lnysim,1),i-1)-lnysim(1:size(lnysim,1)-1,i);
-    spreadyield=(lnysim(1:size(lnysim,1)-1,i)-l nysim(1:size(lnysim,1)- 1,1))./(bondsel(i)-1);
+    spreadyield=(lnysim(1:size(lnysim,1)-1,i)-1 - nysim(1:size(lnysim,1)- 1,1))./(bondsel(i)-1);
     
     [aux1 aux2]=regress(chgyield,[ones(length(lnysim)-1,1) spreadyield]);
     bn(i-1,:)=aux1';
     bnconf(i-1,:)=reshape(aux2,1,4);
 end
+%}
 load gong
 audioplayer(y,Fs);
 play(ans)

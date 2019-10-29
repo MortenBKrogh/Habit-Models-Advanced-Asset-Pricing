@@ -2,21 +2,21 @@ function [stsim vtsim lndctsim lnrfsim]=simulacorr(rho)
 
 global ncalc gamma sig g phi delta B s_bar seedval
 
-%% Smulando choques do processo de consumo com correlação controlada rho
+%% Simulation of shocks from the correlationcoefficient rho
 
 T=ncalc;
 randn('seed',seedval);
 x = sig*randn(T,1);
 y = sig*randn(T,1);
 
-vtsim = rho*x + sqrt(1-rho^2)*y; % Controlando a correlação dos processos de consumo.
+vtsim = rho*x + sqrt(1-rho^2)*y; 
 lndctsim = g + vtsim;
 
-%% Simular variável de estado log(S)
+%% Simulation log state (Surplus consumption ratio)
 
 stsim = zeros(T+1,1);
 
-stsim(1) = s_bar;          % A economia começa no seu estado estacionário.
+stsim(1) = s_bar;        
 
 for i=2:T+1
     
@@ -24,7 +24,7 @@ for i=2:T+1
 
 end
 
-%% Log de Rf variante no tempo
+%% Time variying log RF-rate
 
 lnrfsim = -log(delta)+gamma*g-(gamma*(1-phi)-B)/2-B .*(stsim-s_bar); 
 
