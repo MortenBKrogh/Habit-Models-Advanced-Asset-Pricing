@@ -19,7 +19,7 @@ calib=4;    % 0 - b>0
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rho seedval verd debug ann lnpca con
 % Initialization
-if calib == 0
+if calib == 0;
     tsc = 4; % Interval 4 = quarter
     g=0.0228/tsc;
     sig=0.009/sqrt(tsc);
@@ -179,8 +179,8 @@ if method == 0 || method == 2
     Stdexrett_pf = std(exrett_pf); % SD excess log returns)
     Eexrettinterp_pf = mean(exrettinterp_pf);
     Stdexrettinterp_pf = std(exrettinterp_pf);
-    Ep_d_pf = mean(alnpctsim_pf); % Log consumption
-    Stdp_d_pf = std(alnpctsim_pf); 
+    Ep_d_pf = mean(alnpctsim_pf); % M?dia do log da raz?o pre?o-consumo simulada
+    Stdp_d_pf = std(alnpctsim_pf); % Desvio do log da raz?o pre?o-consumo simulada
     
     table = zeros(13,1);
     table(1,1) = Edc_pf;
@@ -197,6 +197,7 @@ if method == 0 || method == 2
     table(12,1)= S_bar;
     table(13,1)= delta^tsc;
 end
+%%
 if method == 1 || method == 2
     if ann == 1
         Edc_s = tsc*mean(alndctsim_s);
@@ -211,20 +212,20 @@ if method == 1 || method == 2
     Erfinterp_s = mean(atesterfsim_s);
     Stdrfinterp_s = std(atesterfsim_s);
     
-    exrett_s = alnrtsim_s - alnrfsim_s; % Excess returns
+    exrett_s = alnrtsim_s - alnrfsim_s; % Excesso de retonos
     exrettinterp_s = alnrtsim_s - atesterfsim_s;
-    Shpr_s = mean(exrett_s)/std(exrett_s); % Sharpe Ratio
+    Shpr_s = mean(exrett_s)/std(exrett_s); % Raz?o de Sharpe para log dos retornos
     ShpR_s = mean(exp(alnrtsim_s)-exp(alnrfsim_s))/std(exp(alnrtsim_s)- exp(alnrfsim_s));
     Shprinterp_s = mean(exrettinterp_s)/std(exrettinterp_s);
     ShpRinterp_s = mean(exp(alnrtsim_s)-exp(atesterfsim_s))/std(exp(alnrtsim_s)- exp(atesterfsim_s));
     
-    Eexrett_s = mean(exrett_s); % Mean excess returns
-    Stdexrett_s = std(exrett_s); 
+    Eexrett_s = mean(exrett_s); % M?dia do excesso de retornos (em log)
+    Stdexrett_s = std(exrett_s); % Desvio do excesso de retornos (em log)
     Eexrettinterp_s = mean(exrettinterp_s);
     Stdexrettinterp_s = std(exrettinterp_s);
     
-    Ep_d_s = mean(alnpctsim_s); % Mean log consumption
-    Stdp_d_s = std(alnpctsim_s); 
+    Ep_d_s = mean(alnpctsim_s); % M?dia do log da raz?o pre?o-consumo simulada
+    Stdp_d_s = std(alnpctsim_s); % Desvio do log da raz?o pre?o-consumo simulada
     
     table = zeros(13,1);
     table(1,1) = Edc_s;
@@ -258,14 +259,17 @@ if method == 2
     table(13,1)= delta^tsc; table(13,2)= delta^tsc;
 end
 
-%% SDF Simulation
+%%
+% resumo(:,loop)=table;
+% end
+% Tentativa de Simula??o dos SDF's
 
 if method == 0 || method == 2
     randn('seed',seedval);
     [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
         sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
         simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
-    % Stochastic discount factor
+    % Fator estoc?stico de desconto dos USA
     SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim))...
         -stsim(1:length(stsim)-1)));
     
@@ -279,9 +283,9 @@ if method == 0 || method == 2
         lnrfsimx(:,k)=lnrfx;
     end
     
-    %% Real FX-rates
+    %% Encontrando as taxas de c?mbio real
     deltaq = log(SDFx) - kron(ones(1,size(SDFx,2)),log(SDFus));
-    %% Regression
+    %% Regress?es da UIP
     if con == 1
         for k=1:length(rho)
             diff(:,k)=lnrfsim-lnrfsimx(:,k); regressor=cat(2,ones(length(diff(:,k)),1),diff(:,k));
@@ -313,7 +317,7 @@ if method == 0 || method == 2
 end
 %%
 if method == 1 || method == 2
-    randn('seed',seedval); 
+    randn('seed',seedval); % Ajustando o seed rand?mico
     [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
         sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
         simvars(dc,lnpca_s,er_s,elnr_s,sdr_s,sdlnr_s,elnrcb_s,sdlnrcb_s,lny_s,lnrf1_s );
