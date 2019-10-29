@@ -2,8 +2,8 @@ function [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim.
     sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerf]=simvars(dc,lnpca,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1)
 
 %
-% This routine simulates the most important time-series of this model     %
-% from a chosen calibration                                               %
+% This routine simulates the most important time-series of this model from 
+%                                                                         %
 % Simulating:                                                             %
 % - s=log(S);                                                             %
 % - P/C;                                                                  %
@@ -14,17 +14,24 @@ function [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim.
 % - corr(Rf{t+1},Cons_t)                                                  %
 % - Bonds                                                                 %
 %                                                                         %
+% Todas as séries simuladas serão sufixadas por 'tsim' e terão a mesma    %
+% nomeação herdada dos programas anteriores (findlpc e finders).          %
+%                                                                         %
+% Se o input de simvars é nulo, que dizer que este programa irá simular o %
+% processo de consumo do modelo. Caso o usuário queira inserir os dados   %
+% reais da economia americana, as outras variáveis serão simuladas através%
+% destes dados de consumo.                                                %
+% ----------------------------------------------------------------------- %
 
 global ncalc gamma sig g phi delta s_max s_bar sg maxcb tsc bondsel
 %% Ajustando o input do programa de simulação dos dados Americanos
-if dc == 0 
-    T=ncalc;           
+if dc == 0 T=ncalc;             % Simvars irá simular os dados de consumo.
     
     vtsim = sig*randn(T,1);
     
     lndctsim = g + vtsim;
 
-else
+else                         % Simvars irá utilizar dados reais de consumo.
     if min(dc) <= 0
         
         disp('simvars: Você inseriu o log do crescimento do consumo.');
@@ -40,7 +47,7 @@ end
 
 stsim = zeros(T+1,1);
 
-stsim(1) = s_bar;           % Starting the process at SS
+stsim(1) = s_bar;           % A economia começa no seu estado estacionário.
 
 for i=2:T+1
     if strans(stsim(i-1),vtsim(i-1)) <= s_max

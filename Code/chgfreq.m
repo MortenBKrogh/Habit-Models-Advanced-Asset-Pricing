@@ -54,25 +54,25 @@ function [ro] = chgfreq(rm,k,f,o)
 T = size(rm,1);
 ro = rm;
 
-if k > 1;
+if k > 1
     bigr = rm(1:T-k+1,:);
     i = 1;
-    while i <= k-1 ;
+    while i <= k-1 
         bigr = bigr+rm(1+i:T-k+1+i,:);
         i = i+1;
     end
     ro = cat(1,(-99*ones(k-1,1))*ones(1,size(bigr,2)),bigr);
-end;
+end
 
-if f > 1;
+if f > 1
     mask = zeros(size(ro,1),1);
     i = 1;
-    while i <= size(ro,1);
-        if (f*i-o) <= size(ro,1);
+    while i <= size(ro,1)
+        if (f*i-o) <= size(ro,1)
             mask(f*i-o) = 1;
-        end;
+        end
         i = i+1;
-    end;
+    end
 end
 ro = selif(ro,mask);
 end

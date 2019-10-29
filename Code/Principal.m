@@ -4,23 +4,21 @@
 clear all
 format long
 tic
-%% Escolha do m?todo de solu??o de P/C (Ponto Fixo ou S?ries)
-method = 0; % Escolha: 0 m?todo por ponto fixo;
-% Escolha: 1 Wachter 2005
-% 2: comparative
-% Calibrering
-calib=2;    % 0 - b>0
-% 1 - b<0
-% 2 - Campbell Cochrane (1999)
-% 3 - Paper Wachter (2005)
-% 4 - Working Paper Verdelhan (2008)
+%% 
+% Choice of method
+method = 0; % Method: 0 Fixed point
+            % Method: 1 Wachter 2005
+            % Method: 2 comparative
+% Calibration Choice
+calib=4;    % 0 - b>0
+            % 1 - b<0
+            % 2 - Campbell Cochrane (1999)
+            % 3 - Paper Wachter (2005)
+            % 4 - Working Paper Verdelhan (2008)
 %%
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rho seedval verd debug ann lnpca con
-%resumo=zeros(13,100);
-% for loop=1:100
-
-% Par?metros para b>0
+% Initialization
 if calib == 0;
     tsc = 4; % Interval 4 = quarter
     g=0.0228/tsc;
@@ -386,7 +384,7 @@ bn=zeros(length(bondsel)-1,2);
 bnconf=zeros(length(bondsel)-1,4);
 for i=2:length(bondsel)
     chgyield=lnysim(2:size(lnysim,1),i-1)-lnysim(1:size(lnysim,1)-1,i);
-    spreadyield=(lnysim(1:size(lnysim,1)-1,i)-lnysim(1:size(lnysim,1)- 1,1))./(bondsel(i)-1);
+    spreadyield=(lnysim(1:size(lnysim,1)-1,i)-l nysim(1:size(lnysim,1)- 1,1))./(bondsel(i)-1);
     
     [aux1 aux2]=regress(chgyield,[ones(length(lnysim)-1,1) spreadyield]);
     bn(i-1,:)=aux1';

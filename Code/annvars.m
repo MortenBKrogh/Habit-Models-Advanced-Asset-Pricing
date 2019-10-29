@@ -6,7 +6,7 @@ function [alndctsim astsim alnpctsim alnrtsim alnrfsim asdlnrtsim alnchpsim ...
 % os retornos esperados. Falta anualizar os retornos dos títulos (bonds)
 % simulados.
 
-global tsc bondsel ann
+global tsc bondsel ann ncalc
 
 %% Rodando as séries temporais artificiais
 [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
@@ -94,8 +94,8 @@ end
 
 % Desvio
 if size(sdlnrcbsim,1) > 1
-    for i=1:length(bondsel)+1
-        asdlnrcbsim(:,i) = chgfreq(sdlnrcbsim(1:T-1,i),tsc,tsc,0);
+    for i=1:length(bondsel)
+        asdlnrcbsim(:,i) = chgfreq(sdlnrcbsim(1:T-1,i+1),tsc,tsc,0);
     %   asdlnrcbsim(:,i) = sdlnrcbsim(1:T-1,i);
     end
     
