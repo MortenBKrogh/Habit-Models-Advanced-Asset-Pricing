@@ -262,7 +262,7 @@ end
 
 if method == 0 || method == 2
     randn('seed',seedval);
-    [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
+    [stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
         sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
         simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
     % Stochastic discount factor
@@ -280,6 +280,7 @@ if method == 0 || method == 2
     end
     %% 
     ts1 = struct();
+    ts1.S_t           = astsim_pf;
     ts1.DCRatio       = alndctsim_pf;
     ts1.PCratio       = alnpctsim_pf;
     ts1.ExPostReturns = alnrtsim_pf;
