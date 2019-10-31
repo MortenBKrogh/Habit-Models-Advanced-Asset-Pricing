@@ -5,7 +5,11 @@ Dat = readtable('ts1.txt');
 
 s_t = Dat.S_t; % Is logged
 pc_t = Dat.PCratio; % Is logged
-ret_t = Dat.ExPostReturns;
+ret_t = Dat.ExPostReturns; % Is logged i think
+rfrate = Dat.RiskFreeRate; %
+Net_ret_t = ret_t - rfrate;
+%
+ret_t = Net_ret_t;
 %% training:
 S_t_train = s_t(1:5000,1);
 pc_t_train = pc_t(1:5000, 1);
