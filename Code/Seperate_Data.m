@@ -27,10 +27,10 @@ Dummy_Rec   = zeros(T, 1);
 for i=1:size(s_t, 1)
     if s_t(i) > s_bar
         S_state_Exp(i) = s_t(i);
-        S_state_Rec(i) = NaN;
+        S_state_Rec(i) = 0;
         Dummy_Rec(i)   = 0;
     else
-        S_state_Exp(i) = NaN;
+        S_state_Exp(i) = 0;
         S_state_Rec(i) = s_t(i);
         Dummy_Rec(i)   = 1;
     end

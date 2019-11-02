@@ -15,6 +15,7 @@ calib=2;    % 0 - b>0
             % 2 - Campbell Cochrane (1999)
             % 3 - Paper Wachter (2005)
             % 4 - Working Paper Verdelhan (2008)
+            
 %%
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rho seedval verd debug ann lnpca con

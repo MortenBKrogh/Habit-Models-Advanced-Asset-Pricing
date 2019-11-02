@@ -1,6 +1,7 @@
-%% Main data examination
+clear
+clc
+%%
 Dat = readtable('ts1.txt');
-
 tsc = 12;
 g=0.0189/tsc;
 sig=0.015/sqrt(tsc);
@@ -20,29 +21,33 @@ pd_t = Dat.PCratio;
 ret_t = Dat.ExPostReturns;
 %% State Variables
 T = size(s_t, 1);
-
 S_state_Rec = zeros(T, 1);
 S_state_Exp = zeros(T, 1);
 Dummy_Rec   = zeros(T, 1);
 for i=1:size(s_t, 1)
     if s_t(i) > s_bar
         S_state_Exp(i) = s_t(i);
-        S_state_Rec(i) = NaN;
+        S_state_Rec(i) = 0;
         Dummy_Rec(i)   = 0;
     else
-        S_state_Exp(i) = NaN;
+        S_state_Exp(i) = 0;
         S_state_Rec(i) = s_t(i);
         Dummy_Rec(i)   = 1;
     end
 end
-%% Recession only sample
-TableRec = table(S_state_Rec, ret_t, pd_t);
-TableRec=TableRec(~any(ismissing(TableRec),2),:);
-%% Regression
-y = TableRec.ret_t;
-x = cat(2, S_state_Rec,S_state_Exp);
-x = cat(2, ones(size(S_state_Rec, 1), 1), x);
-[b, bint, ~, ~, stats] = regress(y,x)
-
-
-    
+%%
+Rolls = 3000;
+nahead = 1;
+beta  = NaN(Rolls, 3);
+stats = NaN(Rolls, 4);
+std = NaN(3,2,Rolls);
+for i = 1:Rolls
+    Mod = ret_t(nahead+i:i+4999+nahead,:);
+    pred = [ones(size(Mod,1), 1), ret_t(i:i+4999), pd_t(i:i+4999) .* Dummy_Rec(i:i+4999)];
+    [beta1, std1, ~, ~, stats1] = regress(Mod, pred);
+    beta(i,:)  = beta1;
+    std(:,:,i)   = std1;
+    stats(i,:) = stats1;
+end
+%%
+ plot(stats(:,1))
