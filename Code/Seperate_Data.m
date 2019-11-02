@@ -44,6 +44,7 @@ y = TableRec.ret_t;
 x = TableRec.S_state_Rec;
 x = cat(2, ones(size(x, 1), 1), x);
 [b, bint, ~, ~, stats] = regress(y,x)
+
 %% Expansion only sample
 TableExp = table(S_state_Exp, ret_t, pd_t);
 TableExp=TableExp(~any(ismissing(TableExp),2),:);
