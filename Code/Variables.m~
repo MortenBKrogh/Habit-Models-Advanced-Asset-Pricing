@@ -49,7 +49,7 @@ end
 %%
 RetAM = importdata('Annual_rets.csv');
 RFR   = importdata('Bonds_INF.csv'); 
-RFR   = log(1 + RFR.data(:,2)) - log(1 + RFR.data(:,4));
+RFR   = log(RFR.data(:,2))RFR.data(:,4));
 ExcessRet =   log(1 + RetAM.data(:,2)) - RFR;
 HistEexrets = mean(ExcessRet);
 HistStdexretsstd = std(ExcessRet);
