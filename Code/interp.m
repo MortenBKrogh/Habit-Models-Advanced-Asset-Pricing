@@ -7,7 +7,8 @@ function [fofs indx] = interp(sv,x,fx)
 % Find local slope and intercept to use on% grid                          %
 % log (S) such that returns f (x) = a + b * x                             %
 % ------------------------------------------------------------------------%
-    
+
+if isempty(min(find(fx == 0))) == 0    
     fofs = 0*sv'; else
     T= size(x,1);
     
