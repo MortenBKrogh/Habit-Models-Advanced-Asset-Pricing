@@ -7,12 +7,11 @@ method = 0; % Method: 0 Fixed point
             % Method: 1 Wachter 2005
             % Method: 2 comparative
 % Calibration Choice
-calib=5;    % 0 - b>0
+calib=2;    % 0 - b>0
             % 1 - b<0
             % 2 - Campbell Cochrane (1999)
             % 3 - Paper Wachter (2005)
             % 4 - Working Paper Verdelhan (2008)
-            % 5 - Krogh Jensen (2019)
             
 %%
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
@@ -107,7 +106,7 @@ chk = 1;
 
 flag1 = 0; % Simulation flag
 flag2 = 1; % 1 Simulation of yearly data, 0 of quarterly
-con = 0;   % Interpolation
+con = 0;   % Se con = 0 usa rf interpolado na curva % calibrada.
 
 %% Criando o grid de log(S)
 sg = mkgrids(szgrid,0);
@@ -122,8 +121,7 @@ lnpca_pf=lnpca;
 
 %% Find Value of P/C, serial method
 if method == 1 || method == 2
-    [W_PC_ratio]=WfindFn(sig,sg); 
-    plot(S,W_PC_ratio/tsc,'k');
+    [W_PC_ratio]=WfindFn(sig,sg); plot(S,W_PC_ratio/tsc,'k');
     lnpca_s=log(W_PC_ratio);
     lnpca=lnpca_s;
 end
