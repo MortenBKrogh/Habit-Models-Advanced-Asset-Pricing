@@ -6,7 +6,6 @@ Coefficients = struct;
 %%% 90 day T-bills less the inflation rate. Using CRSP index %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 RR = importdata('Bonds_INF.csv');
-%%
 Bond = RR.data(:,2);
 Infl = RR.data(:,4);
 Rbond = Bond - Infl;
@@ -27,7 +26,7 @@ pd_t  = pd(1:end-1,:); % t
 pd_t1 = pd(2:end,:); % t+1
 AR1 = pd_t1\[ones(size(pd_t,1),1) pd_t];
 Coefficients.Phi = AR1(2)^12;
-clearvars -except Coefficients R Rx
+%clearvars -except Coefficients R Rx
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Autocorrelation of price/dividend ratio is found to be .9008  %%%
 %%% that is slightly above .87                                    %%%

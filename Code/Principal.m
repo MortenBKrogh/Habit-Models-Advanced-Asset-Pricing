@@ -109,7 +109,7 @@ flag1 = 0; % Simulation flag
 flag2 = 1; % 1 Simulation of yearly data, 0 of quarterly
 con = 0;   % Interpolation
 
-%% Criando o grid de log(S)
+%% Grid def
 sg = mkgrids(szgrid,0);
 S=exp(sg);
 
@@ -294,8 +294,8 @@ if method == 0 || method == 2
     %% 
     ts1 = struct();
     ts1.S_t           = astsim_pf;
-    ts1.DCRatio       = alndctsim_pf;
-    ts1.PCratio       = alnpctsim_pf;
+    ts1.deltac       = alndctsim_pf;
+    ts1.pcratio       = alnpctsim_pf;
     ts1.ExPostReturns = alnrtsim_pf;
     ts1.RiskFreeRate  = alnrfsim_pf;
     ts1.Prices        = alnchpsim_pf;
@@ -307,7 +307,8 @@ if method == 0 || method == 2
     %% Regression
     if con == 1
         for k=1:length(rho)
-            diff(:,k)=lnrfsim-lnrfsimx(:,k); regressor=cat(2,ones(length(diff(:,k)),1),diff(:,k));
+            diff(:,k)=lnrfsim-lnrfsimx(:,k);
+            regressor=cat(2,ones(length(diff(:,k)),1),diff(:,k));
             [betas interv]=regress(deltaq(:,k),regressor(1:length(regressor)-1,:));
             Betas_pf(k,1)=rho(k);
             Betas_pf(k,2)=betas(1,1);
