@@ -1,5 +1,8 @@
 %% Variables:
-
+%------------------------------------------%
+% Load workspace output from "Principal.m" %
+%------------------------------------------%
+load('FULL_Workspace_Principal_run_03_11_2019_time_11_42.mat');
 %%% Consumption %%%
 % ln(C_t) or c_t
 ct = cumsum(alndctsim_pf);
@@ -30,3 +33,21 @@ rft = alnrfsim_pf;
 %%% LOM: Prices %%%
 % (p_t - c_t) - (p_(t-1) - c_(t-1)) + delta c_t
 pt = alnchpsim_pf;
+
+clearvars -except ct dct st pct rt std_rt rft pt s_max s_bar g
+%%
+Model_Calibration
+%%
+indicator_rec = NaN(size(st,1),1);
+for i=1:size(st,1)
+    if st(i) < s_bar
+        indicator_rec(i) = 1;
+    else
+        indicator_rec(i) = 0;
+    end
+end
+%%
+pred = [ones(size(st,1)-1,1) indicator_rec(1:end-1) .* pct(1:end-1) st(1:end-1)];
+y = st(2:end);
+[b, bstd, ~,~,stats] = regress(y,pred)
+stats(1)

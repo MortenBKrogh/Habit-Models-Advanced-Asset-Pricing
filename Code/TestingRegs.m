@@ -43,7 +43,7 @@ Vect = [Variables' num2cell(beta) num2cell(std(:,1)) num2cell(std(:,2))];
 % Format output
 fprintf('    --------------------------| Model |------------------------\n')
 fprintf('    ###########################################################\n')
-fprintf('    ##  r_t = constant + beta_1 * log(P/C_{t-1}) + epsilon_t ##\n')
+fprintf('    ##  r_t = constant + beta_1 * log(deltaC_{t-1}) + epsilon_t ##\n')
 fprintf('    ###########################################################\n')
 fprintf('    \n')
 fprintf('    ----------------| Model Effects |----------------\n')
