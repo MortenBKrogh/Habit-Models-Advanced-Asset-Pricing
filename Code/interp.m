@@ -2,7 +2,7 @@ function [fofs indx] = interp(sv,x,fx)
 % ------------------------------------------------------------------------%
 % Interpolation procedure of s distribution                               %
 % sv -> vector of any values where f (s) is to be generated.              %
-% x -> vector of grid points of s. It must be monotonic.                  %
+% x -> vector of grid points of s. It must be monotonic increasing.       %
 % fx -> vector of current values of f (x) in the grid.                    %
 % Find local slope and intercept to use on% grid                          %
 % log (S) such that returns f (x) = a + b * x                             %
@@ -13,20 +13,20 @@ if isempty(min(find(fx == 0))) == 0
     T= size(x,1);
     
     if x(2) < x(1)
-        disp('O grid deve ser monótono e crescente');
+        disp('Not monotonically increasing');
     end
     
     if size(sv,2) > 1 && size(sv,1) == 1 sv=sv';
         chk = 1;
         
     elseif size(sv,2) > 1 && size(sv,1) > 1
-        disp('ERRO: Vetor sv não pode ser uma matriz');
+        disp('ERROR: Not Same size');
         
     elseif size(sv,2) == 1 && size(sv,1) > 1
         chk = 0;
         
     elseif size(sv,2) == 1 && size(sv,1) == 1
-        chk = 2;                                  % Para o caso de sv = s %
+        chk = 2;                                
         
     end
     

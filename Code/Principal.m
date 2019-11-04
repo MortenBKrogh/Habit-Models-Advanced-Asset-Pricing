@@ -192,7 +192,7 @@ if method == 0 || method == 2
     Stdexrett_pf = std(exrett_pf); % SD excess log returns)
     Eexrettinterp_pf = mean(exrettinterp_pf);
     Stdexrettinterp_pf = std(exrettinterp_pf);
-    Ep_d_pf = mean(alnpctsim_pf); % Log price consumption
+    Ep_d_pf = mean(alnpctsim_pf); % Log price/consumption
     Stdp_d_pf = std(alnpctsim_pf); 
     
     table = zeros(13,1);

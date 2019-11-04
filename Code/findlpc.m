@@ -21,7 +21,7 @@ while iter < 10000 && erro > 1e-6
 for i=1:size(sg,1)
 s = sg(i);
 if exp(-log(delta)+gamma*g-(gamma*(1-phi)-B)/2-B*(s-s_bar)) < g
-disp('\t ATENÇÃO: Rf < g \n');
+disp('\t Attention: Rf < g \n');
 fprintf('value of st: %g',s);
 end
 % Generate the log of the variable interest rate in time

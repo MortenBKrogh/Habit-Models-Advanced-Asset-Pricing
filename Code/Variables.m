@@ -55,8 +55,23 @@ HistEexrets = mean(ExcessRet);
 HistStdexretsstd = std(ExcessRet);
 HistSHRPRatio = HistEexrets/HistStdexretsstd
 SimSHRPRatio = Eexrett_pf/Stdexrett_pf
-%%
-pred = [ones(size(st,1)-1,1) indicator_rec(1:end-1) .* pct(1:end-1) st(1:end-1)];
-y = st(2:end);
+%% Med Dummy
+pred = [ones(size(pct,1)-1,1) indicator_rec(1:end-1) .* pct(1:end-1) st(1:end-1)];
+EexRet = rt - rft;
+y = EexRet(2:end);
 [b, bstd, ~,~,stats] = regress(y,pred)
 stats(1)
+%% Uden dummy
+pred = [ ones(size(pct,1)-1,1) indicator_rec(1:end-1) pct(1:end-1) st(1:end-1)];
+EexRet = rt - rft;
+y = EexRet(2:end);
+[b, bstd, ~,~,stats] = regress(y,pred)
+stats(1)
+%%
+s = plot(EexRet);
+s.Color=[0.8500 0.3250 0.0980 0.15];
+hold on
+t = plot(pred * b);
+t.Color = [0 0.4470 0.7410]
+title({'Regression fit:';'$r^e_t = \alpha + \beta_1 rec_t + \beta_2 \left( p_t - c_t\right)+\beta_3 s_t + \varepsilon_t$'},'interpreter','latex','fontsize',14)
+legend('Series','Fitted')
