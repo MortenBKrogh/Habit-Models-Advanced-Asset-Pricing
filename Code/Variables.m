@@ -1,3 +1,5 @@
+clc
+clear
 %% Variables:
 %------------------------------------------%
 % Load workspace output from "Principal.m" %
@@ -37,8 +39,6 @@ pt = alnchpsim_pf;
 
 clearvars -except ct dct st pct rt std_rt rft pt s_max s_bar g Eexrett_pf Stdexrett_pf
 %%
-Model_Calibration;
-%%
 indicator_rec = NaN(size(st,1),1);
 for i=1:size(st,1)
     if st(i) < s_bar
@@ -54,25 +54,33 @@ RFR   = log(1 + RFR.data(:,2)) - log(1 + RFR.data(:,4));
 ExcessRet =   log(1 + RetAM.data(:,2)) - RFR;
 HistEexrets = mean(ExcessRet);
 HistStdexretsstd = std(ExcessRet);
-HistSHRPRatio = HistEexrets/HistStdexretsstd
-SimSHRPRatio = Eexrett_pf/Stdexrett_pf
+HistSHRPRatio = HistEexrets/HistStdexretsstd;
+SimSHRPRatio = Eexrett_pf/Stdexrett_pf;
 %% Med Dummy
 pred = [ones(size(pct,1)-1,1) indicator_rec(1:end-1) .* pct(1:end-1) st(1:end-1)];
 EexRet = rt - rft;
 y = EexRet(2:end);
-[b, bstd, ~,~,stats] = regress(y,pred)
-stats(1)
+[b, bstd, ~,~,stats] = regress(y,pred);
 %% Uden dummy
 pred = [ ones(size(pct,1)-1,1) indicator_rec(1:end-1) pct(1:end-1) st(1:end-1)];
 EexRet = rt - rft;
 y = EexRet(2:end);
-[b, bstd, ~,~,stats] = regress(y,pred)
-stats(1)
+[b, bstd, ~,~,stats] = regress(y,pred);
+fprintf(' Estimates on top, 95 percent conf interval below \n')
+fprintf('\n')
+fprintf('    Alpha     Beta1    Beta2      Beta3   \n')
+disp(cat(1, b', bstd'))
+fprintf('\n')
+fprintf('\n')
+fprintf('\n')
+fprintf('    R2      F-value     P-Value   Sigma   \n')
+disp(stats)
+
 %%
 s = plot(EexRet);
 s.Color=[0.8500 0.3250 0.0980 0.15];
 hold on
 t = plot(pred * b);
-t.Color = [0 0.4470 0.7410]
+t.Color = [0 0.4470 0.7410];
 title({'Regression fit:';'$r^e_t = \alpha + \beta_1 rec_t + \beta_2 \left( p_t - c_t\right)+\beta_3 s_t + \varepsilon_t$'},'interpreter','latex','fontsize',14)
-legend('Series','Fitted')
+legend('Series','Fitted');
