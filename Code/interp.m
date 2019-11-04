@@ -1,21 +1,16 @@
 function [fofs indx] = interp(sv,x,fx)
+% ------------------------------------------------------------------------%
+% Interpolation procedure of s distribution                               %
+% sv -> vector of any values where f (s) is to be generated.              %
+% x -> vector of grid points of s. It must be monotonic.                  %
+% fx -> vector of current values of f (x) in the grid.                    %
+% Find local slope and intercept to use on% grid                          %
+% log (S) such that returns f (x) = a + b * x                             %
+% ------------------------------------------------------------------------%
 
-% Procedimento de interpolação da distribuição de s                       %
-%                                                                         %
-% sv -> vetor de valores quaisquer onde se quer gerar f(s).               %
-% x -> vetor de pontos do grid de s. Deve ser monotônico.                 %
-% fx -> vetor de valores atuais de f(x) no grid.                          %
-%                                                                         %
-% Acha a inclinação e o intercepto locais para ser usado sobre o grid de  %
-% log(S), de tal forma que retorne f(x) = a + b*x                         %
-% ----------------------------------------------------------------------- %
-
-if isempty(min(find(fx == 0))) == 0
-    
+if isempty(min(find(fx == 0))) == 0    
     fofs = 0*sv'; else
     T= size(x,1);
-    
-    % Algumas garantias sobre os inputs
     
     if x(2) < x(1)
         disp('O grid deve ser monótono e crescente');
@@ -41,10 +36,10 @@ if isempty(min(find(fx == 0))) == 0
     slope = cat(1,gradf(1),gradf);
     slope = cat(1,slope,gradf(T-1));
     
-    % Estamos interessados em achar o menor índice do vetor (sv(i)-x) de forma
-    % a obter um vetor indx que contenha estes índices e possamos organizar
-    % monotonicamente os vetores de slope e intercepto.
-    
+  % We are interested in finding the smallest vector index (sv (i) -x) so
+  % we get an index vector that contains these indexes and we can arrange
+  % monotonically the slope and intercept vectors.
+
     indx = zeros(size(sv,1),1);
     
     for i = 1 : size(sv,1)

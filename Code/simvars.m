@@ -27,9 +27,9 @@ if dc == 0
 else
     if min(dc) <= 0
         
-        disp('simvars: Você inseriu o log do crescimento do consumo.');
-        disp('Preciso que você insira os dados de crescimento do consumo ');
-        disp('bruto, isto é, nem log nem crescimento líquido.');
+        disp ('simvars: You entered the consumption growth log.');
+        disp ('You need to enter consumption growth data');
+        disp ('gross, ie neither log nor net growth.');
         
     end
     T = length(dc); lndctsim = log(dc); 

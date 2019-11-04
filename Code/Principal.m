@@ -1,6 +1,3 @@
-% A Model with external habits formation with time varying risk free rate
-% By Jivago Ximenes
-%% ECHO beginig
 clear all
 format long
 tic
@@ -10,11 +7,13 @@ method = 0; % Method: 0 Fixed point
             % Method: 1 Wachter 2005
             % Method: 2 comparative
 % Calibration Choice
-calib=2;    % 0 - b>0
+calib=5;    % 0 - b>0
             % 1 - b<0
             % 2 - Campbell Cochrane (1999)
             % 3 - Paper Wachter (2005)
             % 4 - Working Paper Verdelhan (2008)
+            % 5 - Krogh Jensen (2019)
+            
 %%
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rho seedval verd debug ann lnpca con
@@ -79,6 +78,19 @@ if calib == 4
     ann=1;
 end
 
+if calib == 5
+    Pars = Model_Calibration;
+    tsc = 12;
+    g = Pars.g/tsc;
+    sig = Pars.sigma/sqrt(tsc);
+    rf0 = Pars.rf/tsc;
+    phi=Pars.Phi^(1/tsc);
+    gamma=2;
+    B=0;
+    verd=0;
+    ann=0;
+end
+
 rho = (-1:.1:1);
 S_bar=sig*sqrt(gamma/(1-phi-B/gamma));
 s_bar = log(S_bar);
@@ -95,9 +107,9 @@ chk = 1;
 
 flag1 = 0; % Simulation flag
 flag2 = 1; % 1 Simulation of yearly data, 0 of quarterly
-con = 0;   % Se con = 0 usa rf interpolado na curva % calibrada.
+con = 0;   % Interpolation
 
-%% Criando o grid de log(S)
+%% Grid def
 sg = mkgrids(szgrid,0);
 S=exp(sg);
 
@@ -110,7 +122,8 @@ lnpca_pf=lnpca;
 
 %% Find Value of P/C, serial method
 if method == 1 || method == 2
-    [W_PC_ratio]=WfindFn(sig,sg); plot(S,W_PC_ratio/tsc,'k');
+    [W_PC_ratio]=WfindFn(sig,sg); 
+    plot(S,W_PC_ratio/tsc,'k');
     lnpca_s=log(W_PC_ratio);
     lnpca=lnpca_s;
 end
@@ -179,7 +192,7 @@ if method == 0 || method == 2
     Stdexrett_pf = std(exrett_pf); % SD excess log returns)
     Eexrettinterp_pf = mean(exrettinterp_pf);
     Stdexrettinterp_pf = std(exrettinterp_pf);
-    Ep_d_pf = mean(alnpctsim_pf); % Log consumption
+    Ep_d_pf = mean(alnpctsim_pf); % Log price consumption
     Stdp_d_pf = std(alnpctsim_pf); 
     
     table = zeros(13,1);
@@ -281,8 +294,8 @@ if method == 0 || method == 2
     %% 
     ts1 = struct();
     ts1.S_t           = astsim_pf;
-    ts1.DCRatio       = alndctsim_pf;
-    ts1.PCratio       = alnpctsim_pf;
+    ts1.deltac       = alndctsim_pf;
+    ts1.pcratio       = alnpctsim_pf;
     ts1.ExPostReturns = alnrtsim_pf;
     ts1.RiskFreeRate  = alnrfsim_pf;
     ts1.Prices        = alnchpsim_pf;
@@ -294,7 +307,8 @@ if method == 0 || method == 2
     %% Regression
     if con == 1
         for k=1:length(rho)
-            diff(:,k)=lnrfsim-lnrfsimx(:,k); regressor=cat(2,ones(length(diff(:,k)),1),diff(:,k));
+            diff(:,k)=lnrfsim-lnrfsimx(:,k);
+            regressor=cat(2,ones(length(diff(:,k)),1),diff(:,k));
             [betas interv]=regress(deltaq(:,k),regressor(1:length(regressor)-1,:));
             Betas_pf(k,1)=rho(k);
             Betas_pf(k,2)=betas(1,1);

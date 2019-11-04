@@ -17,12 +17,12 @@ if ann == 1
 else
     alnctsim = cumsum(lndctsim);    
     % Monthly logs
-   alnctsim = log(chgfreq(exp(alnctsim),tsc,tsc,0));
+    alnctsim = log(chgfreq(exp(alnctsim),tsc,tsc,0));
     alndctsim = alnctsim(2:size(alnctsim,1))-alnctsim(1:(size(alnctsim,1)- 1));
     
 end
 
-%% S_t
+%% s_t
 if T > 1
     astsim = chgfreq(stsim(2:T),1,tsc,0);
     astsim = astsim(2:size(astsim,1)); 
