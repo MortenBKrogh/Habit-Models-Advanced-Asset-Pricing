@@ -6,6 +6,7 @@ clear
 %------------------------------------------%
 %load('FULL_Workspace_Principal_run_03_11_2019_time_11_42.mat');
 load('Reduced_workspace.mat');
+%%
 %%% Consumption %%%
 % ln(C_t) or c_t
 ct = cumsum(alndctsim_pf);
@@ -17,6 +18,7 @@ dct = alndctsim_pf;
 st = astsim_pf;
 % S_t
 St = exp(astsim_pf);
+monthlyst = stsim;
 
 %%% Price/Consumption ratio %%%
 % ln(P_t/C_t) or p_t - c_t
@@ -25,6 +27,7 @@ pct = alnpctsim_pf;
 %%% Returns %%%
 % ln(R_t) or r_t
 rt = alnrtsim_pf;
+MonthlyExreturns = lnrtsim - Erf_pf^(12);
 
 %  std(r_t) or Volatility
 std_rt = asdlnrtsim_pf;
@@ -37,7 +40,7 @@ rft = alnrfsim_pf;
 % (p_t - c_t) - (p_(t-1) - c_(t-1)) + delta c_t
 pt = alnchpsim_pf;
 
-clearvars -except ct dct st pct rt std_rt rft pt s_max s_bar g Eexrett_pf Stdexrett_pf
+clearvars -except ct dct st pct rt std_rt rft pt s_max s_bar g Eexrett_pf Stdexrett_pf MonthlyExreturns monthlyst
 %%
 indicator_rec = NaN(size(st,1),1);
 for i=1:size(st,1)
@@ -85,16 +88,36 @@ t = plot(pred * b);
 t.Color = [0 0.4470 0.7410];
 title({'Regression fit:';'$r^e_t = \alpha + \beta_1 rec_t + \beta_2 \left( p_t - c_t\right)+\beta_3 s_t + \varepsilon_t$'},'interpreter','latex','fontsize',14)
 legend('Series','Fitted');
-%% Long horizon regressions:
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Long horizon regressions in quarters %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+tsc = 12;
+MonthlyExreturns = chgfreq(MonthlyExreturns,1,tsc,0);
 clear K_rt iter
-Horizons = [1 2 3 4 5 6 9 12 16];
-K_rt = NaN(size(rt,1), size(Horizons, 2));
-for h = [1 2 3 4 5 6 9 12 16]
+Horizons = [1 2 3 4 5 6 9 12 16 32 64];
+for h = Horizons
     if h == Horizons(1)
     iter = 1;
     end
-    for i = 1:(size(rt, 1)-h)
-        K_rt(i+h,iter) = sum(rt(i:i+h));
+    for i = 1:(size(MonthlyExreturns, 1)-h)
+        K_rt(i,iter) = sum(MonthlyExreturns(i:i+h));
     end
     iter = iter + 1;
 end
+%%
+%quarterlyst = monthlyst;
+quarterlyst = chgfreq(monthlyst,1,tsc,0);
+%%
+%K_rt = K_rt(2:end,:);
+No_Informational_beta = NaN(2, size(Horizons,2));
+for h = Horizons
+    if h==1
+        iter = 1;
+    end
+    [beta, CI, ~, ~, stats] = regress(K_rt(2:end-h,iter), [ones(size(quarterlyst(1:end-h-2),1), 1), quarterlyst(1:end-h-2)]);
+    No_Informational_beta(:,iter) = beta;
+    R2(:,iter) = stats(1);
+    iter = iter + 1;
+end
+%%
