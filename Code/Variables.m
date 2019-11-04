@@ -2,7 +2,8 @@
 %------------------------------------------%
 % Load workspace output from "Principal.m" %
 %------------------------------------------%
-load('FULL_Workspace_Principal_run_03_11_2019_time_11_42.mat');
+%load('FULL_Workspace_Principal_run_03_11_2019_time_11_42.mat');
+load('Reduced_workspace.mat');
 %%% Consumption %%%
 % ln(C_t) or c_t
 ct = cumsum(alndctsim_pf);
