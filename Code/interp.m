@@ -13,14 +13,14 @@ if isempty(min(find(fx == 0))) == 0
     T= size(x,1);
     
     if x(2) < x(1)
-        disp('O grid deve ser monótono e crescente');
+        disp('O grid deve ser mon?tono e crescente');
     end
     
     if size(sv,2) > 1 && size(sv,1) == 1 sv=sv';
         chk = 1;
         
     elseif size(sv,2) > 1 && size(sv,1) > 1
-        disp('ERRO: Vetor sv não pode ser uma matriz');
+        disp('ERRO: Vetor sv n?o pode ser uma matriz');
         
     elseif size(sv,2) == 1 && size(sv,1) > 1
         chk = 0;
@@ -38,7 +38,7 @@ if isempty(min(find(fx == 0))) == 0
     
   % We are interested in finding the smallest vector index (sv (i) -x) so
   % we get an index vector that contains these indexes and we can arrange
-  % monotonically the slope and intercept vectors.
+  % monotonically the slope and intercept vectors.
 
     indx = zeros(size(sv,1),1);
     
