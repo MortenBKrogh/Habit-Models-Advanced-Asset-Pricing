@@ -66,8 +66,10 @@ pred = [ ones(size(pct,1)-1,1) indicator_rec(1:end-1) pct(1:end-1) st(1:end-1)];
 EexRet = rt - rft;
 y = EexRet(2:end);
 [b, bstd, ~,~,stats] = regress(y,pred);
+fprintf(' Estimates on top, 95 percent conf interval below \n')
+fprintf('\n')
 fprintf('    Alpha     Beta1    Beta2      Beta3   \n')
-disp(cat(1, b', bstd))
+disp(cat(1, b', bstd'))
 fprintf('\n')
 fprintf('\n')
 fprintf('\n')
@@ -77,8 +79,17 @@ disp(stats)
 %%
 s = plot(EexRet);
 s.Color=[0.8500 0.3250 0.0980 0.15];
+%%
 hold on
 t = plot(pred * b);
 t.Color = [0 0.4470 0.7410];
 title({'Regression fit:';'$r^e_t = \alpha + \beta_1 rec_t + \beta_2 \left( p_t - c_t\right)+\beta_3 s_t + \varepsilon_t$'},'interpreter','latex','fontsize',14)
 legend('Series','Fitted');
+%% Long horizon regressions:
+for h = [1 2 3 4 5 6 9 12 16]
+    iter = 1;
+    iter = iter + 1;
+    for i = 1:size(rt, 1)
+        K_rt(i,iter) = sum(rt(i:i+h));
+    end
+end

@@ -79,8 +79,22 @@ disp(stats)
 %%
 s = plot(EexRet);
 s.Color=[0.8500 0.3250 0.0980 0.15];
+%%
 hold on
 t = plot(pred * b);
 t.Color = [0 0.4470 0.7410];
 title({'Regression fit:';'$r^e_t = \alpha + \beta_1 rec_t + \beta_2 \left( p_t - c_t\right)+\beta_3 s_t + \varepsilon_t$'},'interpreter','latex','fontsize',14)
 legend('Series','Fitted');
+%% Long horizon regressions:
+clear K_rt iter
+Horizons = [1 2 3 4 5 6 9 12 16];
+K_rt = NaN(size(rt,1), size(Horizons, 2));
+for h = [1 2 3 4 5 6 9 12 16]
+    if h == Horizons(1)
+    iter = 1;
+    end
+    for i = 1:(size(rt, 1)-h)
+        K_rt(i+h,iter) = sum(rt(i:i+h));
+    end
+    iter = iter + 1;
+end
