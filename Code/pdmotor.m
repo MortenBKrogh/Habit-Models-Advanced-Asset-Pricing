@@ -1,7 +1,7 @@
 function [inside] = pdmotor(v)
-% Procedimento para ser usado na integração numérica quando for se calcular 
-% o ponto fixo. Tem como argumento apenas v ~ N(0,sig). Retorna o VALOR de
-% P/C para cada iteração sobre o valor corrente de s{t} em cada iteração.
+% Procedure to be used for numeric integration when calculating
+% the fixed point. It has as argument only v ~ N (0, sig). Returns VALUE of
+% P / C for each iteration over the current value of s {t} in each iteration.
 % ----------------------------------------------------------------------- %
 global delta g gamma s sg lnpc debug
 s1=strans(s,v);

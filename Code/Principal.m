@@ -16,7 +16,7 @@ calib=5;    % 0 - b>0
             
 %%
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
-    bondsel rho seedval verd debug ann lnpca con
+    bondsel rhow seedval verd debug ann lnpca con sig_w lnpda
 % Initialization
 if calib == 0
     tsc = 4; % Interval 4 = quarter
@@ -86,9 +86,11 @@ if calib == 5
     rf0 = Pars.rf/tsc;
     phi=Pars.Phi^(1/tsc);
     gamma=2;
+    rhow = 0.2;
     B=0;
     verd=0;
     ann=0;
+    sig_w = Pars.sigma_w/sqrt(tsc);
 end
 
 rho = (-1:.1:1);
@@ -119,6 +121,14 @@ if method == 0 || method == 2
     plot(S,PC_ratio/tsc,'k'); % Annulized P/C-curve
 end
 lnpca_pf=lnpca;
+%% PD-ratio
+figure;
+if method == 0 || method == 2
+    [lnpda dtrindx]=findlpd(sig_w,g,s_bar);
+    PD_ratio=exp(lnpda);
+    plot(S,PD_ratio/tsc,'k'); % Annulized P/C-curve
+end
+lnpda_pf=lnpda;
 
 %% Find Value of P/C, serial method
 if method == 1 || method == 2
@@ -137,7 +147,7 @@ verd=0;
 % Fixed point method
 if method == 0 || method == 2
     [er_pf elnr_pf sdr_pf sdlnr_pf lnrf_pf lnrf1_pf lny_pf elnrcb_pf sdlnrcb_pf slpmv_pf] = finders(sg);
-end
+    end
 % Serial method
 if method == 1 || method == 2
     [er_s elnr_s sdr_s sdlnr_s lnrf_s lnrf1_s lny_s elnrcb_s sdlnrcb_s slpmv_s] = finders(sg);
