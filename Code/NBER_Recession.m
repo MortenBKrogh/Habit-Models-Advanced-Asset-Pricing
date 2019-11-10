@@ -42,32 +42,15 @@ rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss)
 rec_sim_2 = NaN(length(astsim_pf), 1);
 
 %%
+vec = s_emp_recession(s_bar, astsim_pf)
 
-res = @(s_bar) s_bar_match(s_bar, astsim_pf) - rec_emp_percentage
+p_rec = percentage(vec)
 
-options = optimoptions('lsqnonlin','Display','iter');
-lsqnonlin(@(s_bar_1) res(s_bar_1), -3, -4, -3, options)
+% finding value of s_bar that makes the amount of recessions mathc the
+% empirical amount of recessions. 
 
-
+res = @(s_bar, s, emp_rec) percentage(s_emp_recession(s_bar, s)) - emp_rec
 %%
-x0 = [-3];
-options = optimoptions('lsqnonlin','Display','iter');
-lsqnonlin(@(s_bar_1) s_bar_match(s_bar_1, rec_emp_percentage, astsim_pf), x0, -3, -5, options)
+fplot(@(s_bar) percentage(s_emp_recession(s_bar, astsim_pf)))
 %%
-% s_new around -3.193
-
-
-
-for i = 1:length(astsim_pf)
-   
-    if astsim_pf(i) < s_new
-        rec_sim_2(i) = 1;
-    else 
-        rec_sim_2(i) = 0;
-        
-    end
-    
-end
-
-rec_sim_2_percentage = sum(rec_sim_2(:)==1) / length(rec_sim_2)
-
+fplot(@(s_bar) res(s_bar, astsim_pf, rec_emp_percentage), [-15, 10])
