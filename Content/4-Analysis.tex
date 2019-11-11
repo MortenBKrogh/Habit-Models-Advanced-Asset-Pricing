@@ -1,1 +1,44 @@
 \section{Analysis} \label{sec:Analysis}
+    \subsubsection{Calibrated Model}
+\begin{table}[H]
+\centering
+\begin{threeparttable}[b]
+\caption{Parameters of the model}
+\label{tab:ModelCalib}
+\begin{tabular}{@{}ll@{\hspace{1.5cm}}ll@{}}
+\toprule
+ & Parameter                              & Notation         & Value    \\ \midrule 
+\multicolumn{4}{l}{\textit{Calibrated}}                                 \\
+ & Mean consumption growth                & $g$              & $0.0134$ \\
+ & Standard deviation of $\Delta c_t$     & $\sigma$         & $0.0152$ \\
+ & Standard deviation of $\Delta d_t$     & $\sigma_w$       & $0.2544$ \\
+ & Log risk-free rate                     & $r^f$            & $0.0109$ \\
+ & Persistence parameter                  & $\phi$           & $0.9008$ \\
+ \multicolumn{4}{l}{\textit{Assumed}}                                   \\
+ & Coefficient of Risk Aversion           & $\gamma$         & $2.0000$ \\
+ & Correlation dividends/consumption      & $\rho$           & $0.2000$ \\
+\multicolumn{4}{l}{\textit{Implied}}                                    \\
+ & Subjective discount factor             & $\delta$         & $0.9156$ \\
+ & Steady-state surplus consumption ratio & $\Bar{S}$        & $0.0666$ \\
+ & Maximum surplus consumption ratio      & $S_{\text{max}}$ & $0.1096$ \\ \bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize{\item [1] All relevant parameters are annualized
+              \item [2] Calibrated parameters are estimated from data, assumed are chosen arbitrarily on the grounds of existing literature, while implied parameters are calculated from the calibrated/assumed parameters.}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+Compared to the calibration of \citet{Campbell1999}, our calibration suggests a higher persistence parameter, significantly higher volatility of dividend growth and lower consumption growth, the implied surplus consumption parameters suggests a slightly higher overall surplus consumption.
+
+\begin{table}[]
+\centering
+\caption{Data Properties}
+\label{tab:Data_props}
+\begin{tabular}{@{}l@{\hspace{1.5cm}}l@{\hspace{1.5cm}}l@{}}
+\toprule
+ & \textit{Simulated} & \textit{Historic} \\ \midrule
+$\mathbb{E}\left[r_t- r^f_t\right]$& $0.0373$           & $0.0927$          \\
+$\sigma\left(r_t - r^f_t  \right)$ & $0.0962$           & $0.1670$          \\
+$\mathbb{E}\left[r_t- r^f_t\right] / \sigma\left(r_t - r^f_t,\right)$ & $0.3877$ & $0.5548$  \\ \bottomrule
+\end{tabular}
+\end{table}

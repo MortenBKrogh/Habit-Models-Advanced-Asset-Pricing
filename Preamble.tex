@@ -7,6 +7,7 @@
 \usepackage{marginnote,datetime,enumitem,subfigure,rotating,fancyvrb}
 \usepackage{hyperref,float}
 \usepackage{natbib}
+
 \usdate
 
 % These next lines allow including or excluding different versions of text
@@ -60,8 +61,8 @@
 \usepackage{indentfirst} % Indent first sentence of a new section.
 \usepackage{endnotes}    % Use endnotes instead of footnotes
 \usepackage{jf}          % JF-specific formatting of sections, etc.
-\usepackage[labelfont=bf,labelsep=period]{caption}   % Format figure captions
-\captionsetup[table]{labelsep=none}
+\usepackage[labelfont=sc,labelsep=period]{caption}   % Format figure captions
+\captionsetup[table]{labelsep=newline}
 
 % Define theorem-like commands and a few random function names.
 \newtheorem{condition}{CONDITION}
@@ -71,5 +72,5 @@
 \newcommand{\argmax}{\mathop{\rm arg\,max}}
 \newcommand{\sign}{\mathop{\rm sign}}
 \newcommand{\defeq}{\stackrel{\rm def}{=}}
-
+\usepackage{threeparttable}
 \usepackage{lipsum}
