@@ -2,17 +2,14 @@ clear all
 format long
 tic
 %% 
-% Choice of method
-method = 0; % Method: 0 Fixed point
-            % Method: 1 Wachter 2005
-            % Method: 2 comparative
 % Calibration Choice
-calib=2;    % 1 - Campbell Cochrane (1999)
-            % 2 - Krogh Jensen (2019)
+calib=2;    % 1 - Campbell & Cochrane (1999)
+            % 2 - Krogh & Jensen (2019)
             
 %%
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rhow seedval verd debug ann lnpca con sig_w lnpda PD_Claim
+
 % Initialization
 
 if calib == 1
@@ -27,11 +24,11 @@ if calib == 1
     ann=0;
     sig_w = 0.112/sqrt(tsc);
     rhow = 0.2;
-    PD_Claim = 1; % 1 = PD_claim % 0 = PC_Claim
+    PD_Claim_init = 1; % 1 = PD_claim % 0 = PC_Claim
 end
 
 if calib == 2
-    Pars = Model_Calibration;
+    Pars = Model_Calibration; % Change to Krogh_Jensen_Calibration also file name..
     tsc = 12;
     g = Pars.g/tsc;
     sig = Pars.sigma/sqrt(tsc);
@@ -43,9 +40,11 @@ if calib == 2
     verd=0;
     ann=0;
     sig_w = Pars.sigma_w/sqrt(tsc);
-    PD_Claim = 1; % 1 = PD_claim % 0 = PC_Claim
+    PD_Claim_init = 1; % 1 = PD_claim % 0 = PC_Claim
 
 end
+
+PD_Claim = PD_Claim_init;
 
 rho = (-1:.1:1);
 S_bar=sig*sqrt(gamma/(1-phi-B/gamma));
@@ -69,36 +68,28 @@ con = 0;   % Interpolation
 sg = mkgrids(szgrid,0);
 S=exp(sg);
 
-if method == 0 || method == 2
+%% PD- & PC-ratio
+
+PD_Claim = 0; % 1 = PD_claim % 0 = PC_Claim
+    
+    figure;
     [lnpca ctrindx]=findlpc(sig,g,s_bar);
     PC_ratio=exp(lnpca);
-    plot(S,PC_ratio/tsc,'k'); % Annulized P/C-curve
-end
-lnpca_pf=lnpca;
-%% PD-ratio
-figure;
-if method == 0 || method == 2
-    [lnpda dtrindx]=findlpd(sig,g,s_bar);
+    lnpca_pf=lnpca;
+    plot(S,PC_ratio/tsc,'red'); % Annulized P/C-curve
+    hold on;
+    
+PD_Claim = 1; % 1 = PD_claim % 0 = PC_Claim    
+
+    [lnpda dtrindx]=findlpc(sig,g,s_bar);
     PD_ratio=exp(lnpda);
     plot(S,PD_ratio/tsc,'blue'); % Annulized P/C-curve
-    hold on
-    plot(S,PC_ratio/tsc,'red'); % Annulized P/C-curve
-    
-    legend('PD-Ratio', 'PC-Ratio')
-end
-lnpda_pf=lnpda;
+    legend('PC-Ratio', 'PD-Ratio')
+    hold off;
+    lnpda_pf=lnpda;
 
-%% Find Value of P/C, serial method
-if method == 1 || method == 2
-    [W_PC_ratio]=WfindFn(sig,sg); 
-    plot(S,W_PC_ratio/tsc,'k');
-    lnpca_s=log(W_PC_ratio);
-    lnpca=lnpca_s;
-end
-% Comparative method
-if method == 2
-    plot(S,W_PC_ratio/tsc,'r',S,PC_ratio/tsc,'g'); legend('Series method','Fixed-point method',2); xlabel('Consumption surplus ratio (S{t})'); ylabel('Price-consumption ratio (P{t}/C{t})'); comp=max(abs((W_PC_ratio-PC_ratio)./PC_ratio));
-end
+% reset PD_Claim to initial value we only changed it to make the plot
+PD_Claim = PD_Claim_init;
 
 %% Find expected returns and conditional deviations of consumption clain
 verd=0;
