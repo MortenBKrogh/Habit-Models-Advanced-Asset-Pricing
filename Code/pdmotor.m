@@ -5,7 +5,7 @@ function [inside] = pdmotor(v)
 % ----------------------------------------------------------------------- %
 global delta g gamma s sg lnpc debug
 s1=strans(s,v);
-inside = delta*exp(g*(1-gamma))*exp(-gamma*(s1-s)).*...
+inside = delta * exp(g*(1-gamma))*exp(-gamma*(s1-s)).*...
 (1+exp(interp(s1,sg,lnpc)))'.*exp((1-gamma)*v);
 debug(:,2)=inside';
 end

@@ -7,7 +7,7 @@ method = 0; % Method: 0 Fixed point
             % Method: 1 Wachter 2005
             % Method: 2 comparative
 % Calibration Choice
-calib=5;    % 0 - b>0
+calib=2;    % 0 - b>0
             % 1 - b<0
             % 2 - Campbell Cochrane (1999)
             % 3 - Paper Wachter (2005)
@@ -130,7 +130,8 @@ if method == 0 || method == 2
     PD_ratio=exp(lnpda);
     plot(S,PD_ratio/tsc,'blue'); % Annulized P/C-curve
     hold on
-    plot(S,PC_ratio/tsc,'red'); % Annulized P/C-curve
+    plot(S,PC_ratio/tsc,'red'); % Annulized P/C-curveclc
+    
     legend('PD-Ratio', 'PC-Ratio')
 end
 lnpda_pf=lnpda;
