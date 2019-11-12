@@ -176,7 +176,7 @@ if PD_Claim == 1
     PD_Claim_Sim_mom.StdPriceDividend = Stdp_d_pf;
     PD_Claim_Sim_mom.S_max = S_max;
     PD_Claim_Sim_mom.S_bar = S_bar;
-    PD_Claim_Sim_mom.delta = delta^tsc;
+    
     PD_Claim_Sim_mom = struct2table(PD_Claim_Sim_mom);
     writetable(PD_Claim_Sim_mom)
 else
