@@ -7,5 +7,14 @@ subplot(2,1,2)
 scatter(alnrtsim_pf*1e2,alndctsim_pf*1e2);title("Annual Returns vs. consumption growth");
 
 %% Stationary Density 
+warning('off','all'); % fplot doest like the integral functions
 figure;
-fplot(@q_s, [min(log(S)) s_max]);title('Stationary Distribution of s')
+fplot(@q_s, [min(log(S)+3) s_max]);title('Stationary Distribution of s')
+warning('on','all');
+%%
+figure;
+plot(S,PC_ratio/tsc,'red');title("PC vs. PD"); % Annulized P/C-curve
+hold on;
+plot(S,PD_ratio/tsc,'blue'); % Annulized P/D-curve
+legend('PC-Ratio', 'PD-Ratio')
+hold off;

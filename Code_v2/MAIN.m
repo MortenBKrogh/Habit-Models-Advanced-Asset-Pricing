@@ -18,6 +18,9 @@ calib=1;      % 0 - Campbell & Cochrane (1999)
 % Solution method:
 PD_Claim = 0; % 0 = Price Consumption Claim
               % 1 = Price Dividend Claim
+% Plots
+Plots = 0;    % 0 = off
+              % 1 = on
 %% Initialization
 if calib == 0
     tsc = 12;
@@ -73,21 +76,14 @@ sg = mkgrids(szgrid,0);
 S=exp(sg);
 
 %% PD- & PC-ratio
-
 PD_Claim = 0;
-figure;
 [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
 PC_ratio=exp(output_lnpca);
 lnpca_pf=output_lnpca;
-plot(S,PC_ratio/tsc,'red'); % Annulized P/C-curve
-hold on;
 
 PD_Claim = 1;
 [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
 PD_ratio=exp(output_lnpda);
-plot(S,PD_ratio/tsc,'blue'); % Annulized P/D-curve
-legend('PC-Ratio', 'PD-Ratio')
-hold off;
 lnpda_pf=output_lnpda;
 
 % reset PD_Claim to initial value we only changed it to make the plot
@@ -245,7 +241,7 @@ idx_from = find(NBER_REC.textdata(:,1)==string(from)) - 1;
 idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
 
 % Calculate percentage of the time the economy is in recession
-rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1))
+rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1));
 % define recession dummey as when s_t < s_bar
 rec_sim_ss = NaN(length(astsim_pf), 1);
 for i = 1:length(astsim_pf)
@@ -255,7 +251,7 @@ for i = 1:length(astsim_pf)
         rec_sim_ss(i) = 0;
     end
 end
-rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss)
+rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss);
 %% Matching the empirical density
 Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.9);
 %% Redefining recession periods in the simulation
@@ -271,6 +267,9 @@ for i = 1:length(astsim_pf)
     end
 end
 %% Finish
+if Plots == 1
+    Figures_CC1998;
+end
 load gong
 audioplayer(y,Fs);
 play(ans)
