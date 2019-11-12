@@ -1,6 +1,11 @@
 clear all
 format long
 tic
+
+addpath('Functions');
+addpath('Data');
+addpath('Workspaces');
+addpath('Calibration');
 %% 
 % Calibration Choice
 calib=2;    % 1 - Campbell & Cochrane (1999)
@@ -24,11 +29,11 @@ if calib == 1
     ann=0;
     sig_w = 0.112/sqrt(tsc);
     rhow = 0.2;
-    PD_Claim = 1; % 1 = PD_claim % 0 = PC_Claim
+    PD_Claim = 0; % 1 = PD_claim % 0 = PC_Claim
 end
 
 if calib == 2
-    Pars = Model_Calibration; % Change to Krogh_Jensen_Calibration also file name..
+    Pars = Krogh_Jensen_Calibration; % Change to Krogh_Jensen_Calibration also file name..
     tsc = 12;
     g = Pars.g/tsc;
     sig = Pars.sigma/sqrt(tsc);
@@ -40,7 +45,7 @@ if calib == 2
     verd=0;
     ann=0;
     sig_w = Pars.sigma_w/sqrt(tsc);
-    PD_Claim = 1; % 1 = PD_claim % 0 = PC_Claim
+    PD_Claim = 0; % 1 = PD_claim % 0 = PC_Claim
 
 end
 
@@ -185,11 +190,46 @@ randn('seed',seedval);
     ts1.Prices        = alnchpsim_pf;
     ts1.stdReturns    = asdlnrtsim_pf;
     ts1 = struct2table(ts1);
-    writetable(ts1)
+    %writetable(ts1)
     %% Real FX-rates
     deltaq = log(SDFx) - kron(ones(1,size(SDFx,2)),log(SDFus));
+
+%% Construction of Indicator of recession
+
+% Load NBER Recession data from 1854-12-01 to 2019-10-01
+% The USREC.csv is monthly observed.
+% For updated data see
+
+NBER_REC = importdata('USREC.csv');
+
+% Define period yyyy-mm-dd
+from = '1950-01-01';
+to   = '2018-12-01';
+
+% find indexes
+idx_from = find(NBER_REC.textdata(:,1)==string(from)) - 1;
+idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
+
+% Calculate percentage of the time the economy is in recession
+rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1))
+
+% define recession dummey as when s_t < s_bar
+rec_sim_ss = NaN(length(astsim_pf), 1);
+
+for i = 1:length(astsim_pf)
+   
+    if astsim_pf(i) < s_bar
+        rec_sim_ss(i) = 1;
+    else 
+        rec_sim_ss(i) = 0;
+        
+    end
     
-%% Regression Here we will do our own regression
+end
+rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss)
+
+    
+%% Regression
    
     
     load gong
