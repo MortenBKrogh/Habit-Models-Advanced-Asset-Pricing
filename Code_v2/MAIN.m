@@ -164,30 +164,36 @@ table(12,1)= S_bar;
 table(13,1)= delta^tsc;
 if PD_Claim == 1
     PD_Claim_Sim_mom = struct();
-    PD_Claim_Sim_mom.MeanConsGrowth           = Edc_pf;
+    PD_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
     PD_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
-    PD_Claim_Sim_mom.MeanRiskFreeRate       = Erf_pf;
-    PD_Claim_Sim_mom.StdRiskFreeRate = Stdrf_pf;
-    PD_Claim_Sim_mom.logSharperatio  = Shpr_pf;
-    PD_Claim_Sim_mom.Sharperatio        = ShpR_pf;
+    PD_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
+    PD_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
+    PD_Claim_Sim_mom.logSharperatio       = Shpr_pf;
+    PD_Claim_Sim_mom.Sharperatio          = ShpR_pf;
     PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PD_Claim_Sim_mom.StdExcessReturns    = Stdexrett_pf;
-    PD_Claim_Sim_mom.MeanPriceDividend = Ep_d_pf;
-    PD_Claim_Sim_mom.StdPriceDividend = Stdp_d_pf;
-    PD_Claim_Sim_mom.S_max = S_max;
-    PD_Claim_Sim_mom.S_bar = S_bar;
-    PD_Claim_Sim_mom.delta = delta^tsc;
+    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PD_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
+    PD_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
+    PD_Claim_Sim_mom.S_max                = S_max;
+    PD_Claim_Sim_mom.S_bar                = S_bar;
+    PD_Claim_Sim_mom.delta                = delta^tsc;
     PD_Claim_Sim_mom = struct2table(PD_Claim_Sim_mom);
     writetable(PD_Claim_Sim_mom)
 else
     PC_Claim_Sim_mom = struct();
-    PC_Claim_Sim_mom.S_t           = astsim_pf;
-    PC_Claim_Sim_mom.deltac        = alndctsim_pf;
-    PC_Claim_Sim_mom.pcratio       = alnpctsim_pf;
-    PC_Claim_Sim_mom.ExPostReturns = alnrtsim_pf;
-    PC_Claim_Sim_mom.RiskFreeRate  = alnrfsim_pf;
-    PC_Claim_Sim_mom.Prices        = alnchpsim_pf;
-    PC_Claim_Sim_mom.stdReturns    = asdlnrtsim_pf;
+    PC_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
+    PC_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
+    PC_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
+    PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
+    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf;
+    PC_Claim_Sim_mom.Sharperatio          = ShpR_pf;
+    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
+    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PC_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
+    PC_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
+    PC_Claim_Sim_mom.S_max                = S_max;
+    PC_Claim_Sim_mom.S_bar                = S_bar;
+    PC_Claim_Sim_mom.delta                = delta^tsc;
     PC_Claim_Sim_mom = struct2table(PC_Claim_Sim_mom);
     writetable(PC_Claim_Sim_mom)
 end
