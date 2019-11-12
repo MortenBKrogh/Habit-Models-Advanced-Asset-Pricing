@@ -1,0 +1,20 @@
+%% Figures
+% Figure 7 in CC1998
+figure;
+subplot(2,1,1)
+scatter(lnrtsim*1e2,lndctsim*1e2);title("Monthly Returns vs. consumption growth");
+subplot(2,1,2)
+scatter(alnrtsim_pf*1e2,alndctsim_pf*1e2);title("Annual Returns vs. consumption growth");
+
+%% Stationary Density 
+figure;
+fplot(@q_s, [min(log(S)) s_max]);title('Stationary Distribution of s')
+%% Matching the empirical density 
+% Cochrane Campbell Calibration
+% 0.134057971014493 <- empirical
+integral(@q_s,-Inf,s_max); 
+newSbar = s_max-0.97552;
+%%
+lsqnonlin(@(x) (integral(@q_s,-Inf,x) - 0.134057971014493),)
+%%
+q_s(ans)

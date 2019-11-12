@@ -9,6 +9,3 @@ scatter(alnrtsim_pf*1e2,alndctsim_pf*1e2);title("Annual Returns vs. consumption 
 %% Stationary Density 
 figure;
 fplot(@q_s, [min(log(S)) s_max]);title('Stationary Distribution of s')
-%%
-syms s
-S = vpasolve(q_s(s) == 0.4, s)
