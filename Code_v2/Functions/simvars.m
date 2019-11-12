@@ -15,13 +15,17 @@ function [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim.
 % - Bonds                                                                 %
 %                                                                         %
 
-global ncalc gamma sig g phi delta s_max s_bar sg maxcb tsc bondsel
+global ncalc gamma sig sig_w g phi delta s_max s_bar sg maxcb tsc bondsel...
+    PD_Claim
+
 %% initialization
 if dc == 0 
     T=ncalc;           
-    
+    if PD_Claim == 0
     vtsim = sig*randn(T,1);
-    
+    else
+    vtsim = sig_w*randn(T,1);
+    end
     lndctsim = g + vtsim;
 
 else

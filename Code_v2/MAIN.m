@@ -11,7 +11,7 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 
 %% Choices for solution methods
 % Calibration Choice
-calib=1;      % 0 - Campbell & Cochrane (1999)
+calib=0;      % 0 - Campbell & Cochrane (1999)
               % 1 - Krogh & Jensen (2019)
 % Solving method:
 PD_Claim = 0; % 0 = Price Consumption Claim
@@ -161,7 +161,6 @@ table(11,1)= S_max;
 table(12,1)= S_bar;
 table(13,1)= delta^tsc;
 %% SDF Simulation
-
 randn('seed',seedval);
 [stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
     sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
@@ -173,7 +172,7 @@ SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim
 if PD_Claim == 1
     PD_Claim_Sim_dat = struct();
     PD_Claim_Sim_dat.S_t           = astsim_pf;
-    PD_Claim_Sim_dat.deltac         = alndctsim_pf;
+    PD_Claim_Sim_dat.deltac        = alndctsim_pf;
     PD_Claim_Sim_dat.pcratio       = alnpctsim_pf;
     PD_Claim_Sim_dat.ExPostReturns = alnrtsim_pf;
     PD_Claim_Sim_dat.RiskFreeRate  = alnrfsim_pf;
@@ -184,7 +183,7 @@ if PD_Claim == 1
 else
     PC_Claim_Sim_dat = struct();
     PC_Claim_Sim_dat.S_t           = astsim_pf;
-    PC_Claim_Sim_dat.deltac       = alndctsim_pf;
+    PC_Claim_Sim_dat.deltac        = alndctsim_pf;
     PC_Claim_Sim_dat.pcratio       = alnpctsim_pf;
     PC_Claim_Sim_dat.ExPostReturns = alnrtsim_pf;
     PC_Claim_Sim_dat.RiskFreeRate  = alnrfsim_pf;
