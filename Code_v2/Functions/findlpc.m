@@ -10,8 +10,8 @@ ctrindx = find(sg == s_bar);
 else
 disp ('ERROR: The stationary value of log (S) is not in the grid');
 end
-%% Function value vectors P / C
-lnpca = zeros(size(sg,1),1); % We are starting with P/C = 1
+%% Function value vectors P / C or P / D
+lnpca = zeros(size(sg,1),1); % We are starting with PC or PD = 1
 lnpc = lnpca;
 newlnpc = lnpc;
 %% Loop: find ln (P / C) from the grid of s

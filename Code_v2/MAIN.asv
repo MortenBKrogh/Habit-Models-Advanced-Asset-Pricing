@@ -173,7 +173,7 @@ SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim
 if PD_Claim == 1
     PD_Claim_Sim_dat = struct();
     PD_Claim_Sim_dat.S_t           = astsim_pf;
-    PD_Claim_Sim_dat.deltac         = alndctsim_pf;
+    PD_Claim_Sim_dat.deltac        = alndctsim_pf;
     PD_Claim_Sim_dat.pcratio       = alnpctsim_pf;
     PD_Claim_Sim_dat.ExPostReturns = alnrtsim_pf;
     PD_Claim_Sim_dat.RiskFreeRate  = alnrfsim_pf;

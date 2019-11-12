@@ -61,4 +61,3 @@ Coefficients.sigma_w = sigma_w;
 %%% Annual Data on returns yields a sigma_w f .25544 or 25.54%         %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clearvars -except Coefficients
-Coefficients
