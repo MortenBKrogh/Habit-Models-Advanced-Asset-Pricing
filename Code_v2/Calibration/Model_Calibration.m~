@@ -60,5 +60,7 @@ DiffDiv = diff(LogDivs)./3;
 sigma_w = std(DiffDiv)*sqrt(12);
 Coefficients.sigma_w = sigma_w;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Quarterly Data on returns yields a sigma_w f .1849 or 18.49%       %%%
+%%% Annual Data on returns yields a sigma_w f .25544 or 25.54%         %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Coefficients
