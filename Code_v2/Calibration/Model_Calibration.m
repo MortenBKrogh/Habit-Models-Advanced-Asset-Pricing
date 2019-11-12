@@ -53,12 +53,12 @@ clearvars -except Coefficients
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Standard deviation of dividend growth
 RetAM = importdata('All_returns_market_Quart.csv');
-RetAM = RetAM.data(1:190,[2 3]);
+RetAM = RetAM.data(:,[2 3]);
 Divs = (RetAM(:,1) - RetAM(:,2));
 LogDivs = log(Divs);
 DiffDiv = diff(LogDivs)./3;
 sigma_w = std(DiffDiv)*sqrt(12);
 Coefficients.sigma_w = sigma_w;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Quarterly Data on returns yields a sigma_w f .1849 or 18.49%       %%%
+%%% Quarterly Data on returns yields a sigma_w f .1777 or 17.77%       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

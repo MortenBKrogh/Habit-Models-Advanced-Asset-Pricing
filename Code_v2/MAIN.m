@@ -34,7 +34,7 @@ if calib == 0
 end
 
 if calib == 1
-    Pars = Krogh_Jensen_Calibration;
+    Pars = Model_Calibration;
     tsc = 12;
     g = Pars.g/tsc;
     sig = Pars.sigma/sqrt(tsc);
