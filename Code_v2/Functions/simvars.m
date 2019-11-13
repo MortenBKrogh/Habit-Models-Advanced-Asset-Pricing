@@ -22,8 +22,8 @@ global ncalc gamma sig sig_w g phi delta s_max s_bar sg maxcb tsc bondsel...
 if dc == 0 
     T=ncalc;
     vtsim = sig*randn(T,1);
-    wtsim = rhow * sig_w / sig * vtsim + sig_w*(1 - rhow ^2) ^ 0.5 * randn(T,1);
-    if PD_Claim == 0;
+    wtsim = rhow * sig_w / sig * vtsim + sig_w * (1 - rhow ^2) ^ 0.5 * randn(T,1);
+    if PD_Claim == 0
         lndctsim = g + vtsim;
     else
         lndctsim = g + wtsim;
@@ -46,18 +46,24 @@ stsim = zeros(T+1,1);
 
 stsim(1) = s_bar;           % Starting the process at SS
 
-for i=2:T+1
-    if strans(stsim(i-1),vtsim(i-1)) <= s_max
-        
-        stsim(i) = strans(stsim(i-1),vtsim(i-1));
-        
-    else
-        stsim(i)=(1-phi)*s_bar+phi*stsim(i-1);
+if PD_Claim == 0
+    for i=2:T+1
+        if strans(stsim(i-1),vtsim(i-1)) <= s_max
+            stsim(i) = strans(stsim(i-1),vtsim(i-1));
+        else
+            stsim(i)=(1-phi)*s_bar+phi*stsim(i-1);
+        end
+    end
+else
+    for i=2:T+1
+        if strans(stsim(i-1),wtsim(i-1)) <= s_max
+            stsim(i) = strans(stsim(i-1),vtsim(i-1));
+        else
+            stsim(i)=(1-phi)*s_bar+phi*stsim(i-1);
+        end
     end
 end
-
 %% PC ratio                                           % 
-
 lnpctsim = interp(stsim,sg,lnpca)';
 
 %% ex-post Returns                                                        %

@@ -154,8 +154,8 @@ if PD_Claim == 0
     PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
     PC_Claim_Sim_mom.logSharperatio       = Shpr_pf*2;
     PC_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf*400;
-    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf*200;
+    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
+    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
     PC_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PC_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PC_Claim_Sim_mom.S_max                = S_max;
@@ -165,14 +165,14 @@ if PD_Claim == 0
     writetable(PC_Claim_Sim_mom)
 elseif PD_Claim == 1
     PD_Claim_Sim_mom = struct();
-    PD_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
-    PD_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
+    PD_Claim_Sim_mom.MeanDivGrowth       = Edc_pf;
+    PD_Claim_Sim_mom.StdDivGrowth        = Stdc_pf;
     PD_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
     PD_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
     PD_Claim_Sim_mom.logSharperatio       = Shpr_pf*2;
     PD_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf*400;
-    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf*200;
+    PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
+    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
     PD_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PD_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PD_Claim_Sim_mom.S_max                = S_max;
