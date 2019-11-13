@@ -16,18 +16,18 @@ function [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim.
 %                                                                         %
 
 global ncalc gamma sig sig_w g phi delta s_max s_bar sg maxcb tsc bondsel...
-    PD_Claim
+    PD_Claim rhow g
 
 %% initialization
 if dc == 0 
-    T=ncalc;           
-    if PD_Claim == 0
+    T=ncalc;
     vtsim = sig*randn(T,1);
+    wtsim = rhow * sig_w / sig * vtsim + sig_w*(1 - rhow ^2) ^ 0.5 * randn(T,1);
+    if PD_Claim == 0;
+        lndctsim = g + vtsim;
     else
-    vtsim = sig_w*randn(T,1);
+        lndctsim = g + wtsim;
     end
-    lndctsim = g + vtsim;
-
 else
     if min(dc) <= 0
         
@@ -36,8 +36,8 @@ else
         disp ('gross, ie neither log nor net growth.');
         
     end
-    T = length(dc); lndctsim = log(dc); 
-    vtsim = lndctsim - g; 
+    T = length(dc);
+    lndctsim = log(dc); 
 end
 
 %% Simulation of log(S_t)
@@ -64,9 +64,12 @@ lnpctsim = interp(stsim,sg,lnpca)';
 %                                                                         % 
 %                        R = (C'/C){(1+(P/C)')/(P/C)}                     % 
 % ----------------------------------------------------------------------- %
-
+if PD_Claim == 0
 lnrtsim = log(1+exp(lnpctsim(2:T+1))) - lnpctsim(1:T) + lndctsim;
-
+else
+lnrdtb =ln( 1+exp(lnpctsim(2:T+1)) ) - lnpctsim(1:T) + wtsim;
+end
+    %%
 %% potential time varying RF-rate
 
 lnrfsim = -log(delta) + gamma*g - gamma*(1-phi)*(stsim-s_bar)... 
