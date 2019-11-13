@@ -59,7 +59,7 @@ Divs = (RetAM(:,1) - RetAM(:,2));
 DiffDiv = Divs(2:end)./Divs(1:end-1) /3;
 % DiffDiv = diff(LogDivs)./3;
 sigma_w = std(DiffDiv)*sqrt(12);
-Coefficients.sigma_w = sigma_w
+Coefficients.sigma_w = sigma_w;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Quarterly Data on returns yields a sigma_w f .1777 or 17.77%       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
