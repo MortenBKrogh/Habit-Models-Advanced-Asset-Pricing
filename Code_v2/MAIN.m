@@ -291,6 +291,7 @@ reg = nwest(y,x,0)
 plot(y)
 hold on;
 plot(reg.yhat)
+
 %%
 load gong
 audioplayer(y,Fs);
