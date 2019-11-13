@@ -67,7 +67,7 @@ lnpctsim = interp(stsim,sg,lnpca)';
 if PD_Claim == 0
 lnrtsim = log(1+exp(lnpctsim(2:T+1))) - lnpctsim(1:T) + lndctsim;
 else
-lnrdtb =ln( 1+exp(lnpctsim(2:T+1)) ) - lnpctsim(1:T) + wtsim;
+lnrtsim =log( 1+exp(lnpctsim(2:T+1)) ) - lnpctsim(1:T) + wtsim;
 end
     %%
 %% potential time varying RF-rate
