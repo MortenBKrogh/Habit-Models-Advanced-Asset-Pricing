@@ -51,7 +51,7 @@ if calib == 1
     sig_w = Pars.sigma_w/sqrt(tsc);
 end
 
-PD_Claim_init = PD_Claim;
+% PD_Claim_init = PD_Claim;
 rho = (-1:.1:1);
 
 S_bar=sig*sqrt(gamma/(1-phi-B/gamma));
@@ -76,24 +76,24 @@ sg = mkgrids(szgrid,0);
 S=exp(sg);
 
 %% PD- & PC-ratio
- PD_Claim = 0;
- [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
- PC_ratio=exp(output_lnpca); 
- lnpca_pf=output_lnpca;
+% PD_Claim = 0;
+% [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
+% PC_ratio=exp(output_lnpca);
+% lnpca_pf=output_lnpca;
 
- PD_Claim = 1;
- [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
- PD_ratio=exp(output_lnpda);
- lnpda_pf=output_lnpda;
+% PD_Claim = 1;
+% [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
+% PD_ratio=exp(output_lnpda);
+% lnpda_pf=output_lnpda;
 
 % reset PD_Claim to initial value we only changed it to make the plot
- PD_Claim = PD_Claim_init;
+% PD_Claim = PD_Claim_init;
 
 if PD_Claim == 0
-    [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
+    [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
     lnpca = output_lnpca;
 elseif PD_Claim == 1
-    [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
+    [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
     lnpca = output_lnpda;
 end
 
@@ -161,23 +161,6 @@ table(11,1)= S_max;
 table(12,1)= S_bar;
 table(13,1)= delta^tsc;
 if PD_Claim == 0
-    PC_Claim_Sim_mom = struct();
-    PC_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
-    PC_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
-    PC_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
-    PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf;
-    PC_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
-    PC_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
-    PC_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
-    PC_Claim_Sim_mom.S_max                = S_max;
-    PC_Claim_Sim_mom.S_bar                = S_bar;
-    PC_Claim_Sim_mom.delta                = delta^tsc;
-    PC_Claim_Sim_mom = struct2table(PC_Claim_Sim_mom);
-    writetable(PC_Claim_Sim_mom)
-elseif PD_Claim == 1
     PD_Claim_Sim_mom = struct();
     PD_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
     PD_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
@@ -194,6 +177,7 @@ elseif PD_Claim == 1
     PD_Claim_Sim_mom.delta                = delta^tsc;
     PD_Claim_Sim_mom = struct2table(PD_Claim_Sim_mom);
     writetable(PD_Claim_Sim_mom)
+else
 
 end
 %% SDF Simulation
@@ -205,18 +189,7 @@ randn('seed',seedval);
 SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim))...
     -stsim(1:length(stsim)-1)));
 %% Data Table
-if PD_Claim == 0
-    PC_Claim_Sim_dat = struct();
-    PC_Claim_Sim_dat.S_t           = astsim_pf;
-    PC_Claim_Sim_dat.deltac        = alndctsim_pf;
-    PC_Claim_Sim_dat.pcratio       = alnpctsim_pf;
-    PC_Claim_Sim_dat.ExPostReturns = alnrtsim_pf;
-    PC_Claim_Sim_dat.RiskFreeRate  = alnrfsim_pf;
-    PC_Claim_Sim_dat.Prices        = alnchpsim_pf;
-    PC_Claim_Sim_dat.stdReturns    = asdlnrtsim_pf;
-    PC_Claim_Sim_dat = struct2table(PC_Claim_Sim_dat);
-    writetable(PC_Claim_Sim_dat)
-elseif PD_Claim == 1
+if PD_Claim == 1
     PD_Claim_Sim_dat = struct();
     PD_Claim_Sim_dat.S_t           = astsim_pf;
     PD_Claim_Sim_dat.deltac        = alndctsim_pf;
@@ -227,6 +200,17 @@ elseif PD_Claim == 1
     PD_Claim_Sim_dat.stdReturns    = asdlnrtsim_pf;
     PD_Claim_Sim_dat = struct2table(PD_Claim_Sim_dat);
     writetable(PD_Claim_Sim_dat)
+elseif PD_Claim == 0
+    PC_Claim_Sim_dat = struct();
+    PC_Claim_Sim_dat.S_t           = astsim_pf;
+    PC_Claim_Sim_dat.deltac        = alndctsim_pf;
+    PC_Claim_Sim_dat.pcratio       = alnpctsim_pf;
+    PC_Claim_Sim_dat.ExPostReturns = alnrtsim_pf;
+    PC_Claim_Sim_dat.RiskFreeRate  = alnrfsim_pf;
+    PC_Claim_Sim_dat.Prices        = alnchpsim_pf;
+    PC_Claim_Sim_dat.stdReturns    = asdlnrtsim_pf;
+    PC_Claim_Sim_dat = struct2table(PC_Claim_Sim_dat);
+    writetable(PC_Claim_Sim_dat)
 end
 %% Construction of Indicator of recession
 % Load NBER Recession data from 1854-12-01 to 2019-10-01
@@ -273,10 +257,6 @@ end
 if Plots == 1
     Figures_CC1998;
 end
-
-%% Regression
-
-
 load gong
 audioplayer(y,Fs);
 play(ans)

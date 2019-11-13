@@ -9,7 +9,11 @@ scatter(alnrtsim_pf*1e2,alndctsim_pf*1e2);title("Annual Returns vs. consumption 
 %% Stationary Density 
 warning('off','all'); % fplot doest like the integral functions
 figure;
-fplot(@q_s, [min(log(S)+3) s_max]);title('Stationary Distribution of s')
+fplot(@q_s, [min(log(S)+3) s_max+0.15]);title('Stationary Distribution of s')
+hold on;
+xline(s_bar, '--','$\bar{s}$', 'interpreter','latex', 'fontsize', 16);
+hold on;
+xline(s_max, '--','$s_{max}$', 'interpreter','latex', 'fontsize', 16);
 warning('on','all');
 %%
 figure;
