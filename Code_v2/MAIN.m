@@ -28,7 +28,7 @@ if calib == 0
     sig=0.015/sqrt(tsc);
     rf0=0.0094/tsc;
     phi=0.87^(1/tsc);
-    gamma=2;
+    gamma=3;
     B=0;
     verd=0;
     ann=0;
