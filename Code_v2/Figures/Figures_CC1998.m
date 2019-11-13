@@ -22,3 +22,9 @@ hold on;
 plot(S,PD_ratio/tsc,'blue'); % Annulized P/D-curve
 legend('PC-Ratio', 'PD-Ratio')
 hold off;
+%% Regression
+% plot fitted vs actual
+figure;
+plot(y)
+hold on;
+plot(reg.yhat)
