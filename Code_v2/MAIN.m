@@ -12,7 +12,7 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 
 %% Choices for solution methods
 % Calibration Choice
-calib=1;      % 0 - Campbell & Cochrane (1999)
+calib=0;      % 0 - Campbell & Cochrane (1999)
               % 1 - Krogh & Jensen (2019)
               
 % Solution method:
