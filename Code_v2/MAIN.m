@@ -16,10 +16,10 @@ calib=1;      % 0 - Campbell & Cochrane (1999)
               % 1 - Krogh & Jensen (2019)
               
 % Solution method:
-PD_Claim = 0; % 0 = Price Consumption Claim
+PD_Claim = 1; % 0 = Price Consumption Claim
               % 1 = Price Dividend Claim
 % Plots
-Plots = 0;    % 0 = off
+Plots = 1;    % 0 = off
               % 1 = on
 %% Initialization
 if calib == 0
