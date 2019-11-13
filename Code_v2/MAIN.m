@@ -28,7 +28,7 @@ if calib == 0
     sig=0.015/sqrt(tsc);
     rf0=0.0094/tsc;
     phi=0.87^(1/tsc);
-    gamma=3;
+    gamma=2;
     B=0;
     verd=0;
     ann=0;
@@ -43,7 +43,7 @@ if calib == 1
     sig = Pars.sigma/sqrt(tsc);
     rf0 = Pars.rf/tsc;
     phi=Pars.Phi^(1/tsc);
-    gamma=3;
+    gamma=2;
     rhow = 0.2;
     B=0;
     verd=0;
