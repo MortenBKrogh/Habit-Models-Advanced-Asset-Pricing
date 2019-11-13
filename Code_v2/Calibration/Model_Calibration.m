@@ -52,14 +52,13 @@ clearvars -except Coefficients
 %%% .0134 or 1.34% while sigma_v is found to be 1.52% (.0152)          %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Standard deviation of dividend growth
-RetAM = importdata('All_returns_market_Quart.csv');
-RetAM = RetAM.data(1:200,[2 3]);
-Divs = (RetAM(:,1) - RetAM(:,2));
-% LogDivs = log(Divs);
-DiffDiv = Divs(2:end)./Divs(1:end-1) /3;
-% DiffDiv = diff(LogDivs)./3;
-sigma_w = std(DiffDiv)*sqrt(12);
+RetAM = importdata('Annual_rets_ADAX_NYSE.csv');
+RetAM = RetAM.data(:,[2 3])+1;
+dp = RetAM(:,1)./RetAM(:,2)-1; % DP-ratio
+DD = dp(2:end)./dp(1:end-1).*RetAM(2:end,2);
+sigma_w = std(DD);
 Coefficients.sigma_w = sigma_w;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Quarterly Data on returns yields a sigma_w f .1777 or 17.77%       %%%
+%%% Annual Data on returns yields a sigma_w f .1256 or 12.56%          %%%
+%%% Note here not very robust to frequency changes                     %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
