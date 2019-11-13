@@ -152,7 +152,7 @@ if PD_Claim == 0
     PC_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
     PC_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
     PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf*2;
+    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf;
     PC_Claim_Sim_mom.Sharperatio          = ShpR_pf;
     PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
     PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
@@ -169,7 +169,7 @@ elseif PD_Claim == 1
     PD_Claim_Sim_mom.StdDivGrowth        = Stdc_pf;
     PD_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
     PD_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PD_Claim_Sim_mom.logSharperatio       = Shpr_pf*2;
+    PD_Claim_Sim_mom.logSharperatio       = Shpr_pf;
     PD_Claim_Sim_mom.Sharperatio          = ShpR_pf;
     PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
     PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
