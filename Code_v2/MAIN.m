@@ -12,7 +12,7 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 
 %% Choices for solution methods
 % Calibration Choice
-calib=0;      % 0 - Campbell & Cochrane (1999)
+calib=1;      % 0 - Campbell & Cochrane (1999)
               % 1 - Krogh & Jensen (2019)
               
 % Solution method:
@@ -146,30 +146,16 @@ Stdexrettinterp_pf = std(exrettinterp_pf);
 Ep_d_pf = mean(alnpctsim_pf); % Log price/consumption
 Stdp_d_pf = std(alnpctsim_pf);
 
-table = zeros(13,1);
-table(1,1) = Edc_pf;
-table(2,1) = Stdc_pf;
-table(3,1) = Erf_pf;
-table(4,1) = Stdrf_pf;
-table(5,1) = Shpr_pf;
-table(6,1) = ShpR_pf;
-table(7,1) = Eexrett_pf;
-table(8,1) = Stdexrett_pf;
-table(9,1) = Ep_d_pf;
-table(10,1) = Stdp_d_pf;
-table(11,1)= S_max;
-table(12,1)= S_bar;
-table(13,1)= delta^tsc;
 if PD_Claim == 0
     PC_Claim_Sim_mom = struct();
     PC_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
     PC_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
     PC_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
     PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf;
+    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf*2;
     PC_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf*400;
+    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf*200;
     PC_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PC_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PC_Claim_Sim_mom.S_max                = S_max;
@@ -183,10 +169,10 @@ elseif PD_Claim == 1
     PD_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
     PD_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
     PD_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PD_Claim_Sim_mom.logSharperatio       = Shpr_pf;
+    PD_Claim_Sim_mom.logSharperatio       = Shpr_pf*2;
     PD_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf*400;
+    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf*200;
     PD_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PD_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PD_Claim_Sim_mom.S_max                = S_max;
