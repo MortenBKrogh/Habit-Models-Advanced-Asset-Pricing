@@ -281,11 +281,16 @@ PD_regress = alnpctsim_pf; % PD / PC
 h   = 0;                        % Forecast Horizon 0 = in-sample regression
 
 y   = returns(1+h:end,1);
-x   = [ones(length(returns(1:end-h,:)), 1),  ...        % vector of Ones
-    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ... %    I_rec_t *PD_t         
-    (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)] % (1-I_rec_t)*PD_t
+x   = [ones(length(returns(1:end-h,:)), 1),  ...         % vector of Ones
+    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t         
+    (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
 
 reg = nwest(y,x,0)
+
+% plot fitted vs actual
+plot(y)
+hold on;
+plot(reg.yhat)
 %%
 load gong
 audioplayer(y,Fs);
