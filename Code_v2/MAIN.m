@@ -22,7 +22,7 @@ calib=1;      % 0 - Campbell & Cochrane (1999)
 PD_Claim = 0; % 0 = Price Consumption Claim
               % 1 = Price Dividend Claim
 % Plots
-Plots = 0;    % 0 = off
+Plots = 1;    % 0 = off
               % 1 = on
 % Update tables
 Tables = 0;   % 0 = off
@@ -280,7 +280,7 @@ if Plots == 1
     Figures_CC1998;
 end
 
-if Talbes == 1
+if Tables == 1
     Tables;
 end
 %%
