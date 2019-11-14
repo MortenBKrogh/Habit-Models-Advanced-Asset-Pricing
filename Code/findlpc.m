@@ -25,7 +25,6 @@ disp('\t Attention: Rf < g \n');
 fprintf('value of st: %g',s);
 end
 % Generate the log of the variable interest rate in time
-%newlnpc(i) = log(intgl1(@pdint,abs(sig)*(-8),abs(sig)*8));
 newlnpc(i)=log(GaussLegendre(@pdint,abs(sig)*(-8),abs(sig)*8,40)  );
 debug;
 end

@@ -2,47 +2,17 @@ clear all
 format long
 tic
 %% 
-% Choice of method
-method = 0; % Method: 0 Fixed point
-            % Method: 1 Wachter 2005
-            % Method: 2 comparative
 % Calibration Choice
-calib=5;    % 0 - b>0
-            % 1 - b<0
-            % 2 - Campbell Cochrane (1999)
-            % 3 - Paper Wachter (2005)
-            % 4 - Working Paper Verdelhan (2008)
-            % 5 - Krogh Jensen (2019)
+calib=2;    % 1 - Campbell & Cochrane (1999)
+            % 2 - Krogh & Jensen (2019)
             
 %%
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
-    bondsel rhow seedval verd debug ann lnpca con sig_w lnpda
+    bondsel rhow seedval verd debug ann lnpca con sig_w lnpda PD_Claim
+
 % Initialization
-if calib == 0
-    tsc = 4; % Interval 4 = quarter
-    g=0.0228/tsc;
-    sig=0.009/sqrt(tsc);
-    rf0=0.0127/tsc;
-    B=0.009;
-    gamma=2.5;
-    phi=0.902^(1/tsc);
-    verd=0;
-    ann=0;
-end
 
 if calib == 1
-    tsc = 4;
-    g=0.0219/tsc;
-    sig=0.0202/sqrt(tsc);
-    rf0=0.0098/tsc;
-    phi=0.931^(1/tsc);
-    gamma=2;
-    B=-0.01;
-    verd=1;
-    ann=0;
-end
-
-if calib == 2
     tsc = 12;
     g=0.0189/tsc;
     sig=0.015/sqrt(tsc);
@@ -52,35 +22,13 @@ if calib == 2
     B=0;
     verd=0;
     ann=0;
-end
-
-if calib == 3
-    tsc = 4;
-    g=0.022/tsc;
-    sig=0.0087/sqrt(tsc);
-    rf0=0.0147/tsc;
-    phi=(0.89)^(1/tsc);
-    gamma=2;
-    B=0.011;
-    verd=0;
-    ann=0;
     sig_w = 0.112/sqrt(tsc);
+    rhow = 0.2;
+    PD_Claim_init = 1; % 1 = PD_claim % 0 = PC_Claim
 end
 
-if calib == 4
-    tsc = 4;
-    g=0.02115/tsc;
-    sig=0.0102/sqrt(tsc);
-    rf0=0.0136/tsc;
-    phi=0.97^(1/tsc);
-    gamma=2.4;
-    B=-0.01;
-    verd=1;
-    ann=1;
-end
-
-if calib == 5
-    Pars = Model_Calibration;
+if calib == 2
+    Pars = Model_Calibration; % Change to Krogh_Jensen_Calibration also file name..
     tsc = 12;
     g = Pars.g/tsc;
     sig = Pars.sigma/sqrt(tsc);
@@ -91,9 +39,12 @@ if calib == 5
     B=0;
     verd=0;
     ann=0;
-   sig_w = Pars.sigma_w/sqrt(tsc);
-    % sig_w = Pars.sigma_w/sqrt(tsc);
+    sig_w = Pars.sigma_w/sqrt(tsc);
+    PD_Claim_init = 1; % 1 = PD_claim % 0 = PC_Claim
+
 end
+
+PD_Claim = PD_Claim_init;
 
 rho = (-1:.1:1);
 S_bar=sig*sqrt(gamma/(1-phi-B/gamma));
@@ -117,35 +68,28 @@ con = 0;   % Interpolation
 sg = mkgrids(szgrid,0);
 S=exp(sg);
 
-if method == 0 || method == 2
+%% PD- & PC-ratio
+
+PD_Claim = 0; % 1 = PD_claim % 0 = PC_Claim
+    
+    figure;
     [lnpca ctrindx]=findlpc(sig,g,s_bar);
     PC_ratio=exp(lnpca);
-    plot(S,PC_ratio/tsc,'k'); % Annulized P/C-curve
-end
-lnpca_pf=lnpca;
-%% PD-ratio
-figure;
-if method == 0 || method == 2
-    [lnpda dtrindx]=findlpd(sig,g,s_bar);
+    lnpca_pf=lnpca;
+    plot(S,PC_ratio/tsc,'red'); % Annulized P/C-curve
+    hold on;
+    
+PD_Claim = 1; % 1 = PD_claim % 0 = PC_Claim    
+
+    [lnpda dtrindx]=findlpc(sig,g,s_bar);
     PD_ratio=exp(lnpda);
     plot(S,PD_ratio/tsc,'blue'); % Annulized P/C-curve
-    hold on
-    plot(S,PC_ratio/tsc,'red'); % Annulized P/C-curve
-    legend('PD-Ratio', 'PC-Ratio')
-end
-lnpda_pf=lnpda;
+    legend('PC-Ratio', 'PD-Ratio')
+    hold off;
+    lnpda_pf=lnpda;
 
-%% Find Value of P/C, serial method
-if method == 1 || method == 2
-    [W_PC_ratio]=WfindFn(sig,sg); 
-    plot(S,W_PC_ratio/tsc,'k');
-    lnpca_s=log(W_PC_ratio);
-    lnpca=lnpca_s;
-end
-% Comparative method
-if method == 2
-    plot(S,W_PC_ratio/tsc,'r',S,PC_ratio/tsc,'g'); legend('Series method','Fixed-point method',2); xlabel('Consumption surplus ratio (S{t})'); ylabel('Price-consumption ratio (P{t}/C{t})'); comp=max(abs((W_PC_ratio-PC_ratio)./PC_ratio));
-end
+% reset PD_Claim to initial value we only changed it to make the plot
+PD_Claim = PD_Claim_init;
 
 %% Find expected returns and conditional deviations of consumption clain
 verd=0;
@@ -406,18 +350,7 @@ if method == 2
     Intervalo = cat(2,Interv_pf,NaN*ones(size(Interv_pf,1),1));
     Intervalo = cat(2,Intervalo,Interv_s);
 end
-%{
-bn=zeros(length(bondsel)-1,2);
-bnconf=zeros(length(bondsel)-1,4);
-for i=2:length(bondsel)
-    chgyield=lnysim(2:size(lnysim,1),i-1)-lnysim(1:size(lnysim,1)-1,i);
-    spreadyield=(lnysim(1:size(lnysim,1)-1,i)-1 - nysim(1:size(lnysim,1)- 1,1))./(bondsel(i)-1);
-    
-    [aux1 aux2]=regress(chgyield,[ones(length(lnysim)-1,1) spreadyield]);
-    bn(i-1,:)=aux1';
-    bnconf(i-1,:)=reshape(aux2,1,4);
-end
-%}
+
 load gong
 audioplayer(y,Fs);
 play(ans)

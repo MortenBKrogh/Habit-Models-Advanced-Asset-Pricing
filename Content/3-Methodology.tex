@@ -1,1 +1,155 @@
-\section{Methodology} \label{sec:Methodology}
+\section{Model framework} \label{sec:Methodology}
+
+The framework utilized is a direct application of the model by \citet{Campbell1999} in the following section a brief overview of the model and model dynamics are presented.\\
+The model can be seen as an extension of the basic consumption-based asset pricing framework in that the standard CRRA-utility function is augmented with habit formation. 
+\begin{align}
+   U(C_t, X_t) = \mathbb{E} \sum _ {t = 0} ^{\infty} \delta ^ t \frac{\left( C_t - X_t\right)^{1-\gamma } - 1}{1-\gamma }
+\end{align}
+Where $X_t$ denotes the habit level, $\delta$ is the subjective discount factor  of the agents. \citet{Campbell1999} proposes that the entire economy can be summarized by the state variable capturing the relationship between consumption and habit - the \textit{surplus-consumption ratio} $S_t$.
+\begin{align}
+   S_t \equiv \frac{C_t - X_t}{C_t} \label{S_t_Process}
+\end{align}
+The surplus consumption ratio can thus be interpreted as the consumption level above above the habit level. This formulation ensures that the surplus consumption ratio does not go below 0, however as $X_t$. approaches $C_t$ the surplus consumption ratio converges to $0$, which indicates an extreme case where the risk aversion in the economy diverges, this result follows directly from the expression of the local curvature of the utility function.
+\begin{align}
+    \eta _t \equiv - \frac{C_t U_{cc}\left( C_t, X_t \right)}{U_{c} \left( C_t, X_t \right)} = \frac{\gamma}{S_t}
+    \end{align}
+However this result, while not well behaved in extreme cases, implies a convenient feature of this model, namely that the degree of risk aversion increases (decreases) as the surplus consumption ratio declines (increases). The economic interpretation is that as the growth of wealth and by extension consumption falls below the usual level, the risk aversion of the agents increases which is a well known trait of agent behavior and the driving forces behind this phenomena are studied more throughout in behavioral economics.\\
+\newline
+Also following \citet{Campbell1999} the law of motion of log surplus consumption ratio is defined as a heteroscedastic autoregressive model of order 1,
+\begin{align}
+    s_{t+1}^a  = \left( 1-\phi  \right)\Bar{s}+ \phi s_t ^ a + \lambda \left( s_t ^a  \right)\left( c_{t+1}^a - c_t^a - g\right) \label{ARHet}
+\end{align}
+where $\lambda(s_t^a)$ is a sensitivity function whose functional form will be further specified below and $\Bar{s},\phi, g$ are parameters either to be matched or calibrated. We note that around the steady state the rational agents all behave equivalent too one another, and the superscript \textit{a}, denoting aggregate measures can be dropped.
+The last term of \eqref{ARHet} follows from the assumed functional form of consumption growth,
+\begin{align}
+    \Delta c_{t+1} = g + v_{t+1}, \qquad v_{t+1}\overset{\mathcal{IID}}{\sim}\mathcal{N}\left(0, \sigma^2 \right) \label{DConos}
+\end{align}
+hence,
+\begin{align}
+     c_{t+1} - c_t - g = v_{t+1}
+\end{align}
+\subsection{Stochastic discount factor/pricing kernel}
+Starting from the utility function of the rational agent,
+\begin{align*}
+    U(C_t, X_t) = \mathbb{E} \sum _ {t = 0} ^{\infty} \delta ^ t \frac{\left( C_t - X_t\right)^{1-\gamma } - 1}{1-\gamma }
+\end{align*}
+the first order condition with respect to consumption,
+\begin{align*}
+    U_c \left( C_t, X_t \right) = \frac{\partial}{\partial C_t} U(C_t, X_t) & = \left( C_t - X_t\right)^{-\gamma}
+\end{align*}
+Substituting $X_t$ from \eqref{S_t_Process}:  $(-X_t = S_t)$,
+\begin{align}
+     U_c \left( C_t, X_t \right) = S_t ^{-\gamma} C_t ^{-\gamma}
+\end{align}
+The stochastic discount factor can then be expressed,
+\begin{align}
+    M_{t+1} & \equiv  \delta \frac{u_c\left( C_{t+1}, X_{t+1} \right)}{u_c\left( C_{t}, X_{t} \right)} \nonumber \\
+    & = \delta \left( \frac{S_{t+1} C_{t+1}}{S_t C_t} \right) \label{SDF}
+\end{align}
+Collecting previous expressions in the system and plugging into \eqref{SDF},
+\begin{equation}
+M_{t+1}=\delta G^{-\gamma} e^{-\gamma\left(s_{t+1}-s_{t}+v_{t+1}\right)}=\delta G^{-\gamma} e^{\left.-\gamma(\phi-1)\left(s_{t}-s\right)+\left[1+\lambda\left(s_{t}\right)\right] v_{t+1}\right\}}
+\end{equation}
+Which can be viewed as the pricing kernel utilized in this paper, conditional moments of all variables of interest can be derived from this equation which is a function of the state $s_t$.
+
+\subsection{Risk-free Rate}
+In the framework by \citet{Campbell1999} the risk-free rate is assumed to be constant, this follows from the definition of the risk-free rate,
+\begin{align}
+    R_t^{f} \equiv \frac{1}{\mathbb{E}_t \left[ {M_{t+1}} \right]} \nonumber
+\end{align}
+using equation \eqref{SDF} yields the log risk-free rate,
+\begin{align}
+    r_t^{f} = -\ln \left(\delta \right) + \gamma g - \underset{A}{\underbrace{\gamma \left( 1-\phi \right)\left( s_t - \Bar{s} \right)}} - \underset{B}{\underbrace{\frac{\gamma ^2 \sigma ^2 }{2} \left( 1+ \lambda\left( s_t \right) \right)^2}} \label{RFR}
+\end{align}
+to make sure $R_t^f$ is constant \citet{Campbell1999} chooses the functional form of $\lambda\left( s_t \right)$ such that the effects of intertemporal substitution (\textit{A}) offsets the precautionary savings-term (\textit{B }).\\
+\neweline
+In addition the functional form of $\lambda(s_t)$ is chosen to satisfy two additional conditions, the three conditions are then given:
+\begin{enumerate}
+    \item Risk-free rate constant through time
+    \item Habit is predetermined at steady-state
+    \item Habit is predetermined close to steady-state
+\end{enumerate}
+These conditions yields an expression for the steady-state surplus consumption ratio,
+\begin{align}
+    \Bar{S} = \sigma \sqrt{\frac{\gamma }{1-\phi}}
+\end{align}
+Implying a predetermined habit level in the steady-state. In addition the sensitivity function is then specified,
+\begin{align}
+    \lambda \left( s_t \right) = \begin{cases}
+    {\frac{1}{\Bar{S}}\sqrt{1-2\left( s_t - \Bar{s} \right)}-1, \qquad &s_t \leq s_{\max}\\
+    0, \qquad & s_t\geq s_{\max}}
+    \end{cases}
+\end{align}
+where $S_\max$ is the solution to
+\begin{align}
+    0 & = {\frac{1}{\Bar{S}}\sqrt{1-2\left( s_{\max} - \Bar{s} \right)}-1}\\
+    s_{\max} & = \Bar{s} + \frac{1}{2}\left( 1 - \Bar{S}^2\right)
+\end{align}
+Now substituting in these results into equation \eqref{RFR} yields a time-invariant risk-free rate as per construction.
+\begin{equation}
+r_{t}^{f}=-\ln (\delta)+\gamma g-\left(\frac{\gamma}{S}\right)^{2} \frac{\sigma^{2}}{2}=-\ln (\delta)+\gamma g-\frac{\gamma}{2}(1-\phi) \label{RFR1}
+\end{equation}
+Now to refine the framework one could implement a time-varying risk-free rate as suggested by \citet{Campbell1999} and implemented by \citet{Wachter2005}. A time-varying risk-free rate allows for the construction of term-structures as a function of the state variable, this suggests that by correct specification the term-structure is predictable using the surplus consumption ratio.\\
+However \citet{Campbell1999} argues that that the risk-free rate in US-data exhibits limited variation furthermore extending the model with a time-varying risk-free rate has little to no effect on the results regarding the stock market, therefore the model specification used in this paper assumes a constant risk-free rate, consistent with the model in \citet{Campbell1999}.
+
+\subsection{Pricing a Consumption Claim}
+The actual pricing relations in this part while very simple analytically, are the most comprehensive part computational and numerical, this follows from the fact that the the price-dividend ratio as a function of state-variable $s_t$ are not observable and are thus solved on a grid using the Gauss-Legendre quadrature procedure for numerical integration. \\
+\newline
+To clarify economical procedure, we will utilize the basic pricing relation that is,
+\begin{align}
+    1 = \mathbb{E}_t \left [ M_{t+1}R_{t+1} \right] \nonumber \\
+    R_{t+1} \equiv \frac{P_{t+1} + D_{t+1}}{P_t}
+\end{align}
+The functional $P_t/C_t(s_t)$ must then satisfy,
+\begin{align}
+    \frac{P_{t}}{C_{t}}\left(s_{t}\right)=E_{t}\left[M_{t+1} \frac{C_{t+1}}{C_{t}}\left[1+\frac{P_{t+1}}{C_{t+1}}\left(s_{t+1}\right)\right]\right] \label{PCRatio}
+\end{align}
+The conditional expectation is then solved on a grid through the Gauss-Legendre procedure over the error term $v_t$.
+
+\subsection{Pricing a Dividend Claim}
+The dividend claim process is solved in the same manner as in the previous section however the IID log-normal process for dividend growth is constructed such that the innovations in the dividend growth $w_t$ and in consumption $v_t$ is correlated with magnitude $\rho$,
+\begin{align}
+    \Delta d_{t+1} = g + w_{t+1},\qquad w_t \overset{\mathcal{IID}}{\sim}\mathcal{N}\left(0,\sigma^2_w \right),\qquad \operatorname{corr}\left( w_t,\ v_t \right) = \rho
+\end{align}
+The functional price-dividend ratio is then calculated in the same manner as \eqref{PCRatio}
+\begin{align}
+    \frac{P_{t}}{D_{t}}\left(s_{t}\right)=E_{t}\left[M_{t+1} \frac{D_{t+1}}{D_{t}}\left[1+\frac{P_{t+1}}{D_{t+1}}\left(s_{t+1}\right)\right]\right] \label{pd_ratio}
+\end{align}
+It is worth noting that \citet{Campbell1999} actually recommends that the relationship between dividend growth and consumption growth should in fact be co-integrated rather than correlated, however we will be closing the model with a correlational relationship rather than the co-integrational relation proposed\footnote{\textsc{MatLab} code are available at GitHub, and are modified from the code presented by \citet{Costa2009}}.
+
+\subsection{Calibration of the model parameters}
+For model calibration we will rely on CRSP-data retrieved from the WRDS-database. The sampling period utilized spans 1950-2018 and samples 90 day T-bill returns and inflation rate \textit{Annual}, CRSP-Market return index\footnote{Index spanning the 3 stock indices NYSE/AMEX/NASDAQ} \textit{Monthly and annual}, and \textit{FRED} personal consumption data non-durables \textit{Quarterly}.  
+
+
+We will utilize the analytical results presented by \citet{Campbell1999} and \citet{StigVinter2010}
+
+\subsubsection{Moments of growth}
+The unconditional mean of the consumption growth in the model can be retrieved by applying the expectations operator to equation \eqref{DConos},
+
+\begin{align}
+    \mathbb{E}\left[ \Delta c_{t+1} \right] &=  \mathbb{E}\left[ g + v_{t+1} \right]\qquad \forall t\nonumber \\
+    & = g
+\end{align}
+
+hence a consistent estimator is given as the sample mean of consumption growth. From this result follows by extension that the unconditional standard deviation is given by $\sigma$ while the consistent estimate is simply the standard deviation of the consumption growth, the same result applies to dividend growth.
+
+\subsubsection{$\mathbf{\operatorname{corr}(w_t, v_t)}$}
+Following the convincing argumentation of \citet{Campbell1999} the correlation between dividend growth and consumption growth are especially tricky to calibrate as it is very non-robust to horizon changes, hence we fix the correlation to the level chosen by \citet{Campbell1999}.
+
+\subsubsection{Autocorrelation $\phi$}
+The estimate for the true autocorrelation-coefficient is given by the first order autocorrelation function of the price-dividend ratio, i.e,
+\begin{align}
+    p_t - d_t = \alpha + \phi \left( p_{t-1} - d_{t-1} \right)+\varepsilon_t
+\end{align}
+this follows from equation \eqref{pd_ratio}, stating the the price-dividend ratio is a functional only of the state variable, hence inheriting the dynamics of only one state, the surplus consumption ratio. This hold true for all $t$ thus the effects of $s_t$ on $p_{t+1}-d_{t+1}$, can be retrieved using the information contained in $p_t-d_t$.
+
+\subsubsection{$\mathbf{\gamma}$ Utility Curvature}
+The coefficient of utility curvature is chosen as to match the observed return on consumption claims. In line with the proposed method by \citet{Campbell1999}.
+
+\subsubsection{$\mathbf{\delta}$ Subjective discount factor}
+The subjective discount factor is chosen as to match the risk-free rate as reported in the CRSP-data. 
+Recalling equation \eqref{RFR1} allows for a closed form solution for subjective discount factor given an arbitrary calibration of the risk-free rate, the local utility curvature, the persistence coefficient and the growth rate of dividends/consumption,
+\begin{align}
+    \delta = \exp{\left( \gamma g - \frac{1}{2} \left( \left(1-\phi\right)\gamma  \right) - r^{f} \right)}
+\end{align}
+that is when the model has been calibrated with all of the estimates above, there exists one unique solution to the $\delta$ parameter.

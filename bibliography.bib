@@ -1,15 +1,15 @@
 % % insert something like \input(some-bib-file.tex)
 
 % % References from lecture 7
-\input{References/Campbell_et_al-2000-The_Journal_of_Finance}
-\input{References/Campbell and Cochrane (1999)}
-\input{References/Wachter (2005).txt}
-\input{References/Verdelhan (2010).txt}
-\input{References/Chen_et_al-2009-Journal_of_Applied_Econometrics.txt}
-\input{References/Atanasov et. al. (2019).bib}
+% \input{References/Campbell_et_al-2000-The_Journal_of_Finance}
+% \input{References/Campbell and Cochrane (1999)}
+% \input{References/Wachter (2005).txt}
+% \input{References/Verdelhan (2010).txt}
+% \input{References/Chen_et_al-2009-Journal_of_Applied_Econometrics.txt}
+% \input{References/Atanasov et. al. (2019).bib}
 
-% % the book of the course
-\input{References/Campbell (2018).txt}
+% % % the book of the course
+% \input{References/Campbell (2018).txt}
 
 
 
@@ -23,4 +23,63 @@ journal = {Journal of Finance, Forthcomingl},
 doi = {10.2139/ssrn.3098057}
 }
 
-\bibitem[Jones et al.(1990)Jones, Baker, and Smith]{key}
+@article{Campbell1999,
+abstract = {We present a consumption-based model that explains a wide variety of dynamic asset pricing phenomena, including the procyclical variation of stock prices, the long-horizon predictability of excess stock returns, and the countercyclical variation of stock market volatility. The model captures much of the history of stock prices from consumption data. It explains the short- and long-run equity premium puzzles despite a low and constant risk-free rate. The results are essentially the same whether we model stocks as a claim to the consumption stream or as a claim to volatile dividends poorly correlated with consumption. The model is driven by an independently and identically distributed consumption growth process and adds a slow-moving external habit to the standard power utility function. These features generate slow countercylical variation in risk premia. The model posits a fundamentally novel description of risk premia: Investors fear stocks primarily because they do poorly in recessions unrelated to the risks of long-run average consumption growth.},
+author = {Campbell, John Y. and Cochrane, John H.},
+doi = {10.1086/250059},
+issn = {00223808},
+journal = {Journal of Political Economy},
+title = {{By force of habit: A consumption-based explanation of aggregate stock market behavior}},
+year = {1999}
+}
+
+@article{Wachter2005,
+abstract = {Habit utility has been the focus of a large and growing body of literature in financial economics. This study investigates ways of accurately and efficiently solving the Campbell and Cochrane [1999. Journal of Political Economy 107, 205-251] external habit model. Solutions for this model based on a grid of values for the state variable are shown to converge as the grid becomes increasingly fine. Convergence is substantially faster if the price-dividend ratio is computed as a series of "zero-coupon equity" claims rather than as the fixed point of the Euler equation. Fitting the model to the term structure as well as to equity moments (as in [Wachter, J.A., 2005. A consumption-based model of the term structure of interest rates. Journal of Financial Economics, in press]) also results in faster convergence. {\textcopyright} 2005 Elsevier Inc. All rights reserved.},
+author = {Wachter, Jessica A.},
+doi = {10.1016/j.frl.2005.08.001},
+issn = {15446123},
+journal = {Finance Research Letters},
+keywords = {Catching up with the Joneses,Habit formation,Numerical solution methods},
+title = {{Solving models with external habit}},
+year = {2005}
+}
+
+@TechReport{Costa2009,
+  author={Costa, Carlos Eugênio da and Vasconcelos, Jivago B. Ximenes de},
+  title={{Can a habit formation model really explain the forward premium anomaly?}},
+  year=2009,
+  month=May,
+  institution={EPGE Brazilian School of Economics and Finance - FGV EPGE (Brazil)},
+  type={FGV EPGE Economics Working Papers (Ensaios Economicos da EPGE)},
+  url={https://ideas.repec.org/p/fgv/epgewp/692.html},
+  number={692},
+  abstract={Verdelhan (2009) shows that if one is to explain the foreign exchange forward premium behavior using Campbell and Cochrane (1999)’s habit formation model one must specify it in such a way to generate pro-cyclical short term risk free rates. At the calibration procedure, we show that this is only possible in Campbell and Cochrane’s framework under implausible parameters specifications given that the price-consumption ratio diverges in almost all parameters sets. We, then, adopt Verdelhan’s shortcut of fixing the sensivity function λ(st) at its steady state level to attain a finite value for the price-consumption ratio and release it in the simulation stage to ensure pro-cyclical risk free rates. Beyond the potential inconsistencies that such procedure may generate, as suggested by Wachter (2006), with procyclical risk free rates the model generates a downward sloped real yield curve, which is at odds with the data.},
+  keywords={},
+  doi={},
+}
+
+
+@article{StigVinter2010,
+author = {Engsted, Tom and Møller, Stig V.},
+title = {An iterated \textsc{GMM} procedure for estimating the \textsc{C}ampbell–\textsc{C}ochrane habit formation model, with an application to Danish Stock and bond returns},
+journal = {International Journal of Finance \& Economics},
+volume = {15},
+number = {3},
+pages = {213-227},
+keywords = {consumption-based model, habit persistence, GMM, pricing error},
+doi = {10.1002/ijfe.389},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/ijfe.389},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/ijfe.389},
+abstract = {Abstract We suggest an iterated GMM approach to estimate and test the consumption based habit persistence model of Campbell and Cochrane, and we apply the approach on annual and quarterly Danish stock and bond returns. For comparative purposes we also estimate and test the standard constant relative risk-aversion (CRRA) model. In addition, we compare the pricing errors of the different models using Hansen and Jagannathan's specification error measure. The main result is that for Denmark the Campbell–Cochrane model does not seem to perform markedly better than the CRRA model. For the long annual sample period covering more than 80 years there is absolutely no evidence of superior performance of the Campbell–Cochrane model. For the shorter and more recent quarterly data over a 20–30 year period, there is some evidence of counter-cyclical time-variation in the degree of risk-aversion, in accordance with the Campbell–Cochrane model, but the model does not produce lower pricing errors or more plausible parameter estimates than the CRRA model. Copyright © 2009 John Wiley \& Sons, Ltd.},
+year = {2010}
+}
+
+
+% Federal Reserve Bank of St. Louis, NBER based Recession Indicators for the United States from the Period following the Peak through the Trough [USREC], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/USREC, November 11, 2019.
+
+@misc{USREC,
+organization = {Federal Reserve Bank of St. Louis}, 
+title = { NBER based Recession Indicators for the United States from the Period following the Peak through the Trough [USREC]},
+date = {November 11, 2019.},
+url = {https://fred.stlouisfed.org/series/USREC}
+}
