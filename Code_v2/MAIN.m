@@ -7,6 +7,7 @@ addpath('Data');
 addpath('Workspaces');
 addpath('Calibration');
 addpath('Figures');
+addpath('Tables');
 %% Defining Globals
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rhow seedval verd debug ann lnpca con sig_w lnpda PD_Claim Regressions
@@ -277,7 +278,11 @@ end
 if Plots == 1
     Figures_CC1998;
 end
-%%
+
+if Tables == 1
+    Tables;
+end
+
 load gong
 audioplayer(y,Fs);
 play(ans)

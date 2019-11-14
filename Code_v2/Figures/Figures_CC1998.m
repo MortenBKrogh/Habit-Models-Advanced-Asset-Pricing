@@ -29,6 +29,7 @@ plot(S,PD_ratio/tsc,'blue'); % Annulized P/D-curve
 legend('PC-Ratio', 'PD-Ratio')
 hold off;
 saveas(gcf,'Figures/PC_&_PD_ratio.eps','eps2c');
+
 %% Regression
 % plot fitted vs actual
 if Regressions == 1
