@@ -66,7 +66,8 @@ if size(lnysim,1) > 1
     for i=1:length(bondsel)+1
      alnysim(:,i) = chgfreq(lnysim(1:T-1,i),tsc,tsc,0);
     end
-    alnysim = alnysim(2:size(alnysim,1),:); end
+    alnysim = alnysim(2:size(alnysim,1),:); 
+end
 %% Bonds
 % Mean returns
 if size(elnrcbsim,1) > 1

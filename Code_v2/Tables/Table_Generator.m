@@ -1,6 +1,10 @@
 %% Table 1 - Calibrated Model
-delete Table_1.tex
-diary("Table_1.tex")
+if isfile('Tables/Table_1.tex')
+delete Tables/Table_1.tex
+end
+
+%%
+diary("Tables/Table_1.tex")
 diary on
 
 disp('\begin{table}[H]')
@@ -35,8 +39,11 @@ disp('\end{table}')
 diary off
 
 %% Table 2 - Data Properties
-delete Table_2.tex
-diary("Table_2.tex")
+if isfile('Tables/Table_2.tex')
+delete Tables/Table_2.tex
+end
+
+diary("Tables/Table_2.tex")
 diary on
 disp(['\begin{table}[H]'])
 disp(['\centering'])
@@ -54,8 +61,11 @@ diary off
 
 
 %% Table 3 - Simulated Moments
-delete Table_3.tex
-diary("Table_3.tex")
+if isfile('Tables/Table_3.tex')
+delete Tables/Table_3.tex
+end
+
+diary("Tables/Table_3.tex")
 diary on
 disp(['\begin{table}[H]'])
 disp(['\centering'])

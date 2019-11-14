@@ -14,21 +14,21 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 
 %% Choices for solution methods
 % Calibration Choice
-calib=1;      % 0 - Campbell & Cochrane (1999)
-              % 1 - Krogh & Jensen (2019)
+calib=0;           % 0 - Campbell & Cochrane (1999)
+                   % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 0; % 0 = Price Consumption Claim
-              % 1 = Price Dividend Claim
+PD_Claim = 1;      % 0 = Price Consumption Claim
+                   % 1 = Price Dividend Claim
 % Plots
-Plots = 1;    % 0 = off
-              % 1 = on
+Plots = 0;         % 0 = off
+                   % 1 = on
 % Update tables
-Tables = 0;   % 0 = off
-              % 1 = on
+Tables = 1;        % 0 = off
+                   % 1 = on
 % Regressions
-Regressions = 0; % 0 = off
-                 % 1 = on
+Regressions = 0;   % 0 = off
+                   % 1 = on
 %% Initialization
 if calib == 0
     tsc = 12;
@@ -280,7 +280,7 @@ if Plots == 1
 end
 
 if Tables == 1
-    Tables;
+    Table_Generator;
 end
 
 load gong
