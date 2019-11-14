@@ -277,13 +277,6 @@ end
 if Plots == 1
     Figures_CC1998;
 end
-<<<<<<< HEAD
-=======
-
-if Tables == 1
-    Tables;
-end
->>>>>>> 6e0fc5d71ac1acba21dfdc5d304ce7c40dec842f
 %%
 load gong
 audioplayer(y,Fs);

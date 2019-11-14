@@ -13,7 +13,7 @@ warning('off','all'); % fplot doest like the integral functions
 figure;
 fplot(@q_s, [min(log(S)+3) s_max+0.15]);title('Stationary Distribution of s')
 %hold on %% Only works for MatLab later than 2018b 
-xline(s_bar, '--','$\bar{s}$', 'interpreter','latex', 'fontsize', 16);
+% xline(s_bar, '--','$\bar{s}$', 'interpreter','latex', 'fontsize', 16);
 %%% ----- %%%
 % hold on
 % xline(s_max, '--','$s_{max}$', 'interpreter','latex', 'fontsize', 16);
