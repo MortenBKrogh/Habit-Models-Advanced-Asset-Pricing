@@ -65,9 +65,14 @@ for i=1:size(sg,1)
     
     
     lnrf1(i)= - log(GaussLegendre(@intemrs,abs(sig)*(-8),abs(sig)*8,40));
+    if PD_Claim == 0
     er(i)= GaussLegendre(@inter,abs(sig)*(-8),abs(sig)*8,40);
-    elnr(i)= GaussLegendre(@intelnr,abs(sig)*(-8),abs(sig)*8,40);
     sdr(i) = GaussLegendre(@inter2,abs(sig)*(-8),abs(sig)*8,40);
+    else
+    er(i) = GaussLegendre(@interd,abs(sig)*(-8),abs(sig)*8,40);
+    sdr(i) = GaussLegendre(@inter2d,abs(sig)*(-8),abs(sig)*8,40);    
+    end
+    elnr(i)= GaussLegendre(@intelnr,abs(sig)*(-8),abs(sig)*8,40);
     sdr(i) = (sdr(i) - er(i).^2).^(.5);
     sdlnr(i) = GaussLegendre(@intelnr2,abs(sig)*(-8),abs(sig)*8,40);
     
