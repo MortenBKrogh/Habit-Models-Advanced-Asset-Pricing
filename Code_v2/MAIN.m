@@ -7,8 +7,6 @@ addpath('Data');
 addpath('Workspaces');
 addpath('Calibration');
 addpath('Figures');
-addpath('Utilities');
-addpath('Tables');
 %% Defining Globals
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rhow seedval verd debug ann lnpca con sig_w lnpda PD_Claim Regressions
@@ -17,7 +15,7 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 % Calibration Choice
 calib=1;      % 0 - Campbell & Cochrane (1999)
               % 1 - Krogh & Jensen (2019)
-              
+
 % Solution method:
 PD_Claim = 0; % 0 = Price Consumption Claim
               % 1 = Price Dividend Claim
@@ -87,7 +85,7 @@ S=exp(sg);
 %% PD- & PC-ratio
  PD_Claim = 0;
  [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
- PC_ratio=exp(output_lnpca); 
+ PC_ratio=exp(output_lnpca);
  lnpca_pf=output_lnpca;
 
  PD_Claim = 1;
@@ -124,7 +122,7 @@ end
 
 %% Simulation of time-series
 [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
-    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf] ...
+    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf aerd] ...
     =annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 %% Statistics of interest
 if ann == 1
@@ -192,7 +190,7 @@ end
 %% SDF Simulation
 rng(24,'twister')
 [stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
-    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
+    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim erd]=...
     simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
 % Stochastic discount factor
 SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim))...
@@ -265,13 +263,13 @@ end
 %% Regression
 if Regressions == 1
 returns = alnrtsim_pf;     % Returns
-PD_regress = alnpctsim_pf; % PD / PC 
+PD_regress = alnpctsim_pf; % PD / PC
 
 h   = 0;                        % Forecast Horizon 0 = in-sample regression
 
 y   = returns(1+h:end,1);
 x   = [ones(length(returns(1:end-h,:)), 1),  ...         % vector of Ones
-    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t         
+    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
 reg = nwest(y,x,0)
 end
@@ -288,4 +286,3 @@ load gong
 audioplayer(y,Fs);
 play(ans)
 toc
-
