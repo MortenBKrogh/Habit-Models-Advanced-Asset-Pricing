@@ -8,8 +8,8 @@ momPD = readtable('PD_Claim_Sim_mom.txt');
 datPC = readtable('PC_Claim_Sim_dat.txt');
 datPD = readtable('PD_Claim_Sim_dat.txt');
 %%
-table2latex(momPC, 'Tables/Moments_PC')
-table2latex(momPD, 'Tables/Moments_PD')
+% table2latex(momPC, 'Tables/Moments_PC')
+% table2latex(momPD, 'Tables/Moments_PD')
 %%
 figure;
 subplot(2,1,1)
