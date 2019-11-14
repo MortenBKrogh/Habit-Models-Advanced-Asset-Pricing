@@ -1,8 +1,8 @@
-function [out] = inter2(v)
+function [out] = inter2d(v)
 
 % Expected variance returns consumption claim
 % ----------------------------------------------------------------------- %
 
-global sig
-out = (1/(sig*(2*pi)^(.5)))*exp(-.5*(v/sig).^2).*erinsd(v).^2;
+global sig g rhow sig_w lnpca sg
+out = internorm(v) .* erd2ind(v);
 end
