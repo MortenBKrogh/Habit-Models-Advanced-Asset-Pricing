@@ -1,6 +1,7 @@
 
 
 %% Table 1 - Calibrated Model
+delete Table_1.tex
 diary("Table_1.tex")
 diary on
 
@@ -36,6 +37,7 @@ disp('\end{table}')
 diary off
 
 %% Table 2 - Data Properties
+delete Table_2.tex
 diary("Table_2.tex")
 diary on
 disp(['\begin{table}[H]'])
@@ -54,6 +56,7 @@ diary off
 
 
 %% Table 3 - Simulated Moments
+delete Table_3.tex
 diary("Table_3.tex")
 diary on
 disp(['\begin{table}[H]'])
@@ -73,11 +76,4 @@ disp(['\end{tabular}'])
 disp(['\end{table}'])
 diary off
 
-%%
- x=linspace(-0.8,0.8,101);y=x.^2;
- plot(x,y);
- xlabel('$x$','interpreter','latex','fontsize',18); 
- ylabel('$x^2$','interpreter','latex','fontsize',18); 
- set(gca,'fontsize',14); % increase font size
- saveas(gcf,'functionsaveas.eps','eps2c');
  
