@@ -21,6 +21,7 @@ global ncalc gamma sig sig_w g phi delta s_max s_bar sg maxcb tsc bondsel...
 %% initialization
 if dc == 0 
     T=ncalc;
+    rng(24,'twister');
     vtsim = sig*randn(T,1);
     wtsim = rhow * sig_w / sig * vtsim + sig_w * (1 - rhow ^2) ^ 0.5 * randn(T,1);
     if PD_Claim == 0

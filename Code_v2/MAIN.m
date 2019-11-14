@@ -1,4 +1,5 @@
 clear all
+clc
 format long
 tic
 addpath('Functions');
@@ -6,21 +7,25 @@ addpath('Data');
 addpath('Workspaces');
 addpath('Calibration');
 addpath('Figures');
+addpath('Utilities');
 %% Defining Globals
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
-    bondsel rhow seedval verd debug ann lnpca con sig_w lnpda PD_Claim
+    bondsel rhow seedval verd debug ann lnpca con sig_w lnpda PD_Claim Regressions
 
 %% Choices for solution methods
 % Calibration Choice
-calib=0;      % 0 - Campbell & Cochrane (1999)
+calib=1;      % 0 - Campbell & Cochrane (1999)
               % 1 - Krogh & Jensen (2019)
               
 % Solution method:
-PD_Claim = 1; % 0 = Price Consumption Claim
+PD_Claim = 0; % 0 = Price Consumption Claim
               % 1 = Price Dividend Claim
 % Plots
 Plots = 0;    % 0 = off
               % 1 = on
+% Regressions
+Regressions = 0; % 0 = off
+                 % 1 = on
 %% Initialization
 if calib == 0
     tsc = 12;
@@ -114,7 +119,6 @@ elseif flag1 == 1 && flag2 == 1
 end
 
 %% Simulation of time-series
-randn('seed',seedval);
 [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
     alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf] ...
     =annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
@@ -150,12 +154,12 @@ if PD_Claim == 0
     PC_Claim_Sim_mom = struct();
     PC_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
     PC_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
-    PC_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
-    PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf;
-    PC_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PC_Claim_Sim_mom.MeanRiskFreeRate     = Erfinterp_pf;
+    PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrfinterp_pf;
+    PC_Claim_Sim_mom.logSharperatio       = Shprinterp_pf;
+    PC_Claim_Sim_mom.Sharperatio          = ShpRinterp_pf;
+    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrettinterp_pf;
+    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrettinterp_pf;
     PC_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PC_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PC_Claim_Sim_mom.S_max                = S_max;
@@ -165,14 +169,14 @@ if PD_Claim == 0
     writetable(PC_Claim_Sim_mom)
 elseif PD_Claim == 1
     PD_Claim_Sim_mom = struct();
-    PD_Claim_Sim_mom.MeanDivGrowth       = Edc_pf;
-    PD_Claim_Sim_mom.StdDivGrowth        = Stdc_pf;
-    PD_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
-    PD_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PD_Claim_Sim_mom.logSharperatio       = Shpr_pf;
-    PD_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PD_Claim_Sim_mom.MeanDivGrowth        = Edc_pf;
+    PD_Claim_Sim_mom.StdDivGrowth         = Stdc_pf;
+    PD_Claim_Sim_mom.MeanRiskFreeRate     = Erfinterp_pf;
+    PD_Claim_Sim_mom.StdRiskFreeRate      = Stdrfinterp_pf;
+    PD_Claim_Sim_mom.logSharperatio       = Shprinterp_pf;
+    PD_Claim_Sim_mom.Sharperatio          = ShpRinterp_pf;
+    PD_Claim_Sim_mom.MeanExcessReturns    = Eexrettinterp_pf;
+    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrettinterp_pf;
     PD_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PD_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PD_Claim_Sim_mom.S_max                = S_max;
@@ -180,10 +184,9 @@ elseif PD_Claim == 1
     PD_Claim_Sim_mom.delta                = delta^tsc;
     PD_Claim_Sim_mom = struct2table(PD_Claim_Sim_mom);
     writetable(PD_Claim_Sim_mom)
-
 end
 %% SDF Simulation
-randn('seed',seedval);
+rng(24,'twister')
 [stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
     sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
     simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
@@ -256,6 +259,7 @@ for i = 1:length(astsim_pf)
     end
 end
 %% Regression
+if Regressions == 1
 returns = alnrtsim_pf;     % Returns
 PD_regress = alnpctsim_pf; % PD / PC 
 
@@ -266,6 +270,7 @@ x   = [ones(length(returns(1:end-h,:)), 1),  ...         % vector of Ones
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t         
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
 reg = nwest(y,x,0)
+end
 %% Finish
 if Plots == 1
     Figures_CC1998;
