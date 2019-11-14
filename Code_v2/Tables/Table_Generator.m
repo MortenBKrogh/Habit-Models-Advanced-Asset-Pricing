@@ -1,5 +1,5 @@
 %% Table 1 - Calibrated Model
-name = string(['Tables/Table_1_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex'])
+name = string(['Tables/Table_1_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex']);
 if isfile(name)
 delete name;
 end
@@ -40,7 +40,7 @@ disp('\end{table}');
 diary off
 
 %% Table 2 - Data Properties
-name = string(['Tables/Table_2_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex'])
+name = string(['Tables/Table_2_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex']);
 if isfile(name)
 delete name;
 end
@@ -55,8 +55,8 @@ disp(['\label{tab:Data_props_', num2str(calib),'_',num2str(PD_Claim),'}']);
 disp(['\begin{tabular}{@{}l@{\hspace{1.5cm}}l@{\hspace{1.5cm}}l@{}}']);
 disp(['\toprule']);
 disp([' & \textit{Simulated} & \textit{Historic} \\ \midrule']);
-disp(['$\mathbb{E}\left[r_t- r^f_t\right]$& $', num2str(Eexrettinterp_pf),'$           & $', num2str(0.0927),'$          \\']);
-disp(['$\sigma\left(r_t - r^f_t  \right)$ & $', num2str(Stdexrettinterp_pf),'$           & $', num2str(0.1670),'$          \\']);
+disp(['$\mathbb{E}\left[r_t- r^f_t\right]$& $',                                    num2str(Eexrettinterp_pf),'$           & $', num2str(0.0927),'$          \\']);
+disp(['$\sigma\left(r_t - r^f_t  \right)$ & $',                                    num2str(Stdexrettinterp_pf),'$           & $', num2str(0.1670),'$          \\']);
 disp(['$\mathbb{E}\left[r_t- r^f_t\right] / \sigma\left(r_t - r^f_t,\right)$ & $', num2str(Shprinterp_pf),'$ & $', num2str(0.5548),'$  \\ \bottomrule']);
 disp(['\end{tabular}']);
 disp(['\end{table}']);
@@ -64,7 +64,7 @@ diary off
 
 
 %% Table 3 - Simulated Moments
-name = string(['Tables/Table_3_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex'])
+name = string(['Tables/Table_3_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex']);
 if isfile(name)
 delete name;
 end
@@ -74,16 +74,17 @@ diary(name);
 diary on
 disp(['\begin{table}[H]']);
 disp(['\centering']);
-disp(['\caption{Simulated Moments}']);
+disp(['\caption{Simulated Moments_Calib_', num2str(calib),'_PD_', num2str(PD_Claim),'}']);
 disp(['\label{tab:MMoomme}']);
 disp(['\begin{tabular}{@{}llllllllll@{}}']);
 disp(['\toprule ']);
-disp([' & $\mathbb{E}\Delta d$ & $\sigma_{\Delta d}$ & $\mathbb{E}r^f$ & $\mathbb{E}r^m/\sigma _{r^m}$ & $\mathbb{E}R^m/\sigma _{R^m}$ & $\mathbb{E}r^m$ & $\sigma_{r^m}$ & $\mathbb{E}d-p$ & $\sigma_{d-p}$  \\ ']);
+if PD_Claim == 0
+disp([' & $\mathbb{E}\Delta c$ & $\sigma_{\Delta c}$ & $\mathbb{E}r^f$ & $\mathbb{E}r^m/\sigma _{r^m}$ & $\mathbb{E}R^m/\sigma _{R^m}$ & $\mathbb{E}r^m$ & $\sigma_{r^m}$ & $\mathbb{E}c-p$ & $\sigma_{c-p}$  \\ ']); 
+elseif PD_Claim == 1
+disp([' & $\mathbb{E}\Delta d$ & $\sigma_{\Delta d}$ & $\mathbb{E}r^f$ & $\mathbb{E}r^m/\sigma _{r^m}$ & $\mathbb{E}R^m/\sigma _{R^m}$ & $\mathbb{E}r^m$ & $\sigma_{r^m}$ & $\mathbb{E}d-p$ & $\sigma_{d-p}$  \\ ']);    
+end
 disp(['\midrule ']);
-disp(['\multicolumn{10}{l}{$P/D$}\\'])
-disp([' & ', num2str(0.0117),' & ', num2str(0.1026),' & ', num2str(0.0109),' & ', num2str(0.2424),' & ', num2str(0.3147),' & ', num2str(0.0402),' & ', num2str(0.1657),' & ', num2str(3.2545),' & ', num2str(0.2070),' \\ '])
-disp(['\multicolumn{10}{l}{$P/C$}\\'])
-disp(['& ', num2str(0.0135),' & ', num2str(0.0124),' & ', num2str(0.0109),' & ', num2str(0.3853),' & ', num2str(0.4204),' & ', num2str(0.0372),'& ', num2str(0.0966),' & ', num2str(3.3797),' & ', num2str(0.1864),' \\ '])
+disp([' & ', num2str(Edc_pf),' & ', num2str(Stdc_pf),' & ', num2str(Erfinterp_pf),' & ', num2str(Stdrfinterp_pf),' & ', num2str(Shprinterp_pf),' & ', num2str(ShpRinterp_pf),' & ', num2str(Eexrettinterp_pf),' & ', num2str(Stdexrettinterp_pf),' & ', num2str(Stdp_d_pf),' \\ '])
 disp(['\bottomrule '])
 disp(['\end{tabular}'])
 disp(['\end{table}'])

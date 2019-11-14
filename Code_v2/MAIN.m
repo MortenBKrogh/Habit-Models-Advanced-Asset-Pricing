@@ -18,7 +18,7 @@ calib=0;           % 0 - Campbell & Cochrane (1999)
                    % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 1;      % 0 = Price Consumption Claim
+PD_Claim = 0;      % 0 = Price Consumption Claim
                    % 1 = Price Dividend Claim
 % Plots
 Plots = 0;         % 0 = off
@@ -272,7 +272,7 @@ y   = returns(1+h:end,1);
 x   = [ones(length(returns(1:end-h,:)), 1),  ...         % vector of Ones
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
-reg = nwest(y,x,0)
+reg = nwest(y,x,0);
 end
 %% Finish
 if Plots == 1
