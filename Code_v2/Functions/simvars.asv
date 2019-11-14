@@ -86,6 +86,7 @@ lnrfsim = -log(delta) + gamma*g - gamma*(1-phi)*(stsim-s_bar)...
 
 testerf = interp(stsim,sg,lnrf1)';
 ertsim = interp(stsim,sg,er)';
+
 elnrtsim = interp(stsim,sg,elnr)'; 
 sdrtsim = interp(stsim,sg,sdr)'; 
 sdlnrtsim = interp(stsim,sg,sdlnr)';

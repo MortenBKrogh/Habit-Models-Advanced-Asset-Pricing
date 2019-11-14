@@ -122,7 +122,7 @@ end
 
 %% Simulation of time-series
 [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
-    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf aerd] ...
+    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf] ...
     =annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 %% Statistics of interest
 if ann == 1
@@ -190,7 +190,7 @@ end
 %% SDF Simulation
 rng(24,'twister')
 [stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
-    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim erd]=...
+    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
     simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
 % Stochastic discount factor
 SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim))...
@@ -276,10 +276,6 @@ end
 %% Finish
 if Plots == 1
     Figures_CC1998;
-end
-
-if Talbes == 1
-    Tables;
 end
 %%
 load gong
