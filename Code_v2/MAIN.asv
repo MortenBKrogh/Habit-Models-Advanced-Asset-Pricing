@@ -19,7 +19,7 @@ calib=1;      % 0 - Campbell & Cochrane (1999)
 PD_Claim = 0; % 0 = Price Consumption Claim
               % 1 = Price Dividend Claim
 % Plots
-Plots = 0;    % 0 = off
+Plots = 1;    % 0 = off
               % 1 = on
 %% Initialization
 if calib == 0
@@ -48,8 +48,7 @@ if calib == 1
     B=0;
     verd=0;
     ann=0;
-    sig_w = 0.112/sqrt(tsc);
-       % sig_w = Pars.sigma_w/sqrt(tsc);
+    sig_w = Pars.sigma_w/sqrt(tsc);
 end
 
 PD_Claim_init = PD_Claim;
@@ -117,7 +116,7 @@ end
 %% Simulation of time-series
 randn('seed',seedval);
 [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
-    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf] ...
+    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf vtsim1 stsim1] ...
     =annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 %% Statistics of interest
 if ann == 1
@@ -147,30 +146,16 @@ Stdexrettinterp_pf = std(exrettinterp_pf);
 Ep_d_pf = mean(alnpctsim_pf); % Log price/consumption
 Stdp_d_pf = std(alnpctsim_pf);
 
-table = zeros(13,1);
-table(1,1) = Edc_pf;
-table(2,1) = Stdc_pf;
-table(3,1) = Erf_pf;
-table(4,1) = Stdrf_pf;
-table(5,1) = Shpr_pf;
-table(6,1) = ShpR_pf;
-table(7,1) = Eexrett_pf;
-table(8,1) = Stdexrett_pf;
-table(9,1) = Ep_d_pf;
-table(10,1) = Stdp_d_pf;
-table(11,1)= S_max;
-table(12,1)= S_bar;
-table(13,1)= delta^tsc;
 if PD_Claim == 0
     PC_Claim_Sim_mom = struct();
     PC_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
     PC_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
-    PC_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
-    PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PC_Claim_Sim_mom.logSharperatio       = Shpr_pf;
-    PC_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PC_Claim_Sim_mom.MeanRiskFreeRate     = Erfinterp_pf;
+    PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrfinterp_pf;
+    PC_Claim_Sim_mom.logSharperatio       = Shprinterp_pf;
+    PC_Claim_Sim_mom.Sharperatio          = ShpRinterp_pf;
+    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrettinterp_pf;
+    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrettinterp_pf;
     PC_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PC_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PC_Claim_Sim_mom.S_max                = S_max;
@@ -180,14 +165,14 @@ if PD_Claim == 0
     writetable(PC_Claim_Sim_mom)
 elseif PD_Claim == 1
     PD_Claim_Sim_mom = struct();
-    PD_Claim_Sim_mom.MeanConsGrowth       = Edc_pf;
-    PD_Claim_Sim_mom.StdConsGrowth        = Stdc_pf;
-    PD_Claim_Sim_mom.MeanRiskFreeRate     = Erf_pf;
-    PD_Claim_Sim_mom.StdRiskFreeRate      = Stdrf_pf;
-    PD_Claim_Sim_mom.logSharperatio       = Shpr_pf;
-    PD_Claim_Sim_mom.Sharperatio          = ShpR_pf;
-    PD_Claim_Sim_mom.MeanExcessReturns    = Eexrett_pf;
-    PD_Claim_Sim_mom.StdExcessReturns     = Stdexrett_pf;
+    PD_Claim_Sim_mom.MeanDivGrowth       = Edc_pf;
+    PD_Claim_Sim_mom.StdDivGrowth        = Stdc_pf;
+    PC_Claim_Sim_mom.MeanRiskFreeRate     = Erfinterp_pf;
+    PC_Claim_Sim_mom.StdRiskFreeRate      = Stdrfinterp_pf;
+    PC_Claim_Sim_mom.logSharperatio       = Shprinterp_pf;
+    PC_Claim_Sim_mom.Sharperatio          = ShpRinterp_pf;
+    PC_Claim_Sim_mom.MeanExcessReturns    = Eexrettinterp_pf;
+    PC_Claim_Sim_mom.StdExcessReturns     = Stdexrettinterp_pf;
     PD_Claim_Sim_mom.MeanPriceDividend    = Ep_d_pf;
     PD_Claim_Sim_mom.StdPriceDividend     = Stdp_d_pf;
     PD_Claim_Sim_mom.S_max                = S_max;
@@ -195,15 +180,14 @@ elseif PD_Claim == 1
     PD_Claim_Sim_mom.delta                = delta^tsc;
     PD_Claim_Sim_mom = struct2table(PD_Claim_Sim_mom);
     writetable(PD_Claim_Sim_mom)
-
 end
 %% SDF Simulation
-randn('seed',seedval);
-[stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
-    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
-    simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
+%randn('seed',seedval);
+%[stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
+%    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
+%    simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
 % Stochastic discount factor
-SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim))...
+SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim1).*exp(- gamma*(stsim(2:length(stsim1))...
     -stsim(1:length(stsim)-1)));
 %% Data Table
 if PD_Claim == 0
@@ -270,11 +254,6 @@ for i = 1:length(astsim_pf)
         rec_sim_ss(i) = 0;
     end
 end
-%% Finish
-if Plots == 1
-    Figures_CC1998;
-end
-
 %% Regression
 returns = alnrtsim_pf;     % Returns
 PD_regress = alnpctsim_pf; % PD / PC 
@@ -285,14 +264,11 @@ y   = returns(1+h:end,1);
 x   = [ones(length(returns(1:end-h,:)), 1),  ...         % vector of Ones
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t         
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
-
 reg = nwest(y,x,0)
-
-% plot fitted vs actual
-plot(y)
-hold on;
-plot(reg.yhat)
-
+%% Finish
+if Plots == 1
+    Figures_CC1998;
+end
 %%
 load gong
 audioplayer(y,Fs);
