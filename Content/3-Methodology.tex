@@ -107,7 +107,7 @@ The functional $P_t/C_t(s_t)$ must then satisfy,
 The conditional expectation is then solved on a grid through the Gauss-Legendre procedure over the error term $v_t$.
 
 \subsection{Pricing a Dividend Claim}
-The dividend claim process is solved in the same manner as in the previous section however the IID log-normal process for dividend growth is constructed such that the innovations in the dividend growth $w_t$ and in consumption $v_t$ is correlated of order $\rho$,
+The dividend claim process is solved in the same manner as in the previous section however the IID log-normal process for dividend growth is constructed such that the innovations in the dividend growth $w_t$ and in consumption $v_t$ is correlated with magnitude $\rho$,
 \begin{align}
     \Delta d_{t+1} = g + w_{t+1},\qquad w_t \overset{\mathcal{IID}}{\sim}\mathcal{N}\left(0,\sigma^2_w \right),\qquad \operatorname{corr}\left( w_t,\ v_t \right) = \rho
 \end{align}
