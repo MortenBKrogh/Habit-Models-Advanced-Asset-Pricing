@@ -56,8 +56,9 @@ function table2latex(T, filename)
     % Writing header
     fileID = fopen(filename, 'w');
     fprintf(fileID, '\\begin{tabular}{%s}\n', col_spec);
-    fprintf(fileID, '%s \\\\ \n', col_names);
     fprintf(fileID, '\\toprule \n');
+    fprintf(fileID, '%s \\\\ \n', col_names);
+    fprintf(fileID, '\\midrule \n');
     
     % Writing the data
     try
