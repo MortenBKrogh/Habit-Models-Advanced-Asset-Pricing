@@ -1,5 +1,5 @@
 function [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
-    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerf]=simvars(dc,lnpca,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1)
+    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerf erd]=simvars(dc,lnpca,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1)
 
 %
 % This routine simulates the most important time-series of this model     %
@@ -86,6 +86,10 @@ lnrfsim = -log(delta) + gamma*g - gamma*(1-phi)*(stsim-s_bar)...
 
 testerf = interp(stsim,sg,lnrf1)';
 ertsim = interp(stsim,sg,er)';
+for i=1:length(sg)
+if PD_Claim == 1
+    erd(i) = GaussLegendre(interd,abs(sig)*(-8),sig*8);
+end
 elnrtsim = interp(stsim,sg,elnr)'; 
 sdrtsim = interp(stsim,sg,sdr)'; 
 sdlnrtsim = interp(stsim,sg,sdlnr)';

@@ -1,5 +1,5 @@
 function [alndctsim astsim alnpctsim alnrtsim alnrfsim asdlnrtsim alnchpsim ...
-    alnysim aelnrcbsim asdlnrcbsim atesterf]=annvars(dc,lnpc,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1)
+    alnysim aelnrcbsim asdlnrcbsim atesterf aerd]=annvars(dc,lnpc,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1)
 % Annualising and preparing data from the simulation "simvars.m". Returns
 % various series of interest. Returns, PC and DC ratio, std, bond returns
 % etc.
@@ -7,7 +7,7 @@ function [alndctsim astsim alnpctsim alnrtsim alnrfsim asdlnrtsim alnchpsim ...
 global tsc bondsel ann ncalc
 % Simulating series
 [stsim vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
-    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerf]=simvars(dc,lnpc,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1);
+    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerf erd]=simvars(dc,lnpc,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1);
 
 T = size(stsim,1);
 
@@ -53,7 +53,8 @@ end
 %% Conditional deviation of returns
 if size(sdlnrtsim,1) > 1
     asdlnrtsim = chgfreq(sdlnrtsim,tsc,tsc,0);
-    asdlnrtsim = asdlnrtsim(2:size(asdlnrtsim,1)); end
+    asdlnrtsim = asdlnrtsim(2:size(asdlnrtsim,1));
+end
 %% Price evolution
 if size(lnpctsim,1) > 1
     lnchpsim = lnpctsim(2:T)-lnpctsim(1:T-1)+lndctsim;
@@ -66,6 +67,8 @@ if size(lnysim,1) > 1
      alnysim(:,i) = chgfreq(lnysim(1:T-1,i),tsc,tsc,0);
     end
     alnysim = alnysim(2:size(alnysim,1),:); end
+%% Expected rets
+aerd(:,i) = chgfreq(erd(1:T-1,i+1),tsc,tsc,0);
 %% Bonds
 % Mean returns
 if size(elnrcbsim,1) > 1
