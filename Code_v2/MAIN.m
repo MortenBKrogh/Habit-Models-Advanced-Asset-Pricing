@@ -278,8 +278,6 @@ end
 if Plots == 1
     Figures_CC1998;
 end
-<<<<<<< HEAD
-=======
 
 if Tables == 1
     Tables;
