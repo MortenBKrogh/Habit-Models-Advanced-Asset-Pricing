@@ -15,12 +15,15 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 % Calibration Choice
 calib=1;      % 0 - Campbell & Cochrane (1999)
               % 1 - Krogh & Jensen (2019)
-              
+
 % Solution method:
 PD_Claim = 0; % 0 = Price Consumption Claim
               % 1 = Price Dividend Claim
 % Plots
 Plots = 0;    % 0 = off
+              % 1 = on
+% Update tables
+Tables = 0;   % 0 = off
               % 1 = on
 % Regressions
 Regressions = 0; % 0 = off
@@ -82,7 +85,7 @@ S=exp(sg);
 %% PD- & PC-ratio
  PD_Claim = 0;
  [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
- PC_ratio=exp(output_lnpca); 
+ PC_ratio=exp(output_lnpca);
  lnpca_pf=output_lnpca;
 
  PD_Claim = 1;
@@ -260,13 +263,13 @@ end
 %% Regression
 if Regressions == 1
 returns = alnrtsim_pf;     % Returns
-PD_regress = alnpctsim_pf; % PD / PC 
+PD_regress = alnpctsim_pf; % PD / PC
 
 h   = 0;                        % Forecast Horizon 0 = in-sample regression
 
 y   = returns(1+h:end,1);
 x   = [ones(length(returns(1:end-h,:)), 1),  ...         % vector of Ones
-    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t         
+    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
 reg = nwest(y,x,0)
 end
@@ -274,9 +277,12 @@ end
 if Plots == 1
     Figures_CC1998;
 end
+
+if Talbes == 1
+    Tables;
+end
 %%
 load gong
 audioplayer(y,Fs);
 play(ans)
 toc
-
