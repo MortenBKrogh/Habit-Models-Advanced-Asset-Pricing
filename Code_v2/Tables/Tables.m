@@ -1,5 +1,3 @@
-
-
 %% Table 1 - Calibrated Model
 delete Table_1.tex
 diary("Table_1.tex")
