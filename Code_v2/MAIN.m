@@ -7,27 +7,28 @@ addpath('Data');
 addpath('Workspaces');
 addpath('Calibration');
 addpath('Figures');
+addpath('Tables');
 %% Defining Globals
 global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
     bondsel rhow seedval verd debug ann lnpca con sig_w lnpda PD_Claim Regressions
 
 %% Choices for solution methods
 % Calibration Choice
-calib=1;      % 0 - Campbell & Cochrane (1999)
-              % 1 - Krogh & Jensen (2019)
+calib=0;           % 0 - Campbell & Cochrane (1999)
+                   % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 0; % 0 = Price Consumption Claim
-              % 1 = Price Dividend Claim
+PD_Claim = 0;      % 0 = Price Consumption Claim
+                   % 1 = Price Dividend Claim
 % Plots
-Plots = 1;    % 0 = off
-              % 1 = on
+Plots = 0;         % 0 = off
+                   % 1 = on
 % Update tables
-Tables = 0;   % 0 = off
-              % 1 = on
+Tables = 1;        % 0 = off
+                   % 1 = on
 % Regressions
-Regressions = 0; % 0 = off
-                 % 1 = on
+Regressions = 0;   % 0 = off
+                   % 1 = on
 %% Initialization
 if calib == 0
     tsc = 12;
@@ -125,7 +126,7 @@ end
 
 %% Simulation of time-series
 [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
-    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf aerd] ...
+    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf] ...
     =annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 %% Statistics of interest
 if ann == 1
@@ -193,7 +194,7 @@ end
 %% SDF Simulation
 rng(24,'twister')
 [stsim, vtsim lndctsim lnpctsim lnrtsim lnrfsim ertsim elnrtsim sdrtsim...
-    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim erd]=...
+    sdlnrtsim elnrcbsim sdlnrcbsim lnysim lnrcbsim testerfsim]=...
     simvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf ,lnrf1_pf);
 % Stochastic discount factor
 SDFus = delta*exp(-g*gamma)*exp(-gamma*vtsim).*exp(- gamma*(stsim(2:length(stsim))...
@@ -274,7 +275,7 @@ y   = returns(1+h:end,1);
 x   = [ones(length(returns(1:end-h,:)), 1),  ...         % vector of Ones
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
-reg = nwest(y,x,0)
+reg = nwest(y,x,0);
 end
 %% Finish
 if Plots == 1
@@ -282,7 +283,7 @@ if Plots == 1
 end
 
 if Tables == 1
-    Tables;
+    Table_Generator;
 end
 
 if calib == 1

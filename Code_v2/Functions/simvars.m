@@ -86,10 +86,6 @@ lnrfsim = -log(delta) + gamma*g - gamma*(1-phi)*(stsim-s_bar)...
 
 testerf = interp(stsim,sg,lnrf1)';
 ertsim = interp(stsim,sg,er)';
-for i=1:length(sg)
-if PD_Claim == 1
-    erd(i) = GaussLegendre(interd,abs(sig)*(-8),sig*8);
-end
 elnrtsim = interp(stsim,sg,elnr)'; 
 sdrtsim = interp(stsim,sg,sdr)'; 
 sdlnrtsim = interp(stsim,sg,sdlnr)';

@@ -6,7 +6,7 @@ function [er elnr sdr sdlnr lnrf lnrf1 lny elnrcb sdlnrcb slpmv] = finders(sg)
 % ativos de consumo.                                                      %
 % ----------------------------------------------------------------------- %
 
-global g gamma sig phi s maxcb s_bar delta tsc lnpcb matur
+global g gamma sig phi s maxcb s_bar delta tsc lnpcb matur PD_Claim
 
 % Inclina??o da Fronteira de M?dia-Vari?ncia                              %
 %                                                                         %
