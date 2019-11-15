@@ -24,7 +24,7 @@ PD_Claim = 0;      % 0 = Price Consumption Claim
 Plots = 0;         % 0 = off
                    % 1 = on
 % Update tables
-Tables = 1;        % 0 = off
+Tables = 0;        % 0 = off
                    % 1 = on
 % Regressions
 Regressions = 0;   % 0 = off
