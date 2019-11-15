@@ -19,7 +19,7 @@ plot(table2array(datPC(:,4)));title('$P/C$')
 subplot(2,1,2)
 plot(table2array(datPD(:,4)));title('$P/D$')
 %%                          
-if PD_Claim_Regressions == 0:
+if PD_Claim_Regressions == 0
     Moments = momPC;
     Data = datPC;
 else
@@ -32,7 +32,8 @@ astsim = table2array(Data(:,1));
 load('Workspaces/Calibration','s_bar');
 load('Workspaces/CC_PC_Claim_workspace','rec_emp_percentage')
 %% Matching the empirical density
-Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.9);
+%Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.9);
+Rec_s_bar = -2.75;
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
