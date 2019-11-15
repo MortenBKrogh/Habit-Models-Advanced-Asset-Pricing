@@ -17,7 +17,7 @@ disp('\begin{tabular}{@{}ll@{\hspace{1.5cm}}ll@{}}');
 disp('\toprule');
 disp(' & Parameter                              & Notation         & Value    \\ \midrule') ;
 disp('\multicolumn{4}{l}{\textit{Calibrated}}                                 \\');
-disp([' & Mean consumption growth                & $g$            & $', num2str(Edc_pf), '$ \\']);
+disp([' & Mean consumption growth                & $g$              & $', num2str(Edc_pf), '$ \\']);
 disp([' & Standard deviation of $\Delta c_t$     & $\sigma$         & $', num2str(Stdc_pf),'$ \\']);
 disp([' & Standard deviation of $\Delta d_t$     & $\sigma_w$       & $', num2str(Stdc_pf), '$ \\']);
 disp([' & Log risk-free rate                     & $r^f$            & $', num2str(Erfinterp_pf),'$ \\']);
