@@ -66,6 +66,9 @@ s_bar = log(S_bar);
 s_max = s_bar + (1-S_bar^2)/2;
 S_max = exp(s_max);
 delta=exp(gamma*g-.5*((1-phi)*gamma-B)-rf0); % Equation (12) in paper C&C- 1999.
+
+save('Workspaces/Calibration');
+
 szgrid=15;
 
 ncalc = 100000;                % Number of simulations
@@ -281,6 +284,21 @@ end
 if Tables == 1
     Tables;
 end
+
+if calib == 1
+    if PD_Claim == 0
+        save('Workspaces/PC_Claim_workspace');
+    else
+        save('Workspaces/PD_Claim_workspace');
+    end
+else
+    if PD_Claim == 0
+        save('Workspaces/CC_PC_Claim_workspace');
+    else
+        save('Workspaces/CC_PD_Claim_workspace');
+    end
+end
+
 %%
 load gong
 audioplayer(y,Fs);
