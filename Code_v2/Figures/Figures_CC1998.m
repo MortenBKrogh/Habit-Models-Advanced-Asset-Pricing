@@ -14,7 +14,9 @@ saveas(gcf,string(['Figures/Figure_7_CC_1998_Calib_', num2str(calib),'_PD_', num
 %% Stationary Density 
 warning('off','all'); % fplot doest like the integral functions
 figure;
-fplot(@q_s, [min(log(S)+3) s_max+0.15]);title('Stationary Distribution of s')
+fplot(@q_s, [min(log(S)+3) s_max+0.15]);title('Stationary Distribution of s');
+hold on
+hist(astsim)
 %hold on %% Only works for MatLab later than 2018b 
 % xline(s_bar, '--','$\bar{s}$', 'interpreter','latex', 'fontsize', 16);
 %%% ----- %%%
