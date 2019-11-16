@@ -108,7 +108,7 @@ elseif PD_Claim == 1
     lnpca = output_lnpda;
 end
 
-%% Find expected returns and conditional deviations of consumption clain
+%% Find expected returns and conditional deviations of consumption claim
 verd=0;
 % Fixed point method
 [er_pf elnr_pf sdr_pf sdlnr_pf lnrf_pf lnrf1_pf lny_pf elnrcb_pf sdlnrcb_pf slpmv_pf] = finders(sg);

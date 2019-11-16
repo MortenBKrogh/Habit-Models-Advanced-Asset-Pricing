@@ -12,7 +12,7 @@ set(groot,'defaulttextinterpreter','latex');
 set(groot, 'defaultAxesTickLabelInterpreter','latex');  
 set(groot, 'defaultLegendInterpreter','latex');
 %%
-PD_Claim_Regressions = 1; % 0 = PC
+PD_Claim_Regressions = 0; % 0 = PC
                           % 1 = PD
 
 momPC = readtable('PC_Claim_Sim_mom.txt');
@@ -52,13 +52,14 @@ idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
 % Calculate percentage of the time the economy is in recession
 rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1));
 Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.1);
+Rec_s_bar = Rec_s_bar;
 %Rec_s_bar = -2.22;
 %%
-[heights location] = hist(astsim_pf, 250);
+[heights location] = hist(astsim, 50);
 width = location(2) - location(1);
-heights = heights / (size(astsim_pf, 1) * width)^.9;
+heights = heights / (size(astsim, 1) * width);
 
-warning('off','all'); % fplot doest like the integral functions
+warning('off','all'); % fplot doesnt like the integral functions
 figure;
 bar(location, heights,'hist')
 hold on
@@ -75,3 +76,4 @@ for i = 1:length(astsim)
         rec_sim_ss(i) = 0;
     end
 end
+rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss)

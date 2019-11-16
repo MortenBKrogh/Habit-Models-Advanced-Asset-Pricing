@@ -47,7 +47,7 @@ stsim = zeros(T+1,1);
 
 stsim(1) = s_bar;           % Starting the process at SS
 
-if PD_Claim == 0
+% if PD_Claim == 0
     for i=2:T+1
         if strans(stsim(i-1),vtsim(i-1)) <= s_max
             stsim(i) = strans(stsim(i-1),vtsim(i-1));
@@ -55,15 +55,15 @@ if PD_Claim == 0
             stsim(i)=(1-phi)*s_bar+phi*stsim(i-1);
         end
     end
-else
-    for i=2:T+1
-        if strans(stsim(i-1),wtsim(i-1)) <= s_max
-            stsim(i) = strans(stsim(i-1),vtsim(i-1));
-        else
-            stsim(i)=(1-phi)*s_bar+phi*stsim(i-1);
-        end
-    end
-end
+% else
+%     for i=2:T+1
+%         if strans(stsim(i-1),wtsim(i-1)) <= s_max
+%             stsim(i) = strans(stsim(i-1),vtsim(i-1));
+%         else
+%             stsim(i)=(1-phi)*s_bar+phi*stsim(i-1);
+%         end
+%     end
+% end
 %% PC ratio                                           % 
 lnpctsim = interp(stsim,sg,lnpca)';
 
