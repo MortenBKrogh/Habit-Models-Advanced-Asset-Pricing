@@ -87,12 +87,16 @@ rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss);
 load('PD_Claim_workspace','s_bar','s_max',...
         'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf','alnpctsim_pf');
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% r_(t+h) = alpha + beta p/d_t + eps %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 PD_regress = alnpctsim_pf;              % PD/PC
 rets = alnrtsim_pf;                     % Returns
-h   =  1;                        % Forecast Horizon 0 = in-sample regression
+h   =  1;                               % Forecast Horizon 0 = in-sample regression
 
 y   = rets(1+h:end,1);
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
+x   = [ones(length(rets(1:end-h,:)), 1),  ...            % vector of Ones
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
 regPDrec = nwest(y,x,0);
@@ -106,7 +110,6 @@ regPDnorec = nwest(y,x,0);
 load('PC_Claim_workspace','alnrtsim_pf','alnpctsim_pf');
 PC_regress = alnpctsim_pf;              % PD/PC
 rets = alnrtsim_pf;                     % Returns
-h   =  1;                        % Forecast Horizon 0 = in-sample regression
 
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones

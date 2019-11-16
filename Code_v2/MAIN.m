@@ -68,8 +68,6 @@ s_max = s_bar + (1-S_bar^2)/2;
 S_max = exp(s_max);
 delta=exp(gamma*g-.5*((1-phi)*gamma-B)-rf0); % Equation (12) in paper C&C- 1999.
 
-save('Workspaces/Calibration');
-
 szgrid=15;
 
 ncalc = 100000;                % Number of simulations
