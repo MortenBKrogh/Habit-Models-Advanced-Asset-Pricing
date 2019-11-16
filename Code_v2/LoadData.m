@@ -103,7 +103,7 @@ regPDrec = nwest(y,x,0);
 
 %%
 y   = rets(1+h:end,1);
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
+x   = [ones(length(rets(1:end-h,:)), 1),...         % vector of Ones
     PD_regress(1:end-h,1)];
 regPDnorec = nwest(y,x,0);
 %%
