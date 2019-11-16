@@ -67,7 +67,7 @@ end;
     G=zeros(nvar,nvar); w=zeros(2*nlag+1,1);
     a=0;
 
-    while a~=nlag+1;
+    while a~=nlag+1
         ga=zeros(nvar,nvar);
         w(nlag+1+a,1)=(nlag+1-a)/(nlag+1);
         za=hhat(:,(a+1):nobs)*hhat(:,1:nobs-a)';
@@ -78,12 +78,13 @@ end;
           end;
         G=G+w(nlag+1+a,1)*ga;
         a=a+1;
-    end; % end of while
+    end % end of while
     
         V=xpxi*G*xpxi;
         nwerr= sqrt(diag(V));
 
 results.tstat = results.beta./nwerr; % Newey-West t-statistics
+results.nwerr = nwerr;
 ym = y - ones(nobs,1)*mean(y);
 rsqr1 = sigu;
 rsqr2 = ym'*ym;

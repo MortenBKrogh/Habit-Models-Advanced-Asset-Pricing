@@ -8,6 +8,7 @@ addpath('Tables');
 %%% Loads simulated data and performs regressions %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear
+clc
 set(groot,'defaulttextinterpreter','latex');  
 set(groot, 'defaultAxesTickLabelInterpreter','latex');  
 set(groot, 'defaultLegendInterpreter','latex');
@@ -35,9 +36,15 @@ end
 
 aretssim =  table2array(Data(:,4));
 astsim = table2array(Data(:,1));
-load('Workspaces/Calibration','s_bar','s_max','verd','S_bar','sig','gamma','S');
-load('WS_Krogh_Jrensen_Calibration_PD_Claim_1','S')
-load('WS_Krogh_Jrensen_Calibration_PD_Claim_1','s_bar','s_max','verd','S_bar','sig','gamma','S','astsim');
+load('Workspaces/Calibration','s_bar','s_max','verd','S_bar','sig','gamma');
+if PD_Claim_Regressions == 0
+    load('PC_Claim_workspace','s_bar','s_max',...
+        'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf');
+else
+    load('PD_Claim_workspace','s_bar','s_max',...
+        'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf');
+end
+    
 %% Matching the empirical density
 NBER_REC = importdata('USREC.csv');
 
@@ -76,4 +83,37 @@ for i = 1:length(astsim)
         rec_sim_ss(i) = 0;
     end
 end
-rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss)
+rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss);
+%%
+PD_regress = table2array(Data(:,3));    % PD/PC
+rets = alnrtsim_pf;                     % Returns
+
+h   =  1;                        % Forecast Horizon 0 = in-sample regression
+
+y   = rets(1+h:end,1);
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
+    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
+    (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
+reg = nwest(y,x,0);
+%%
+plot(y);
+hold on
+plot(reg.yhat);
+%%
+PD_regress = table2array(Data(:,3));    % PD/PC
+rets = alnrtsim_pf;                     % Returns
+
+h   =  1;                        % Forecast Horizon 0 = in-sample regression
+
+y   = rets(1+h:end,1);
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
+    PD_regress(1:end-h,1)];
+reg = nwest(y,x,0);
+%%
+plot(y);
+hold on
+plot(reg.yhat);
+%%
+reg
+%%
+
