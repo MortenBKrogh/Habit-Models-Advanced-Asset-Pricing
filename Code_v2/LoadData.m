@@ -120,4 +120,5 @@ x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
 regPCnorec = nwest(y,x,0);
 regs = [regPDrec regPDnorec regPCrec regPCnorec];
 clearvars -except regs
+RegressionTable;
 
