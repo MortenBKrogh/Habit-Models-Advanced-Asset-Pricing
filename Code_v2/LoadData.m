@@ -36,7 +36,6 @@ end
 
 aretssim =  table2array(Data(:,4));
 astsim = table2array(Data(:,1));
-load('Workspaces/Calibration','s_bar','s_max','verd','S_bar','sig','gamma');
 if PD_Claim_Regressions == 0
     load('PC_Claim_workspace','s_bar','s_max',...
         'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf');
@@ -85,34 +84,40 @@ for i = 1:length(astsim)
 end
 rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss);
 %%
-PD_regress = table2array(Data(:,3));    % PD/PC
+load('PD_Claim_workspace','s_bar','s_max',...
+        'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf','alnpctsim_pf');
+    
+PD_regress = alnpctsim_pf;              % PD/PC
 rets = alnrtsim_pf;                     % Returns
-
 h   =  1;                        % Forecast Horizon 0 = in-sample regression
 
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
-reg = nwest(y,x,0);
-%%
-plot(y);
-hold on
-plot(reg.yhat);
-%%
-PD_regress = table2array(Data(:,3));    % PD/PC
-rets = alnrtsim_pf;                     % Returns
+regPDrec = nwest(y,x,0);
 
+%%
+y   = rets(1+h:end,1);
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
+    PD_regress(1:end-h,1)];
+regPDnorec = nwest(y,x,0);
+%%
+load('PC_Claim_workspace','alnrtsim_pf','alnpctsim_pf');
+PC_regress = alnpctsim_pf;              % PD/PC
+rets = alnrtsim_pf;                     % Returns
 h   =  1;                        % Forecast Horizon 0 = in-sample regression
 
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
-    PD_regress(1:end-h,1)];
-reg = nwest(y,x,0);
+    rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1), ...  %    I_rec_t *PD_t
+    (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
+regPCrec = nwest(y,x,0);
 %%
-plot(y);
-hold on
-plot(reg.yhat);
-%%
-reg
-%%
+y   = rets(1+h:end,1);
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
+    PC_regress(1:end-h,1)];
+regPCnorec = nwest(y,x,0);
+regs = [regPDrec regPDnorec regPCrec regPCnorec];
+clearvars -except regs
+
