@@ -12,7 +12,7 @@ set(groot,'defaulttextinterpreter','latex');
 set(groot, 'defaultAxesTickLabelInterpreter','latex');  
 set(groot, 'defaultLegendInterpreter','latex');
 %%
-PD_Claim_Regressions = 0; % 0 = PC
+PD_Claim_Regressions = 1; % 0 = PC
                           % 1 = PD
 
 momPC = readtable('PC_Claim_Sim_mom.txt');
@@ -76,4 +76,5 @@ for i = 1:length(astsim)
         rec_sim_ss(i) = 0;
     end
 end
-rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss)
+rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss);
+    
