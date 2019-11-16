@@ -9,23 +9,23 @@ addpath('Tables');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear
 clc
-set(groot,'defaulttextinterpreter','latex');  
-set(groot, 'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot, 'defaultAxesTickLabelInterpreter','latex');
 set(groot, 'defaultLegendInterpreter','latex');
 %%
-PD_Claim_Regressions = 0; % 0 = PC
+PD_Claim_Regressions = 1; % 0 = PC
                           % 1 = PD
 
 momPC = readtable('PC_Claim_Sim_mom.txt');
 momPD = readtable('PD_Claim_Sim_mom.txt');
 datPC = readtable('PC_Claim_Sim_dat.txt');
-datPD = readtable('PD_Claim_Sim_dat.txt');    
+datPD = readtable('PD_Claim_Sim_dat.txt');
 figure;
 subplot(2,1,1)
 plot(table2array(datPC(:,4)));title('$P/C$')
 subplot(2,1,2)
 plot(table2array(datPD(:,4)));title('$P/D$')
-%%                          
+%%
 if PD_Claim_Regressions == 0
     Moments = momPC;
     Data = datPC;
@@ -44,7 +44,7 @@ else
     load('PD_Claim_workspace','s_bar','s_max',...
         'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf');
 end
-    
+
 %% Matching the empirical density
 NBER_REC = importdata('USREC.csv');
 
@@ -116,4 +116,3 @@ plot(reg.yhat);
 %%
 reg
 %%
-
