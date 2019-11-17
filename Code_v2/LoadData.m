@@ -56,6 +56,7 @@ idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
 
 % Calculate percentage of the time the economy is in recession
 rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1));
+gamma = 2
 Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.1);
 Model_Rec = integral(@q_s,-Inf,s_bar);
 Match_Rec = integral(@q_s,-Inf,Rec_s_bar);
@@ -78,7 +79,7 @@ xline(s_bar,'--','$\bar{s}$','Interpreter','latex','FontSize',18);
 xlim([min(log(S)+1.5) -2]);
 legend('Histogram','Theoretical Density','Location','northwest')
 hold off
-saveas(gcf,'../Figures/DistributionS_t','epsc')
+%%saveas(gcf,'../Figures/DistributionS_t','epsc')
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
@@ -167,3 +168,17 @@ RegRec_PD = nwest(yrec,xrec,0);
 RegExp_PD = nwest(yexp,xexp,0);
 RSregs = [RegRec, RegRec_PD, RegExp, RegExp_PD];
 RSRegressionTable;
+%%
+load('PD_Claim_workspace','elnrtsim'); ExpRetsPD = elnrtsim;
+load('PC_Claim_workspace','elnrtsim'); ExpRetsPC = elnrtsim;
+%%
+figure;
+subplot(2,1,1)
+plot(ExpRetsPC);title({'$P/C$', ['mean =',num2str(mean(ExpRetsPC),6)]});
+xlim([-500 100000])
+ylabel('Excess Returns');
+subplot(2,1,2)
+plot(ExpRetsPD);title({'$P/D$', ['mean =',num2str(mean(ExpRetsPD),6)]});
+ylabel('Excess Returns');
+xlim([-500 100000]);
+% saveas(gcf,'../Figures/Excess_Rets','epsc')
