@@ -118,35 +118,27 @@ The functional price-dividend ratio is then calculated in the same manner as \eq
 It is worth noting that \citet{Campbell1999} actually recommends that the relationship between dividend growth and consumption growth should in fact be co-integrated rather than correlated, however we will be closing the model with a correlational relationship rather than the co-integrational relation proposed\footnote{\textsc{MatLab} code are available at GitHub, and are modified from the code presented by \citet{Costa2009}}.
 
 \subsection{Calibration of the model parameters}
-For model calibration we will rely on CRSP-data retrieved from the WRDS-database. The sampling period utilized spans 1950-2018 and samples 90 day T-bill returns and inflation rate \textit{Annual}, CRSP-Market return index\footnote{Index spanning the 3 stock indices NYSE/AMEX/NASDAQ} \textit{Monthly and annual}, and \textit{FRED} personal consumption data non-durables \textit{Quarterly}.  
+For model calibration we will rely on CRSP-data retrieved from the WRDS-database. The sampling period utilized spans 1950-2018 and samples 90 day T-bill returns and inflation rate \textit{Annual}, CRSP-Market return index\footnote{Index spanning the 2 stock exhanges NYSE/AMEX} \textit{Monthly and annual}, and \textit{FRED} personal consumption data non-durables \textit{Quarterly}.  
 
 
 We will utilize the analytical results presented by \citet{Campbell1999} and \citet{StigVinter2010}
 
-\subsubsection{Moments of growth}
-The unconditional mean of the consumption growth in the model can be retrieved by applying the expectations operator to equation \eqref{DConos},
-
+To estimate the unconditional mean of the consumption growth, $g$, in the model we apply the expectations operator to equation \eqref{DConos},
 \begin{align}
-    \mathbb{E}\left[ \Delta c_{t+1} \right] &=  \mathbb{E}\left[ g + v_{t+1} \right]\qquad \forall t\nonumber \\
+    \mathbb{E}\left[ \Delta c_{t+1} \right] &=  \mathbb{E}\left[ g + v_{t+1} \right],\qquad v_t\overset{IID}{\sim}\mathcal{N}\left(0,\sigma\right), \qquad \forall t\nonumber \\
     & = g
 \end{align}
+hence a consistent estimate of the true unconditional mean is given as the sample mean of consumption growth. From this result follows by extension that the unconditional standard deviation is given by $\sigma$ while the consistent estimate is simply the sample standard deviation of the consumption growth, the same result applies to dividend growth.
 
-hence a consistent estimator is given as the sample mean of consumption growth. From this result follows by extension that the unconditional standard deviation is given by $\sigma$ while the consistent estimate is simply the standard deviation of the consumption growth, the same result applies to dividend growth.
-
-\subsubsection{$\mathbf{\operatorname{corr}(w_t, v_t)}$}
-Following the convincing argumentation of \citet{Campbell1999} the correlation between dividend growth and consumption growth are especially tricky to calibrate as it is very non-robust to horizon changes, hence we fix the correlation to the level chosen by \citet{Campbell1999}.
-
-\subsubsection{Autocorrelation $\phi$}
-The estimate for the true autocorrelation-coefficient is given by the first order autocorrelation function of the price-dividend ratio, i.e,
+To determine the correlation between dividend growth and consumption ratio ${\operatorname{corr}(w_t, v_t)}$ or $\rho$ we follow the argumentation of \citet{Campbell1999} the correlation between dividend growth and consumption growth are especially tricky to calibrate as it is very non-robust to horizon changes, hence we fix the correlation to the level chosen by \citet{Campbell1999}, they use $\rho = 0.2$ but notes that with different horizons the value lies between (0.05-0.25).\\
+To estimate the true autocorrelation-coefficient we use the first order sample autocorrelation function of the price-dividend ratio, i.e,
 \begin{align}
     p_t - d_t = \alpha + \phi \left( p_{t-1} - d_{t-1} \right)+\varepsilon_t
 \end{align}
-this follows from equation \eqref{pd_ratio}, stating the the price-dividend ratio is a functional only of the state variable, hence inheriting the dynamics of only one state, the surplus consumption ratio. This hold true for all $t$ thus the effects of $s_t$ on $p_{t+1}-d_{t+1}$, can be retrieved using the information contained in $p_t-d_t$.
-
-\subsubsection{$\mathbf{\gamma}$ Utility Curvature}
-The coefficient of utility curvature is chosen as to match the observed return on consumption claims. In line with the proposed method by \citet{Campbell1999}.
-
-\subsubsection{$\mathbf{\delta}$ Subjective discount factor}
+These dynamics of the dividend yield are true only if the best forecast of future dividend yield can be retrieved from an AR(1) model, that this holds true can be seen from equation \eqref{pd_ratio}, stating the the price-dividend ratio is a functional only of the state variable, hence inheriting the dynamics of only one state, the surplus consumption ratio. This hold true for all $t$ thus the effects of $s_t$ on $p_{t+1}-d_{t+1}$, can be retrieved using the information contained in $p_t-d_t$.\\
+The local utility curvature, $\gamma$, in the model is not calibrated as per say, instead we rely on existiing literature such as \citet{Campbell1999} and fixes $\gamma = 2$.
+\\
+\newline
 The subjective discount factor is chosen as to match the risk-free rate as reported in the CRSP-data. 
 Recalling equation \eqref{RFR1} allows for a closed form solution for subjective discount factor given an arbitrary calibration of the risk-free rate, the local utility curvature, the persistence coefficient and the growth rate of dividends/consumption,
 \begin{align}
