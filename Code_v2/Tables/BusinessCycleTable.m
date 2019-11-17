@@ -8,7 +8,7 @@ end
 diary(name);
 diary on
 
-disp(['\begin{table}[] ']);
+disp(['\begin{table}[H] ']);
 disp(['\centering']);
 disp(['\caption{Business Cycle, Simulated and historic}']);
 disp(['\label{tab:BC}']);
@@ -20,3 +20,4 @@ disp(['\textit{Parameter}     &                   & ',num2str(exp(s_bar),2),'&',
 disp(['Recession, \% &', num2str(rec_emp_percentage*100,4),'&',   num2str(Model_Rec*100,4),' &',   num2str(Match_Rec*100,4),'\\ \bottomrule']);
 disp(['\end{tabular}']);
 disp(['\end{table}']);
+diary off
