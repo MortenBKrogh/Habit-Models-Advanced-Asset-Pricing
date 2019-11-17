@@ -58,7 +58,7 @@ idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
 rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1));
 Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.1);
 Model_Rec = integral(@q_s,-Inf,s_bar);
-Rec_s_bar = Rec_s_bar;
+Match_Rec = integral(@q_s,-Inf,Rec_s_bar);
 %Rec_s_bar = -2.22;
 %%
 [heights location] = hist(astsim, 65);
