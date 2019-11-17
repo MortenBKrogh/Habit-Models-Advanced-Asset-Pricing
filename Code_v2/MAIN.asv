@@ -18,7 +18,7 @@ calib=1;           % 0 - Campbell & Cochrane (1999)
                    % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 1;      % 0 = Consumption Claim
+PD_Claim = 0;      % 0 = Consumption Claim
                    % 1 = Dividend Claim
 % Plots
 Plots = 0;         % 0 = off
@@ -104,11 +104,9 @@ global lnpca lnpc
 if PD_Claim == 0
     [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
     lnpca = output_lnpca;
-    lnpca_pf = output_lnpca;
 else 
     [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
     lnpca = output_lnpda;
-    lnpca_pf = output_lnpda;
 end
 
 %% Find expected returns and conditional deviations of consumption claim
