@@ -39,39 +39,39 @@ disp('\end{table}');
 
 diary off
 
-%% Table 2 - Data Properties
-name = string(['Tables/Table_2_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex']);
-if isfile(name)
-delete name;
-end
-
-%%
-diary(name);
-diary on
-disp(['\begin{table}[H]']);
-disp(['\centering']);
-disp(['\caption{Data Properties calibration = ', num2str(calib),' claim = ', num2str(PD_Claim),'}']);
-disp(['\label{tab:Data_props_', num2str(calib),'_',num2str(PD_Claim),'}']);
-disp(['\begin{tabular}{@{}l@{\hspace{1.5cm}}l@{\hspace{1.5cm}}l@{}}']);
-disp(['\toprule']);
-disp([' & \textit{Simulated} & \textit{Historic} \\ \midrule']);
-disp(['$\mathbb{E}\left[r_t- r^f_t\right]$& $',                                    num2str(Eexrettinterp_pf),'$           & $', num2str(0.0927),'$          \\']);
-disp(['$\sigma\left(r_t - r^f_t  \right)$ & $',                                    num2str(Stdexrettinterp_pf),'$           & $', num2str(0.1670),'$          \\']);
-disp(['$\mathbb{E}\left[r_t- r^f_t\right] / \sigma\left(r_t - r^f_t,\right)$ & $', num2str(Shprinterp_pf),'$ & $', num2str(0.5548),'$  \\ \bottomrule']);
-disp(['\end{tabular}']);
-disp(['\end{table}']);
-diary off
+% %% Table 2 - Data Properties
+% name = string(['Tables/Table_2_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.tex']);
+% if isfile(name)
+% delete name;
+% end
+% 
+% %%
+% diary(name);
+% diary on
+% disp(['\begin{table}[H]']);
+% disp(['\centering']);
+% disp(['\caption{Data Properties calibration = ', num2str(calib),' claim = ', num2str(PD_Claim),'}']);
+% disp(['\label{tab:Data_props_', num2str(calib),'_',num2str(PD_Claim),'}']);
+% disp(['\begin{tabular}{@{}l@{\hspace{1.5cm}}l@{\hspace{1.5cm}}l@{}}']);
+% disp(['\toprule']);
+% disp([' & \textit{Simulated} & \textit{Historic} \\ \midrule']);
+% disp(['$\mathbb{E}\left[r_t- r^f_t\right]$& $',                                    num2str(Eexrettinterp_pf),'$           & $', num2str(0.0927),'$          \\']);
+% disp(['$\sigma\left(r_t - r^f_t  \right)$ & $',                                    num2str(Stdexrettinterp_pf),'$           & $', num2str(0.1670),'$          \\']);
+% disp(['$\mathbb{E}\left[r_t- r^f_t\right] / \sigma\left(r_t - r^f_t,\right)$ & $', num2str(Shprinterp_pf),'$ & $', num2str(0.5548),'$  \\ \bottomrule']);
+% disp(['\end{tabular}']);
+% disp(['\end{table}']);
+% diary off
 
 
 %% Table 3 - Simulated Moments
-name = string(['../Tables/Table_3_Calib_', num2str(calib),'.tex']);
+name = string(['../Tables/Moments.tex']);
 if isfile(name)
 delete name;
 end
 
 %%
-momPC = readtable('PC_Claim_Sim_mom.txt');
-momPD = readtable('PD_Claim_Sim_mom.txt');
+momPC = table2array(readtable('PC_Claim_Sim_mom.txt'));
+momPD = table2array(readtable('PD_Claim_Sim_mom.txt'));
 diary(name);
 diary on
 disp(['\begin{tabular}{@{}llllllllll@{}}']);
