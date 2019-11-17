@@ -1,5 +1,5 @@
 function [er]=erinsd(v)
-% Procedimento para calcular os retornos do consumption claim.            % 
+% Procedure for calculating consumption claim returns.                    % 
 % ----------------------------------------------------------------------- % 
 
 global sg s lnpca g 

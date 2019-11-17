@@ -1,7 +1,7 @@
 function [out]=intemrs(v)
 
-% Retornará a taxa marginal de substituição de tal forma que possa ser    %
-% utilizada na integração do ponto fixo.                                  %
+% It will return the marginal rate of substitution in such a way that it
+% can be used for fixed point integration.                                %
 % ----------------------------------------------------------------------- %
 
 global sig

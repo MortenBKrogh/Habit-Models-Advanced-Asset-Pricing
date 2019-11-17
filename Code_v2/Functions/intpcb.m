@@ -1,6 +1,6 @@
 function out = intpcb(v)
 
-% Função que fornece o preço dos bonds para cada maturidade               %
+% Function that provides the price of bonds for each maturity.            %
 
 global s sg lnpcb sig
 

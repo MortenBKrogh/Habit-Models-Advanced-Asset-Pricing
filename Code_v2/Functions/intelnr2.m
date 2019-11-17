@@ -1,6 +1,6 @@
 function [out] = intelnr2(v)
 
-% Fornece o valor do retorno esperado de acordo com uma distribuição normal
+% Provides the expected return value according to a normal distribution.
 % ----------------------------------------------------------------------- %
 
 global sig

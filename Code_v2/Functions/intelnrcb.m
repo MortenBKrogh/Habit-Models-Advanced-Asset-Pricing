@@ -1,6 +1,6 @@
 function out = intercb(v)
-% Integrando dos retornos esperados dos títulos públicos                  % 
-% ou, da estrutura a termo.                                               % 
+% Integrating the expected returns of public securities or                % 
+% the termstructure                                           % 
 
 global sig
 
