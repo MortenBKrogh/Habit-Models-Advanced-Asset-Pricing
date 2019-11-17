@@ -57,18 +57,26 @@ idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
 % Calculate percentage of the time the economy is in recession
 rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1));
 Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.1);
+Model_Rec = integral(@q_s,-Inf,s_bar);
 Rec_s_bar = Rec_s_bar;
 %Rec_s_bar = -2.22;
 %%
-[heights location] = hist(astsim, 50);
+[heights location] = hist(astsim, 65);
 width = location(2) - location(1);
 heights = heights / (size(astsim, 1) * width);
-
+%%
 warning('off','all'); % fplot doesnt like the integral functions
 figure;
-bar(location, heights,'hist')
+barplot = bar(location, heights,'hist');
+barplot.FaceColor = [0, 0.4470, 0.7410];
 hold on
-fplot(@q_s, [min(log(S)-.3) s_max+0.15],'red');title('Stationary Distribution of s');
+fplot(@q_s, [min(log(S)+1.5) s_max+0.15],'Color',[0.8500, 0.3250, 0.0980],'LineWidth',2.5);%title('Stationary Distribution of s');
+hold on
+xline(Rec_s_bar,'--','$\bar{s}_{rec}$','Interpreter','latex','FontSize',18);
+hold on
+xline(s_bar,'--','$\bar{s}$','Interpreter','latex','FontSize',18);
+hold off
+saveas(gcf,'../Figures/DistributionS_t','epsc')
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
