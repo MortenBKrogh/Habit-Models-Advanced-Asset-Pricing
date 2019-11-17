@@ -40,12 +40,15 @@ From the calibrated model we simulate a chain of 100.000 monthly draws from the 
 \newline
 Based upon NCER-recession data, we find that the US economy was in recession approximately 13.4\% of the period spanning January 1950 until December 2018.  In the model a recession implies that present consumption in low relative to previous periods consumption, that is the value of $s_t$ is lower than the steady state value of surplus consumption $\Bar{s}$ - integrating over the density of $s_t$ yields that the simulated economy is in recession during 37\% of all observations, which indicates that $\Bar{s}$ might be misspecified. To correct $\Bar{s}$ we match the empirical business cycle behavior by numerical optimization of the $s_t$ density, such that the empirical and simulated economy is in recession roughly the same amount. The $\Bar{s}$-value matching the empirical business cycle, throughout denoted $\Bar{s}_{rec}$ \textit{or} ($\Bar{S}_{rec}$), is found to be $-3.18$ ($0.0415$).
 
+
+
 \begin{figure}[H]
     \centering
     \caption{Distribution of simulated $s_t$ chain}
     \includegraphics[width=\textwidth]{Figures/DistributionS_t.eps}
     \label{fig:DistriSt}
 \end{figure}
+From the constructed surplus consumption threshold $\Bar{s}_{rec}$ for recession, we construct an indicator dummy for recessions. Such that $I_{rec} = 1$ \textit{iff}. $\Bar{s}_{rec} > s_t$ and $I_{rec}=0$ otherwise.
 
 \begin{table}[H]
 \centering
