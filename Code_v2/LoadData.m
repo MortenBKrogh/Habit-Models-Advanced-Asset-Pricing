@@ -46,7 +46,6 @@ end
 
 %% Matching the empirical density
 NBER_REC = importdata('USREC.csv');
-
 % Define period yyyy-mm-dd
 from = '1950-01-01';
 to   = '2018-12-01';
@@ -124,6 +123,37 @@ x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
     PC_regress(1:end-h,1)];
 regPCnorec = nwest(y,x,0);
 regs = [regPDrec regPDnorec regPCrec regPCnorec];
-clearvars -except regs
 RegressionTable;
+%% Split
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Regime Switching model Observable states %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+load('PC_Claim_workspace','alnrtsim_pf','alnpctsim_pf','Erfinterp_pf');
+PC_regress = alnpctsim_pf;              % PD/PC
+rfr  = Erfinterp_pf;                    % Risk free rate
+rets = alnrtsim_pf - rfr;               % Excess Returns
 
+yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1); % Recession
+yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
+xrec  = [ones(length(rets(1:end-h,:)), 1),  ...         
+        rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1)];
+xexp  = [ones(length(rets(1:end-h,:)), 1),...
+        (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)];
+RegRec = nwest(yrec,xrec,0);
+RegExp = nwest(yexp,xexp,0);
+%% Split
+load('PD_Claim_workspace','alnrtsim_pf','alnpctsim_pf','Erfinterp_pf');
+PC_regress = alnpctsim_pf;              % PD/PC
+rfr  = Erfinterp_pf;                    % Risk free rate
+rets = alnrtsim_pf - rfr;               % Excess Returns
+
+yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1); % Recession
+yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
+xrec  = [ones(length(rets(1:end-h,:)), 1),  ...         
+        rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1)];
+xexp  = [ones(length(rets(1:end-h,:)), 1),...
+        (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)];
+RegRec_PD = nwest(yrec,xrec,0);
+RegExp_PD = nwest(yexp,xexp,0);
+RSregs = [RegRec, RegRec_PD, RegExp, RegExp_PD];
+RSRegressionTable;
