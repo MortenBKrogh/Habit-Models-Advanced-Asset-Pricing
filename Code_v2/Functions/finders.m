@@ -1,21 +1,21 @@
 function [er elnr sdr sdlnr lnrf lnrf1 lny elnrcb sdlnrcb slpmv] = finders(sg)
 
-% Procedimento que calcula os retornos esperados dos ativos de consumo. ele
-% nos fornecer? E(R), SD(R), lnrf, a curvatura da fronteira m?dia vari?ncia
-% dada pela vari?vel (slpmv) e integrar? a raz?o de Sharpe do vetor de    %
-% ativos de consumo.                                                      %
+%Procedure that calculates expected returns on consumer assets. elenos will 
+% provide E (R), SD (R), lnrf, the mean boundary curvature of the variance 
+% given by the variable (slpmv) and integrate the Sharpe ratio of the
+% consumer asset vector.                                                   %
 % ----------------------------------------------------------------------- %
 
 global g gamma sig phi s maxcb s_bar delta tsc lnpcb matur PD_Claim
 
-% Inclina??o da Fronteira de M?dia-Vari?ncia                              %
+% Medium-Variance Boundary Slope                              %
 %                                                                         %
 % slpmv = (exp((gamma*sig)^2.*(1+lambda(sg)).^2)-1).^.5                   %
 % ----------------------------------------------------------------------- %
 
 slpmv = (exp((gamma*sig)^2*(1+lambda(sg)).^2)-1).^(0.5);
 
-%% Estrutura termo da taxa de juros dada por:                             %
+%% Term interest rate structure given by:                            %
 %                                                                         %
 % lnrf = -ln(delta) + gamma*g -                                           %
 % gamma*(1-phi)*(s{t}-s_bar)-.5((gamma*sig)^2)*(1+lambda(s{t}))^2
@@ -26,8 +26,7 @@ lnrf = -log(delta) + gamma*g - gamma*(1-phi)*(sg-s_bar)...
     - 0.5*(gamma*sig*(1+lambda(sg))).^2;
 
 %% Bonds
-% Matriz de todos os pre?os dos t?tulos. Sua dimens?o ser?                
-% N(sg) x (maxcb*tsc)
+% Matrix of all bond prices. Your dimension will be N(sg) x (maxcb*tsc)
 lnpcb = [];
 lnpcb(:,1) = -lnrf;
 
@@ -37,9 +36,6 @@ for j = 2:(maxcb*tsc)
     for i = 1:length(sg)
         s = sg(i);
         lnp(i) = log(GaussLegendre(@intpcb,abs(sig)*(-8),abs(sig)*8,40));
-        %      lnp(i) = log(GaussLegendre(@intpcb,abs(sig)*(-8),abs(sig)*8));
-        % newlnpc(i) = log(GaussLegendre(     @pdint,abs(sig)*(-8),abs(sig)*8));
-        % newlnpc(i)=log(GaussLegendre(@pdint,abs(sig)*(-8),abs(sig)*8,40)  );
     end
     lnpcb = cat(2,lnpcb,lnp);
 end
@@ -48,7 +44,7 @@ end
 lny = - ...
     lnpcb./kron(ones(size(sg,1),1),linspace(1/tsc,(maxcb*tsc)/tsc,(maxcb*tsc)));
 
-%% Retornos e Desvios Padr?o Esperados                                    %
+%% Expected Returns and Standard Deviations                                   %
 % ----------------------------------------------------------------------- %
 
 lnrf1 = zeros(size(sg,1),1);

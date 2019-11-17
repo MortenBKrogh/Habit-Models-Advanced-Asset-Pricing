@@ -76,12 +76,11 @@ maxcb = max(bondsel);
 seedval = 123;
 
 chk = 1;
-flag1 = 0; % Simulation flag
 flag2 = 1; % 1 Simulation of yearly data, 0 of quarterly
 con = 0;   % Interpolation
 
 %% Grid def
-sg = mkgrids(szgrid,0);
+sg = mkgrids(szgrid);
 S=exp(sg);
 
 %% PD- & PC-ratio
@@ -117,14 +116,10 @@ verd=0;
 [er_pf elnr_pf sdr_pf sdlnr_pf lnrf_pf lnrf1_pf lny_pf elnrcb_pf sdlnrcb_pf slpmv_pf] = finders(sg);
 
 %% Adjustments of inputs for simulation
-if flag1 == 0 && flag2 == 0
+ if flag2 == 0
     dc = 0;
-elseif flag1 == 1 && flag2 == 0
-    dc = exp(qlndc);
-elseif flag1 == 0 && flag2 == 1
+ elseif flag2 == 1
     dc = 0;
-elseif flag1 == 1 && flag2 == 1
-    dc = exp(alndc);
 end
 
 %% Simulation of time-series
