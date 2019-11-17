@@ -75,6 +75,8 @@ hold on
 xline(Rec_s_bar,'--','$\bar{s}_{rec}$','Interpreter','latex','FontSize',18);
 hold on
 xline(s_bar,'--','$\bar{s}$','Interpreter','latex','FontSize',18);
+xlim([min(log(S)+1.5) -2]);
+legend('Histogram','Theoretical Density','Location','northwest')
 hold off
 saveas(gcf,'../Figures/DistributionS_t','epsc')
 %% Redefining recession periods in the simulation
