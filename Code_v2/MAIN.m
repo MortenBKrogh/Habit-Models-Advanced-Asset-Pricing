@@ -18,8 +18,8 @@ calib=1;           % 0 - Campbell & Cochrane (1999)
                    % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 1;      % 0 = Price Consumption Claim
-                   % 1 = Price Dividend Claim
+PD_Claim = 1;      % 0 = Consumption Claim
+                   % 1 = Dividend Claim
 % Plots
 Plots = 0;         % 0 = off
                    % 1 = on
@@ -85,6 +85,7 @@ sg = mkgrids(szgrid,0);
 S=exp(sg);
 
 %% PD- & PC-ratio
+if plots
  PD_Claim = 0;
  [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
  PC_ratio=exp(output_lnpca);
@@ -94,6 +95,7 @@ S=exp(sg);
  [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
  PD_ratio=exp(output_lnpda);
  lnpda_pf=output_lnpda;
+end
 
 % reset PD_Claim to initial value we only changed it to make the plot
  PD_Claim = PD_Claim_init;
@@ -101,7 +103,7 @@ S=exp(sg);
 if PD_Claim == 0
     [output_lnpca ctrindx]=findlpc(sig,g,s_bar);
     lnpca = output_lnpca;
-elseif PD_Claim == 1
+else 
     [output_lnpda dtrindx]=findlpc(sig,g,s_bar);
     lnpca = output_lnpda;
 end
