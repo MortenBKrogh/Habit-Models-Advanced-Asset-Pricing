@@ -1,5 +1,5 @@
 A = struct2cell(regs);
-name = string(['Tables/RegressionTable.tex']);
+name = string(['../Tables/RegressionTable.tex']);
 if isfile(name)
 delete(name);
 end
