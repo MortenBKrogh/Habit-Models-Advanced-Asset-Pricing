@@ -66,7 +66,7 @@ diary off
 %% Table 3 - Simulated Moments
 name = string(['../Tables/Moments.tex']);
 if isfile(name)
-delete name;
+delete(name);
 end
 
 %%
