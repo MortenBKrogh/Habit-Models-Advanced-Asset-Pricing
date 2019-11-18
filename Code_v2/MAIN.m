@@ -14,7 +14,7 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 
 %% Choices for solution methods
 % Calibration Choice
-calib=1;           % 0 - Campbell & Cochrane (1999)
+calib=0;           % 0 - Campbell & Cochrane (1999)
                    % 1 - Krogh & Jensen (2019)
 
 % Solution method:
@@ -68,7 +68,7 @@ s_max = s_bar + (1-S_bar^2)/2;
 S_max = exp(s_max);
 delta=exp(gamma*g-.5*((1-phi)*gamma-B)-rf0); % Equation (12) in paper C&C- 1999.
 
-szgrid=15;
+szgrid=10;
 
 ncalc = 100000;                % Number of simulations
 bondsel = [1 2 3 4 5 7 10 20]; % Maturity of bonds simulated
@@ -298,5 +298,4 @@ end
 %load gong
 %audioplayer(y,Fs);
 %play(ans)
-mean(aelnrtsim)-Erf_pf
 toc
