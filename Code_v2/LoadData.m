@@ -139,16 +139,33 @@ end
 rec_sim_02 = rec_sim_02';
 %%
 y   = rets(1+h:end,1);
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
-    rec_sim_02(1:end-h,:) .* PC_regress(1:end-h,1), ...  %    I_rec_t *PD_t
-    (1-rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         
+    rec_sim_02(1:end-h,:) .* PC_regress(1:end-h,1), ...
+    (1-rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1)];
 regPCrec2 = nwest(y,x,0);
 
-x   = [ones(length(rets(1:end-h,:)), 1),  ...            % vector of Ones
-    rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
-    (1-rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
+x   = [ones(length(rets(1:end-h,:)), 1),  ...            
+    rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1), ...  
+    (1-rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
 regPDrec2 = nwest(y,x,0);
-regs2 = [regPCrec2 regPDrec2];
+
+x   = [ones(length(rets(1:end-h,:)), 1),  ...        
+    (1-rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1)];
+regPCexp3 = nwest(y,x,0);
+
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         
+     rec_sim_02(1:end-h,:) .* PC_regress(1:end-h,1)];
+regPCrec3 = nwest(y,x,0);
+
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         
+     rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1)];
+regPDrec3 = nwest(y,x,0);
+
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         
+     (1 - rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)];
+regPDexp3 = nwest(y,x,0);
+
+regs2 = [regPCrec2 regPDrec2 regPCrec3 regPCexp3 regPDrec3 regPDexp3];
 RegressionTable2;
 %% Split
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -212,3 +229,4 @@ plot(PDratio);ylabel('$p_t-d_t$','FontSize',14,'Interpreter','latex');
 title({'$P/D$', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]});
 ylim([1.25 3.5]);
 saveas(gcf,'../Figures/PCPD_chain','epsc');
+%%
