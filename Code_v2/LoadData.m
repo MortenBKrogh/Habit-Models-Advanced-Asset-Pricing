@@ -9,9 +9,6 @@ addpath('Tables');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear
 clc
-set(groot,'defaulttextinterpreter','latex');
-set(groot, 'defaultAxesTickLabelInterpreter','latex');
-set(groot, 'defaultLegendInterpreter','latex');
 %%
 PD_Claim_Regressions = 1; % 0 = PC
                           % 1 = PD
@@ -160,7 +157,7 @@ rets = alnrtsim_pf - rfr;               % Excess Returns
 
 yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1); % Recession
 yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
-xrec  = [ones(length(rets(1:end-h,:)), 1),  ...         
+xrec  = [ones(length(rets(1:end-h,:)), 1),...         
         rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1)];
 xexp  = [ones(length(rets(1:end-h,:)), 1),...
         (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)];
@@ -174,14 +171,14 @@ load('PC_Claim_workspace','elnrtsim'); ExpRetsPC = elnrtsim;
 %%
 figure;
 subplot(2,1,1)
-plot(ExpRetsPC);title({'$P/C$', ['mean =',num2str(mean(ExpRetsPC),6)]});
+plot(ExpRetsPC);title({'$P/C$', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPC),6)]});
 xlim([-500 100000])
-ylabel('Excess Returns');
+ylabel('$ E_t  (r_{t+1})$','FontSize',14,'interpreter','latex');
 subplot(2,1,2)
-plot(ExpRetsPD);title({'$P/D$', ['mean =',num2str(mean(ExpRetsPD),6)]});
-ylabel('Excess Returns');
+plot(ExpRetsPD);title({'$P/D$', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPD),6)]});
+ylabel('$ E_t  (r_{t+1})$','interpreter','latex');
 xlim([-500 100000]);
-% saveas(gcf,'../Figures/Excess_Rets','epsc');
+saveas(gcf,'../Figures/Excess_Rets','epsc');
 %% Persistence s_t
 x = astsim_pf(1:end-1,:);
 x1 = astsim_pf(2:end,:);
