@@ -14,11 +14,11 @@ global g sig delta phi gamma S_bar s_bar S_max s_max tsc sg B maxcb ncalc ...
 
 %% Choices for solution methods
 % Calibration Choice
-calib=0;           % 0 - Campbell & Cochrane (1999)
+calib=1;           % 0 - Campbell & Cochrane (1999)
                    % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 1;      % 0 = Consumption Claim
+PD_Claim = 0;      % 0 = Consumption Claim
                    % 1 = Dividend Claim
 % Plots
 Plots = 0;         % 0 = off
