@@ -20,9 +20,12 @@ calib=1;           % 0 - Campbell & Cochrane (1999)
 % Solution method:
 PD_Claim = 0;      % 0 = Consumption Claim
                    % 1 = Dividend Claim
-% Plots
+                   % Run with both = 0 and =1 before generating figures and
+                   % tables and regressions
+% Plots                 
 Plots = 0;         % 0 = off
                    % 1 = on
+                   % Set = 0 for the first two runs
 % Update tables
 Tables = 0;        % 0 = off
                    % 1 = on
