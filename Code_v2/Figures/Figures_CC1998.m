@@ -31,7 +31,7 @@ xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
 xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
 ylabel('Expected Returns, annual percentage, $E_t ( r_{t+1} )$','Interpreter','latex');
 xlabel('Surplus Consumption ratio, $S_t$','Interpreter','latex');
-legend('Expected Return, Dividend Claim','Expected Return, Consumption Claim','Interpreter','latex');
+legend('Expected Return, Consumption Claim','Expected Return, Dividend Claim','Interpreter','latex');
 saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');
 
 %% Regression
