@@ -115,15 +115,10 @@ verd=0;
 [er_pf elnr_pf sdr_pf sdlnr_pf lnrf_pf lnrf1_pf lny_pf elnrcb_pf sdlnrcb_pf slpmv_pf] = finders(sg);
 
 %% Adjustments of inputs for simulation
- if flag2 == 0
-    dc = 0;
- elseif flag2 == 1
-    dc = 0;
-end
-
+dc = 0;
 %% Simulation of time-series
 [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
-    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf] ...
+    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf aelnrtsim] ...
     =annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 %% Statistics of interest
 
@@ -303,4 +298,5 @@ end
 %load gong
 %audioplayer(y,Fs);
 %play(ans)
+mean(aelnrtsim)-Erf_pf
 toc

@@ -1,5 +1,5 @@
 function [alndctsim astsim alnpctsim alnrtsim alnrfsim asdlnrtsim alnchpsim ...
-    alnysim aelnrcbsim asdlnrcbsim atesterf]=annvars(dc,lnpc,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1)
+    alnysim aelnrcbsim asdlnrcbsim atesterf aelnrtsim]=annvars(dc,lnpc,er,elnr,sdr,sdlnr,elnrcb,sdlnrcb,lny,lnrf1)
 % Annualising and preparing data from the simulation "simvars.m". Returns
 % various series of interest. Returns, PC and DC ratio, std, bond returns
 % etc.
@@ -38,6 +38,12 @@ end
 if size(lnrtsim,1) > 1
     alnrtsim = chgfreq(lnrtsim,tsc,tsc,0);
     alnrtsim = alnrtsim(2:size(alnrtsim,1));
+end
+
+% Expected returns:
+if size(elnrtsim,1) > 1
+    elnrtsim = chgfreq(elnrtsim,tsc,tsc,0);
+    elnrtsim = elnrtsim(2:size(elnrtsim,1));
 end
 
 % Risk free rate
