@@ -1,4 +1,4 @@
-A = struct2cell(regs2);
+A = struct2cell(regs2); 
 name = string(['../Tables/RegressionTable2.tex']);
 if isfile(name)
 delete(name);
@@ -26,12 +26,12 @@ disp(['  $\left( p_t - c_t \right)_{EXP}$ &', num2str(A{5,1,1}(3),4),' &   \\ ']
 disp(['  & (', num2str(abs(A{10,1,1}(3)),2),') & \\ ']);
 disp([' \addlinespace ']);
 disp(['  $\left( p_t - d_t \right)_{REC}$ & &',num2str(A{5,1,2}(2),4),'  \\ ']);
-disp(['  & & & (',num2str(A{10,1,2}(2),2),')    \\ ']);
+disp(['  & &  (',num2str(A{10,1,2}(2),2),')    \\ ']);
 disp([' \addlinespace ']);
 disp(['  $\left( p_t - d_t \right)_{EXP}$ & &', num2str(A{5,1,2}(3),4),' \\ ']);
-disp(['  &  & & (',num2str(abs(A{10,1,2}(3)),2), ') &\\ ']);
+disp(['  &  &  (',num2str(abs(A{10,1,2}(3)),2), ') &\\ ']);
 disp([' \addlinespace ']);
-disp([' Constant &',num2str(abs(A{5,1,1}(1)),4),' &' num2str(abs(A{5,1,2}(1)),4),' &', num2str(abs(A{5,1,1}(1)),4),' &',num2str(abs(A{5,1,2}(1)),4),' \\ ']);
+disp([' Constant &',num2str(abs(A{5,1,1}(1)),4),' &' num2str(abs(A{5,1,2}(1)),4),' \\ ']);
 disp(['  &(',num2str(A{10,1,1}(1),2),') &(', num2str(A{10,1,2}(1),2),') \\ ']);
 disp([' \addlinespace ']);
 disp(['\midrule  ']);
