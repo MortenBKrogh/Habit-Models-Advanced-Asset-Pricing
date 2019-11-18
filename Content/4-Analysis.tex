@@ -58,7 +58,14 @@ Having simulated an economy based upon habit formation, and justified our choice
         \item Returns are unpredictable by the price/consumption- or the price/dividend-ratio under expansionary periods?
     \end{enumerate}
 \end{enumerate}
-Examining the expected returns as a function of the surplus consumption ratio as in figure \ref{}
+Examining the expected returns as a function of the surplus consumption ratio, as in figure \ref{fig:ErPCPD}. The model reveals a somewhat linear relationship for high values of the surplus consumption, the relationship however is much more steep and nonlinear when $S_t$ approaches ${S}_{REC}$, the goal is then to exploit this fact when predicting returns.
+
+\begin{figure}[H]
+    \centering
+    \caption{Expected returns as a function of $S_t$}
+    \includegraphics{Figures/ErPCPD.eps}
+    \label{fig:ErPCPD}
+\end{figure}
 
 \subsection{Results}
 First we run 2 regressions on the following form:
@@ -73,8 +80,12 @@ As a benchmark we run two additional regressions given:
       r_{t+1} - r^{f} &= \alpha + \beta \left( p_t - d_t \right) + \varepsilon_{t+1}
 \end{align*}
 Figure \ref{tab:regress} reports results of the four regressions. The desired property of separability of business cycles does not get a lot of support from this exact result. We see no increase in $R^2$, we find strong statistical evidence supporting rejection of the null-hypothesis for all estimates in all four regressions, this is however to be expected as the sample size of 8331 observations is quite large, it is well established that as the sample size increases the asymptotic variance of the OLS-estimate decreases and thus significance is inevitable as the sample size becomes quite large.
-
 \input{Tables/RegressionTable.tex}
+
+However from figure \ref{fig:ErPCPD} we see that the most extreme effect of $S_t$ on expected returns kicks in at an estimated $0.02$, on basis on this fact we run additional regressions with the same specification as above, where we respecify $\Bar{S}=0.2$, the output of which is reported in table \ref{tab:regress2}
+
+
+
 
 Instead we run a regime-switching linear regression with observable states, remember that from the simulation we obtained the surplus consumption ratio as an observable. In real data one would have to rely on latent state regressions such as a \textit{hidden Markov model}, to determine the latent state as a function of $s_t$.\\
 However we have the simulated series and are able to run the regression straightforward. We run four regressions again with excess stock return as the regressand:
