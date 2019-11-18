@@ -7,22 +7,22 @@
 \begin{threeparttable}[b]
 \caption{Parameters of the model}
 \label{tab:ModelCalib}
-\begin{tabular}{@{}ll@{\hspace{1.5cm}}ll@{}}
+\begin{tabular}{@{}llllc@{}}
 \toprule
- & Parameter                              & Notation         & Value    \\ \midrule 
-\multicolumn{4}{l}{\textit{Calibrated}}                                 \\
- & Mean consumption growth                & $g$              & $0.0134$ \\
- & Standard deviation of $\Delta c_t$     & $\sigma$         & $0.0152$ \\
- & Standard deviation of $\Delta d_t$     & $\sigma_w$       & $0.1256$ \\
- & Log risk-free rate                     & $r^f$            & $0.0109$ \\
- & Persistence parameter                  & $\phi$           & $0.9008$ \\
- \multicolumn{4}{l}{\textit{Assumed}}                                   \\
- & Coefficient of Risk Aversion           & $\gamma$         & $2.0000$ \\
- & Correlation dividends/consumption      & $\rho$           & $0.2000$ \\
-\multicolumn{4}{l}{\textit{Implied}}                                    \\
- & Subjective discount factor             & $\delta$         & $0.9156$ \\
- & Steady-state surplus consumption ratio & $\Bar{S}$        & $0.0666$ \\
- & Maximum surplus consumption ratio      & $S_{\text{max}}$ & $0.1096$ \\ \bottomrule
+ & Parameter                              & Notation         & Calibration     & \citet{Campbell1999}\\ \midrule 
+\multicolumn{5}{l}{\textit{Calibrated}}                                    \\
+ & Mean consumption growth                & $g$              & $0.0134$  & $0.0189$\\
+ & Standard deviation of $\Delta c_t$     & $\sigma$         & $0.0152$  & $0.0150$\\
+ & Standard deviation of $\Delta d_t$     & $\sigma_w$       & $0.1256$  & $0.1120$\\
+ & Log risk-free rate                     & $r^f$            & $0.0109$  & $0.0094$\\
+ & Persistence parameter                  & $\phi$           & $0.9008$  & $0.8700$\\
+ \multicolumn{5}{l}{\textit{Assumed}}                                      \\
+ & Coefficient of Risk Aversion           & $\gamma$         & $2.0000$  & $2.0000$\\
+ & Correlation dividends/consumption      & $\rho$           & $0.2000$  & $0.2000$\\
+\multicolumn{5}{l}{\textit{Implied}}                                       \\
+ & Subjective discount factor             & $\delta$         & $0.9156$  & $0.8900$\\
+ & Steady-state surplus consumption ratio & $\Bar{S}$        & $0.0666$  & $0.5700$\\
+ & Maximum surplus consumption ratio      & $S_{\text{max}}$ & $0.1096$  & $0.0940$\\ \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \footnotesize{\item [1] All relevant parameters are annualized
@@ -58,6 +58,7 @@ Having simulated an economy based upon habit formation, and justified our choice
         \item Returns are unpredictable by the price/consumption- or the price/dividend-ratio under expansionary periods?
     \end{enumerate}
 \end{enumerate}
+Examining the expected returns as a function of the surplus consumption ratio as in figure \ref{}
 
 \subsection{Results}
 First we run 2 regressions on the following form:
@@ -75,7 +76,7 @@ Figure \ref{tab:regress} reports results of the four regressions. The desired pr
 
 \input{Tables/RegressionTable.tex}
 
-Instead we run a regime-switching linear regression with observable states, remember that from the simulation we obtained the surplus consumption ratio as an observable. In real data one would have to rely on latent state regressions such as \textit{hidden Markov model}, to determine the latent state as a function of $s_t$.\\
+Instead we run a regime-switching linear regression with observable states, remember that from the simulation we obtained the surplus consumption ratio as an observable. In real data one would have to rely on latent state regressions such as a \textit{hidden Markov model}, to determine the latent state as a function of $s_t$.\\
 However we have the simulated series and are able to run the regression straightforward. We run four regressions again with excess stock return as the regressand:
 \begin{align*}
     \left(r_{t+1} - r^{f}\right) I_{t+1,REC} &=  \alpha + \beta \left( p_t - c_t \right) I_{REC,t} + \varepsilon_{t+1}\\
@@ -84,7 +85,7 @@ However we have the simulated series and are able to run the regression straight
     \left(r_{t+1} - r^{f}\right)I_{t+1,EXP} &=  \alpha + \beta \left( p_t - d_t \right) I_{EXP,t} x+ \varepsilon_{t+1}
 \end{align*}
 
-The results of the four regressions are reported in table \ref{tab:RSregress}, the results are much more interesting. Examining the results reveals that with a regime switching approach as opposed to the previous single state regression, we are able to split the effects of business cycles on the predictability of stock returns. Notice how the coefficients indicating the effects of respectively P/C and P/D ratios on excess returns have switched signs in recession periods, while the constant effect is negative during recessions, indicating the base effect of being in a recession on excess returns is negative. However while not intuitively inappropriate in this context it have to be noted that expected returns are restricted to be positive in this model, therefore mandating that the size of the log P/C and log P/D-ratios must be large enough to offset the negative constant. This restriction is not particular restrictive as the log price consumption-ratio and equivalent log price dividend ratio is seldom below 2.5, see the simulated chains of log PC and log PD in figure \ref{fig:PCPD} in appendix\\
+The results of the four regressions are reported in table \ref{tab:RSregress}, the results are much more interesting. Examining the results reveals that with a regime switching approach as opposed to the previous single state regression, we are able to split the effects of business cycles on the predictability of stock returns. Notice how the coefficients indicating the effects of respectively P/C and P/D ratios on excess returns have switched signs in recession periods, while the constant effect is negative during recessions, indicating the base effect of being in a recession on excess returns is negative. However while not intuitively inappropriate in this context it have to be noted that expected returns are restricted to be positive in this model, therefore mandating that the size of the log P/C and log P/D-ratios must be large enough to offset the negative constant. This restriction is not particular restrictive as the log price consumption-ratio and equivalent log price dividend ratio is seldom below 2, see the simulated chains of log P/C and log P/D in figure \ref{fig:PCPD} in appendix.\\
 
 Another result worth noting is one that provides evidence in favor of both of our hypothesis, that is the estimated coefficient of determination is much higher in the recession periods reaching 7\% when predicting excess returns using the price-consumption-ratio, than it is in expansionary periods reaching just barely .2\%, using the price-dividend-ratio as the predictor yields a smaller $R^2$ this is to be expected, as the price-dividend is by construction a noisier mapping of the price-consumption-ratio dynamics, containing not only the shock to consumption growth $\sigma$ but also the shock to dividend growth $\sigma_w$.\\
 
