@@ -181,4 +181,8 @@ subplot(2,1,2)
 plot(ExpRetsPD);title({'$P/D$', ['mean =',num2str(mean(ExpRetsPD),6)]});
 ylabel('Excess Returns');
 xlim([-500 100000]);
-% saveas(gcf,'../Figures/Excess_Rets','epsc')
+% saveas(gcf,'../Figures/Excess_Rets','epsc');
+%% Persistence s_t
+x = astsim_pf(1:end-1,:);
+x1 = astsim_pf(2:end,:);
+autocorrX = x\x1
