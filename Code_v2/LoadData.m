@@ -53,7 +53,8 @@ idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
 
 % Calculate percentage of the time the economy is in recession
 rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1));
-gamma = 2
+rec_emp_percentagetotal = sum(NBER_REC.data(1:end,1)) / length(NBER_REC.data(1:end,1));
+%%
 Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.1);
 Model_Rec = integral(@q_s,-Inf,s_bar);
 Match_Rec = integral(@q_s,-Inf,Rec_s_bar);
@@ -108,30 +109,47 @@ x   = [ones(length(rets(1:end-h,:)), 1),  ...            % vector of Ones
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
 regPDrec = nwest(y,x,0);
-
-%%
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),...         % vector of Ones
     PD_regress(1:end-h,1)];
 regPDnorec = nwest(y,x,0);
-%%
 load('PC_Claim_workspace','alnrtsim_pf','alnpctsim_pf','Erfinterp_pf');
 PC_regress = alnpctsim_pf;              % PD/PC
 rfr  = Erfinterp_pf;                    % Risk free rate
 rets = alnrtsim_pf - rfr;               % Excess Returns
-
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
     rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1), ...  %    I_rec_t *PD_t
     (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
 regPCrec = nwest(y,x,0);
-%%
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
     PC_regress(1:end-h,1)];
 regPCnorec = nwest(y,x,0);
 regs = [regPDrec regPDnorec regPCrec regPCnorec];
 RegressionTable;
+%% Regressions 2
+for i = 1:length(astsim)
+    if astsim(i) < log(0.02)
+        rec_sim_02(i) = 1;
+    else
+        rec_sim_02(i) = 0;
+    end 
+end
+rec_sim_02 = rec_sim_02';
+%%
+y   = rets(1+h:end,1);
+x   = [ones(length(rets(1:end-h,:)), 1),  ...         % vector of Ones
+    rec_sim_02(1:end-h,:) .* PC_regress(1:end-h,1), ...  %    I_rec_t *PD_t
+    (1-rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
+regPCrec2 = nwest(y,x,0);
+
+x   = [ones(length(rets(1:end-h,:)), 1),  ...            % vector of Ones
+    rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1), ...  %    I_rec_t *PD_t
+    (1-rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)]; % (1-I_rec_t)*PD_t
+regPDrec2 = nwest(y,x,0);
+regs2 = [regPCrec2 regPDrec2];
+RegressionTable2;
 %% Split
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Regime Switching model Observable states %%%

@@ -1,0 +1,42 @@
+\begin{table}[H]
+\centering   
+  \caption{Regressions}           
+  \label{tab:regress2}     
+  \begin{threeparttable}
+\begin{tabular}{@{\hspace{5pt}}l@{\hspace{5pt}}cc} 
+\toprule 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+ & \multicolumn{2}{c}{$\left(r_{t+1}-r^f\right)$} \\ 
+ \cmidrule(rr){2-3}
+ & (1)   &   (2) )\\ 
+\midrule  
+\\[-2.1ex] $\left( p_t - c_t \right)_{REC}$ &-0.1353& \\ 
+  & (0.013) & & & \\ 
+ \addlinespace 
+  $\left( p_t - c_t \right)_{EXP}$ &-0.1439 &   \\ 
+  & (0.0081) & \\ 
+ \addlinespace 
+  $\left( p_t - d_t \right)_{REC}$ & &-0.1205  \\ 
+  & & & (0.012)    \\ 
+ \addlinespace 
+  $\left( p_t - d_t \right)_{EXP}$ & &-0.1297 \\ 
+  &  & & (0.0073) &\\ 
+ \addlinespace 
+ Constant &0.4959 &0.4576 &0.4959 &0.4576 \\ 
+  &(0.026) &(0.024) \\ 
+ \addlinespace 
+\midrule  
+Observations & 8331 & 8331\\
+R$^{2}$ &0.094 & 0.094 \\ 
+Residual Std. Error &0.015 & 0.015 \\ 
+\bottomrule 
+\end{tabular} 
+\begin{tablenotes}
+\footnotesize{
+\item[1] Brackets below estimates contains Newey-West corrected standard errors. 
+\item[2] Regressions on 8331 years of simulated data.
+\item[3] EXP (REC) denotes expansion (recession)
+}
+\end{tablenotes}
+\end{threeparttable}
+\end{table} 
