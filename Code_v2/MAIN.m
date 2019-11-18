@@ -135,12 +135,6 @@ else
     Edc_pf = mean(alndctsim_pf);
     Stdc_pf = std(alndctsim_pf);
 end
-alnrtsim_pf = alnrtsim_pf(100:end);
-atesterfsim_pf = atesterfsim_pf(100:end);
-alnrfsim_pf = alnrfsim_pf(100:end);
-alnpctsim_pf = alnpctsim_pf(100:end);
-
-
 
 Erf_pf = mean(alnrfsim_pf); % mean log riskfree rate
 Stdrf_pf = std(alnrfsim_pf); % sd log RF-rate
@@ -153,8 +147,7 @@ exrettinterp_pf = alnrtsim_pf - atesterfsim_pf;
 Shpr_pf = mean(exrett_pf)/std(exrett_pf); % Sharpe ratio of log returns
 ShpR_pf = mean(exp(alnrtsim_pf)-exp(alnrfsim_pf))/std(exp(alnrtsim_pf)- exp(alnrfsim_pf));
 Shprinterp_pf = mean(exrettinterp_pf)/std(exrettinterp_pf);
-%ShpRinterp_pf = mean(exp(alnrtsim_pf)- exp(atesterfsim_pf))/std(exp(alnrtsim_pf)-exp(atesterfsim_pf));
-ShpRinterp_pf = mean(exp(exrett_pf))/std(exp(exrett_pf));
+ShpRinterp_pf = mean(exp(alnrtsim_pf)- exp(atesterfsim_pf))/std(exp(alnrtsim_pf)-exp(atesterfsim_pf));
 Eexrett_pf = mean(exrett_pf); % Mean excess log returns
 Stdexrett_pf = std(exrett_pf); % SD excess log returns)
 Eexrettinterp_pf = mean(exrettinterp_pf);
