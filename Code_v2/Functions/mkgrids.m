@@ -19,7 +19,7 @@ global s_max S_max s_bar
     % Put more density at the beginning of the grid to improve iteration
     % during the fixed point procedure.%
     % ----------------------------------------------------------------------- %
-    idens=log([.0005 0.0015 .0025 .0035 .0045])';
+    idens=log([.0005 .0007 .0009 .00012 0.0015 .0025 .0035 .0045 .007 .009])';
     sg=cat(1,sg,idens);
     sg = sort(sg); % Sorting the values present in the grid
 end

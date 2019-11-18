@@ -42,8 +42,8 @@ end
 
 % Expected returns:
 if size(elnrtsim,1) > 1
-    elnrtsim = chgfreq(elnrtsim,tsc,tsc,0);
-    elnrtsim = elnrtsim(2:size(elnrtsim,1));
+    aelnrtsim = chgfreq(elnrtsim,tsc,tsc,0);
+    aelnrtsim = aelnrtsim(2:size(aelnrtsim,1));
 end
 
 % Risk free rate
