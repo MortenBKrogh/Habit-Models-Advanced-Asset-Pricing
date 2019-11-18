@@ -176,7 +176,7 @@ xlim([-500 100000])
 ylabel('$ E_t  (r_{t+1})$','FontSize',14,'interpreter','latex');
 subplot(2,1,2)
 plot(ExpRetsPD);title({'$P/D$', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPD),6)]});
-ylabel('$ E_t  (r_{t+1})$','interpreter','latex');
+ylabel('$ E_t  (r_{t+1})$','FontSize',14,'interpreter','latex');
 xlim([-500 100000]);
 saveas(gcf,'../Figures/Excess_Rets','epsc');
 %% Persistence s_t
