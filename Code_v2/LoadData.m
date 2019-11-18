@@ -38,10 +38,10 @@ aretssim =  table2array(Data(:,4));
 astsim = table2array(Data(:,1));
 if PD_Claim_Regressions == 0
     load('PC_Claim_workspace','s_bar','s_max',...
-        'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf');
+        'verd','S_bar','sig','gamma','S','astsim_pf','alnrtsim_pf');
 else
     load('PD_Claim_workspace','s_bar','s_max',...
-        'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf');
+        'verd','S_bar','sig','gamma','S','astsim_pf','alnrtsim_pf');
 end
 
 %% Matching the empirical density
@@ -62,7 +62,7 @@ Model_Rec = integral(@q_s,-Inf,s_bar);
 Match_Rec = integral(@q_s,-Inf,Rec_s_bar);
 %Rec_s_bar = -2.22;
 %%
-[heights location] = hist(astsim, 65);
+[heights location] = hist(astsim, 75);
 width = location(2) - location(1);
 heights = heights / (size(astsim, 1) * width);
 %%
@@ -71,15 +71,15 @@ figure;
 barplot = bar(location, heights,'hist');
 barplot.FaceColor = [0, 0.4470, 0.7410];
 hold on
-fplot(@q_s, [min(log(S)+1.5) s_max+0.15],'Color',[0.8500, 0.3250, 0.0980],'LineWidth',2.5);%title('Stationary Distribution of s');
+fplot(@q_s, [min(log(S)-0.5) s_max+0.25],'Color',[0.8500, 0.3250, 0.0980],'LineWidth',2.5);%title('Stationary Distribution of s');
 hold on
 xline(Rec_s_bar,'--','$\bar{s}_{rec}$','Interpreter','latex','FontSize',18);
 hold on
 xline(s_bar,'--','$\bar{s}$','Interpreter','latex','FontSize',18);
-xlim([min(log(S)+1.5) -2]);
+xlim([min(log(S))-0.5 -2]);
 legend('Histogram','Theoretical Density','Location','northwest')
 hold off
-%%saveas(gcf,'../Figures/DistributionS_t','epsc')
+saveas(gcf,'../Figures/DistributionS_t','epsc')
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
