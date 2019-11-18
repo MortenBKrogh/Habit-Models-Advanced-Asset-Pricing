@@ -183,3 +183,14 @@ saveas(gcf,'../Figures/Excess_Rets','epsc');
 x = astsim_pf(1:end-1,:);
 x1 = astsim_pf(2:end,:);
 autocorrX = x\x1
+%%
+load('PD_Claim_workspace','alnpctsim_pf'); PDratio = alnpctsim_pf;
+load('PC_Claim_workspace','alnpctsim_pf'); PCratio = alnpctsim_pf;
+subplot(2,1,1)
+plot(PCratio);ylabel('$p_t-c_t$','FontSize',14,'Interpreter','latex');
+title({'$P/C$', ['$E(p_t-c_t)$ =',num2str(mean(PCratio),4)]});
+subplot(2,1,2)
+plot(PDratio);ylabel('$p_t-d_t$','FontSize',14,'Interpreter','latex');
+title({'$P/D$', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]});
+ylim([1.25 3.5]);
+saveas(gcf,'../Figures/PCPD_chain','epsc');
