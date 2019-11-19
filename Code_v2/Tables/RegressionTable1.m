@@ -35,7 +35,7 @@ disp([' Constant &',num2str(abs(A{5,1,1}(1)),4),' &' num2str(A{5,1,2}(1),4),'&' 
 disp(['          &(',num2str(A{10,1,1}(1),2),') &(', num2str(A{10,1,2}(1),2),')&(',num2str(A{10,1,3}(1),2),')&(',num2str(A{10,1,4}(1),2),')&(',num2str(A{10,1,5}(1),2),')&(',num2str(A{10,1,6}(1),2),') \\ ']);
 disp([' \addlinespace ']);
 disp(['\midrule  ']);
-disp(['Observations & ',num2str(abs(A{3,1,1})),' & ',num2str(abs(A{3,1,2})),'& ',num2str(abs(A{3,1,4})),'&',num2str(abs(A{3,1,5})),'&',num2str(abs(A{3,1,6})),'\\']);
+disp(['Observations & ',num2str(abs(A{3,1,1})),' & ',num2str(abs(A{3,1,2})),'&',num2str(abs(A{3,1,3})),' & ',num2str(abs(A{3,1,4})),'&',num2str(abs(A{3,1,5})),'&',num2str(abs(A{3,1,6})),'\\']);
 disp(['R$^{2}$ &',num2str(abs(A{11,1,1}),2),' & ',num2str(abs(A{11,1,2}),2),'&',num2str(abs(A{11,1,3}),2),'&',num2str(abs(A{11,1,4}),2),'&',num2str(abs(A{11,1,5}),2),'&',num2str(abs(A{11,1,6}),2),' \\ ']);
 disp(['Residual Std. Error &',num2str(abs(A{8,1,1}),2),' & ',num2str(abs(A{8,1,2}),2),'&',num2str(abs(A{8,1,3}),2),'&',num2str(abs(A{8,1,4}),2),'&',num2str(abs(A{8,1,5}),2),'&',num2str(abs(A{8,1,6}),2),' \\ ']);
 disp(['\bottomrule ']);

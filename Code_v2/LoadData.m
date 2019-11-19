@@ -10,7 +10,7 @@ addpath('Tables');
 clear
 clc
 %%
-PD_Claim_Regressions = 1; % 0 = PC
+PD_Claim_Regressions = 0; % 0 = PC
                           % 1 = PD
 
 momPC = readtable('PC_Claim_Sim_mom.txt');
@@ -62,6 +62,7 @@ Model_Rec_2 = integral(@q_s,-Inf,s_bar_2);
 Match_Rec = integral(@q_s,-Inf,Rec_s_bar);
 %Rec_s_bar = -2.22;
 %%
+load('PC_Claim_workspace','astsim_pf');astsim = astsim_pf;
 [heights location] = hist(astsim, 75);
 width = location(2) - location(1);
 heights = heights / (size(astsim, 1) * width);
