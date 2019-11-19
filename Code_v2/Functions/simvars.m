@@ -66,16 +66,11 @@ stsim(1) = s_bar;           % Starting the process at SS
 % end
 %% PC ratio                                           % 
 lnpctsim = interp(stsim,sg,lnpca)';
-
 %% ex-post Returns                                                        %
 %                                                                         % 
 %                        R = (C'/C){(1+(P/C)')/(P/C)}                     % 
 % ----------------------------------------------------------------------- %
-if PD_Claim == 0
 lnrtsim = log(1+exp(lnpctsim(2:T+1))) - lnpctsim(1:T) + lndctsim;
-else
-lnrtsim =log( 1+exp(lnpctsim(2:T+1)) ) - lnpctsim(1:T) + lndctsim;
-end
     %%
 %% potential time varying RF-rate
 

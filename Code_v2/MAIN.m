@@ -18,11 +18,14 @@ calib=1;           % 0 - Campbell & Cochrane (1999)
                    % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 1;      % 0 = Consumption Claim
+PD_Claim = 0;      % 0 = Consumption Claim
                    % 1 = Dividend Claim
-% Plots
+                   % Run with both = 0 and =1 before generating figures and
+                   % tables and regressions
+% Plots                 
 Plots = 0;         % 0 = off
                    % 1 = on
+                   % Set = 0 for the first two runs
 % Update tables
 Tables = 0;        % 0 = off
                    % 1 = on
@@ -68,7 +71,7 @@ s_max = s_bar + (1-S_bar^2)/2;
 S_max = exp(s_max);
 delta=exp(gamma*g-.5*((1-phi)*gamma-B)-rf0); % Equation (12) in paper C&C- 1999.
 
-szgrid=15;
+szgrid=10;
 
 ncalc = 100000;                % Number of simulations
 bondsel = [1 2 3 4 5 7 10 20]; % Maturity of bonds simulated
@@ -109,24 +112,20 @@ else
     lnpca = output_lnpda;
     lnpca_pf = output_lnpda;
 end
-
 %% Find expected returns and conditional deviations of consumption claim
 verd=0;
 % Fixed point method
 [er_pf elnr_pf sdr_pf sdlnr_pf lnrf_pf lnrf1_pf lny_pf elnrcb_pf sdlnrcb_pf slpmv_pf] = finders(sg);
 
 %% Adjustments of inputs for simulation
- if flag2 == 0
-    dc = 0;
- elseif flag2 == 1
-    dc = 0;
-end
-
+dc = 0;
 %% Simulation of time-series
 [alndctsim_pf astsim_pf alnpctsim_pf alnrtsim_pf alnrfsim_pf asdlnrtsim_pf ...
-    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf] ...
+    alnchpsim_pf alnysim_pf aelnrcbsim_pf asdlnrcbsim_pf atesterfsim_pf aelnrtsim] ...
     =annvars(dc,lnpca_pf,er_pf,elnr_pf,sdr_pf,sdlnr_pf,elnrcb_pf,sdlnrcb_pf,lny_pf,lnrf1_pf);
 %% Statistics of interest
+
+
 if ann == 1
     Edc_pf = tsc*mean(alndctsim_pf);
     Stdc_pf = sqrt(tsc)*std(alndctsim_pf);
