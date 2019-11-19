@@ -4,6 +4,9 @@ if isfile(name)
 delete(name);
 end
 %%
+diary(name);
+diary on
+
 disp(['\begin{table}[H]']);
 disp(['\centering']);
 disp(['\caption{Simulated Moments}']);
@@ -22,3 +25,4 @@ disp(['$\mathbb{E}\left(p-c\right)$                          &     ',num2str(PC_
 disp(['$\sigma\left(p-c\right)$                              &       ',num2str(PC_StdPD),'            &      ',num2str(PD_StdPD),'          &   ',num2str(CC_PC_StdPD),'                                     & ',num2str(CC_PD_StdPD),'                                    \\ \bottomrule']);
 disp(['\end{tabular}']);
 disp(['\end{table}']);
+diary off
