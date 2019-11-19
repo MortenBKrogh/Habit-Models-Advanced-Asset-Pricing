@@ -189,7 +189,7 @@ x   = [ones(length(rets(1:end-h,:)), 1),  ...
 regPDexp3 = nwest(y,x,0);
 
 regs2 = [regPCrec2 regPDrec2 regPCrec3 regPCexp3 regPDrec3 regPDexp3];
-RegressionTable2;
+RegressionTable1;
 %% Split
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Regime Switching model Observable states %%%
