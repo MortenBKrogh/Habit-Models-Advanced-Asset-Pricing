@@ -104,6 +104,8 @@ The functional $P_t/C_t(s_t)$ must then satisfy,
 \begin{align}
     \frac{P_{t}}{C_{t}}\left(s_{t}\right)=E_{t}\left[M_{t+1} \frac{C_{t+1}}{C_{t}}\left[1+\frac{P_{t+1}}{C_{t+1}}\left(s_{t+1}\right)\right]\right] \label{PCRatio}
 \end{align}
+This functional is solved numerically over a grid of $s_t$ spanning $]0:s_max]$, to increase the precision of the estimation, the grid is a equally distributed linespace but augmented with more mass in the tails this allows the estimation to better capture non-linearities in the tail of the distribution of the price-consumption ratio. To determine P/C in-between grid-points we use an interpolation procedure.
+
 The conditional expectation is then solved on a grid through the Gauss-Legendre procedure over the error term $v_t$.
 
 \subsection{Pricing a Dividend Claim}
@@ -115,7 +117,7 @@ The functional price-dividend ratio is then calculated in the same manner as \eq
 \begin{align}
     \frac{P_{t}}{D_{t}}\left(s_{t}\right)=E_{t}\left[M_{t+1} \frac{D_{t+1}}{D_{t}}\left[1+\frac{P_{t+1}}{D_{t+1}}\left(s_{t+1}\right)\right]\right] \label{pd_ratio}
 \end{align}
-It is worth noting that \citet{Campbell1999} actually recommends that the relationship between dividend growth and consumption growth should in fact be co-integrated rather than correlated, however we will be closing the model with a correlational relationship rather than the co-integrational relation proposed\footnote{\textsc{MatLab} code are available at GitHub, and are modified from the code presented by \citet{Costa2009}}.
+It is worth noting that \citet{Campbell1999} actually recommends that the relationship between dividend growth and consumption growth should in fact be co-integrated rather than correlated, however we will be closing the model with a correlational relationship rather than the co-integrational relation proposed\footnote{\textsc{MatLab} code are available at GitHub, and are modified from the code presented by \citet{Costa2009}}. 
 
 \subsection{Calibration of the model parameters}
 For model calibration we will rely on CRSP-data retrieved from the WRDS-database. The sampling period utilized spans 1950-2018 and samples 90 day T-bill returns and inflation rate \textit{Annual}, CRSP-Market return index\footnote{Index spanning the 2 stock exhanges NYSE/AMEX} \textit{Monthly and annual}, and \textit{FRED} personal consumption data non-durables \textit{Quarterly}.  
