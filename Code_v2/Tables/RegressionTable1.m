@@ -1,5 +1,5 @@
-A = struct2cell(regs1); 
-name = string(['../Tables/RegressionTable1.tex']);
+A = struct2cell(regs2); 
+name = string(['../Tables/RegressionTable2.tex']);
 if isfile(name)
 delete(name);
 end
@@ -9,8 +9,8 @@ diary on
 
 disp(['\begin{table}[H]']);
 disp(['\centering   ']);
-disp(['  \caption{Regressions, $\Bar{S}_{REC} = ',num2str(exp(Rec_s_bar)),'$}           ']);
-disp(['  \label{tab:regress1}     ']);
+disp(['  \caption{Regressions, $\Bar{S}_{REC} = ',num2str(exp(s_bar_2),3),'$}           ']);
+disp(['  \label{tab:regress2}     ']);
 disp(['  \begin{threeparttable}']);    
 disp(['\begin{tabular}{@{\hspace{5pt}}l@{\hspace{5pt}}cccccc} ']);
 disp(['\toprule ']);
