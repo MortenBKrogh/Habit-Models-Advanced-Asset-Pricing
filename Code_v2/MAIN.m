@@ -71,7 +71,7 @@ s_max = s_bar + (1-S_bar^2)/2;
 S_max = exp(s_max);
 delta=exp(gamma*g-.5*((1-phi)*gamma-B)-rf0); % Equation (12) in paper C&C- 1999.
 
-szgrid=10;
+szgrid=10; % +6, with ten we have a total of 16 gridpoints.
 
 ncalc = 100000;                % Number of simulations
 bondsel = [1 2 3 4 5 7 10 20]; % Maturity of bonds simulated
