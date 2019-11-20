@@ -102,6 +102,7 @@ load('PD_Claim_workspace','s_bar','s_max',...
 load('PC_Claim_workspace','alnrtsim_pf','alnpctsim_pf','Erfinterp_pf');
 
 PD_regress = alnpctsim_pf;              % PD
+load('PC_Claim_workspace','alnrtsim_pf','alnpctsim_pf','Erfinterp_pf');
 PC_regress = alnpctsim_pf;              % PC
 rfr  = Erfinterp_pf;                    % Risk free rate
 rets = alnrtsim_pf - rfr;               % Excess Returns

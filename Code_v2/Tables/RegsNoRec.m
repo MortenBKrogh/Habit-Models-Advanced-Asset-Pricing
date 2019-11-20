@@ -16,7 +16,7 @@ disp(['\begin{tabular}{@{\hspace{5pt}}l@{\hspace{15pt}}cc} ']);
 disp(['\toprule ']);
 disp([' & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ ']);
 disp([' & \multicolumn{2}{c}{$\left(r_{t+1}-r^f\right)$} \\ ']);
-disp([' \cmidrule(rr){2-4}']);
+disp([' \cmidrule(rr){2-3}']);
 disp([' & (1) & (2)\\ ']);
 disp(['\midrule  ']);
 disp(['\\[-2.1ex] $ p_t - c_t $ &',num2str(A{5,1,1}(2),4),'&\\ ']);
