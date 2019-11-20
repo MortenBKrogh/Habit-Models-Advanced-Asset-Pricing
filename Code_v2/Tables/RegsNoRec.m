@@ -9,10 +9,10 @@ diary on
 
 disp(['\begin{table}[H]']);
 disp(['\centering   ']);
-disp(['  \caption{Regressions}           ']);
+disp(['  \caption{Benchmark regressions}           ']);
 disp(['  \label{tab:regress1}     ']);
 disp(['  \begin{threeparttable}']);    
-disp(['\begin{tabular}{@{\hspace{5pt}}l@{\hspace{15pt}}cc} ']);
+disp(['\begin{tabular}{@{\hspace{5pt}}l@{\hspace{15pt}}c@{\hspace{5pt}}c} ']);
 disp(['\toprule ']);
 disp([' & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ ']);
 disp([' & \multicolumn{2}{c}{$\left(r_{t+1}-r^f\right)$} \\ ']);
