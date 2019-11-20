@@ -1,11 +1,16 @@
 global Regressions
 %% Figures
+clear
 % Figure 7 in CC1998
+load('PD_Claim_workspace')
+
+Sample = 100:1000;
+
 figure;
 subplot(2,1,1)
-scatter(lnrtsim*1e2,lndctsim*1e2);title("Monthly Returns vs. consumption growth");
+scatter(lnrtsim(Sample)*1e2,lndctsim(Sample)*1e2);title("Monthly Returns vs. consumption growth");
 subplot(2,1,2)
-scatter(alnrtsim_pf*1e2,alndctsim_pf*1e2);title("Annual Returns vs. consumption growth");
+scatter(alnrtsim_pf(Sample)*1e2,alndctsim_pf(Sample)*1e2);title("Annual Returns vs. consumption growth");
 %saveas(gcf,string(['Figures/Figure_7_CC_1998_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.eps']),'eps2c');
 
 
