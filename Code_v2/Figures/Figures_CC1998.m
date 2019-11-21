@@ -23,7 +23,7 @@ figure;
 plot(S,PC_ratio/tsc);% Annulized P/C-curve
 hold on;
 plot(S,PD_ratio/tsc); % Annulized P/D-curve
-ylabel('$P/C$, $P/D$','Interpreter','latex');
+ylabel('$P/C,\qquad P/D$','Interpreter','latex');
 legend('PC-Ratio', 'PD-Ratio','Location','northwest')
 xlabel('Surplus Consumption ratio, $S_t$','Interpreter','latex');
 hold off;
