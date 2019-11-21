@@ -11,6 +11,7 @@ subplot(2,1,1)
 scatter(lnrtsim(Sample)*1e2,lndctsim(Sample)*1e2);title("Monthly Returns vs. consumption growth");
 subplot(2,1,2)
 scatter(alnrtsim_pf(Sample)*1e2,alndctsim_pf(Sample)*1e2);title("Annual Returns vs. consumption growth");
+hold off
 %saveas(gcf,string(['Figures/Figure_7_CC_1998_Calib_', num2str(calib),'_PD_', num2str(PD_Claim), '.eps']),'eps2c');
 
 
@@ -19,10 +20,12 @@ load('PD_Claim_workspace','output_lnpda','S','tsc');PD_ratio = output_lnpda;
 load('PC_Claim_workspace','output_lnpca');PC_ratio = output_lnpca;
 %%
 figure;
-plot(S,PC_ratio/tsc,'red');% Annulized P/C-curve
+plot(S,PC_ratio/tsc);% Annulized P/C-curve
 hold on;
-plot(S,PD_ratio/tsc,'blue'); % Annulized P/D-curve
+plot(S,PD_ratio/tsc); % Annulized P/D-curve
+ylabel('$P/C$, $P/D$','Interpreter','latex');
 legend('PC-Ratio', 'PD-Ratio','Location','northwest')
+xlabel('Surplus Consumption ratio, $S_t$','Interpreter','latex');
 hold off;
 saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
 %%
