@@ -3,13 +3,13 @@
 \subsubsection{Calibrated Model}
 
 \begin{table}[H]
-\center
+\begin{adjustbox}{max width=\textwidth}
 \begin{threeparttable}[b]
 \caption{Parameters of the model}
 \label{tab:ModelCalib}
-\begin{tabular}{@{}llllc@{}}
+\begin{tabular}{@{}lllcc@{}}
 \toprule
- & Parameter                              & Notation         & Calibration     & \citet{Campbell1999}\\ \midrule 
+ & Parameter                              & Notation         & Calibration & \citet{Campbell1999}\\ \midrule 
 \multicolumn{5}{l}{\textit{Calibrated}}                                    \\
  & Mean consumption growth                & $g$              & $0.0134$  & $0.0189$\\
  & Standard deviation of $\Delta c_t$     & $\sigma$         & $0.0152$  & $0.0150$\\
@@ -29,6 +29,7 @@
               \item [2] Calibrated parameters are estimated from data, assumed are chosen arbitrarily on the grounds of existing literature, while implied parameters are calculated from the calibrated/assumed parameters.}
 \end{tablenotes}
 \end{threeparttable}
+\end{adjustbox}
 \end{table}
 
 
@@ -43,7 +44,7 @@ From the calibrated model we simulate a chain of 100.000 monthly draws from the 
 Allowing us to infer about the predictability of excess stock returns, during times of simulated crisis. 
 \newline
 \\
-Based on NCER-recession data, we find that the US economy was in recession approximately 13.4\% of the period spanning January 1950 until December 2018.  In the model a recession implies that present consumption in low relative to previous periods consumption, that is the value of $s_t$ is lower than the steady state value of surplus consumption $\Bar{s}$ - integrating over the density of $s_t$ yields that the simulated economy is in recession during 37\% of all observations, which indicates that $\Bar{s}$ might be misspecified. To correct $\Bar{s}$ we match the empirical business cycle behavior by numerical optimization of the $s_t$ density, such that the empirical and simulated economy is in recession roughly the same amount. The $\Bar{s}$-value matching the empirical business cycle, throughout denoted $\Bar{s}_{rec}$ \textit{or} ($\Bar{S}_{rec}$), is found to be $-3.18$ ($0.0415$). One additional recessions specification we denote as $\bar{s}_{2,rec}$ is chosen as to capture only the most extreme non-linearity of the relationship between surplus consumption and expected returns as presented in figure \ref{fig:ErPCPD}.
+Based on NCER-recession data, we find that the US economy was in recession approximately 13.4\% of the period spanning January 1950 until December 2018.  In the model a recession implies that present consumption in low relative to previous periods consumption, that is the value of $s_t$ is lower than the steady state value of surplus consumption $\Bar{s}$ - integrating over the density of $s_t$ yields that the simulated economy is in recession during 37\% of all observations, which indicates that $\Bar{s}$ might be misspecified. To correct $\Bar{s}$ we match the empirical business cycle behavior by numerical optimization of the $s_t$ density, such that the empirical and simulated economy is in recession roughly the same amount. The $\Bar{s}$-value matching the empirical business cycle, throughout denoted $\Bar{s}_{rec}$ \textit{or} ($\Bar{S}_{rec}$), is found to be $-3.18$ ($0.0415$). One additional recessions specification we denote as $\bar{s}_{2,rec}$ is chosen as to capture only the most extreme non-linearity of the relationship between surplus consumption and expected returns as presented in figure \ref{fig:SPCPD-a}.
 
 \input{Tables/BC.tex}
 
@@ -88,7 +89,7 @@ Examining the expected returns as a function of the surplus consumption ratio, a
 \includegraphics[width=0.45\textwidth]{Figures/PC_PD_Ratio.eps}}
 \end{figure}
 
-From the functionals of surplus consumption ratio reported in \ref{fig:SPCPD}, some basic predictions can be made. We see that when surplus consumption is low, that is in recessionary times, expected returns increases, the intuition is that when times are bad, the risk aversion increases, people wants a higher level of compensation pr. risk unit, that is the price of risk  increases -  note that this must hold true as the risk-free rate is fixed in the model.  
+From the functionals of surplus consumption ratio reported in \ref{fig:SPCPD}, some basic predictions can be made. We see that when surplus consumption is low, that is in recessionary times, expected returns increases, the intuition is that when times are bad, as consumption falls relative to habit levels, the risk aversion increases, people wants a higher level of compensation per unit of risk - the risk premium rises - note that this must hold true for all levels of $S$ as the risk-free rate is fixed in the model.  
 
 
 \subsection{Results}
