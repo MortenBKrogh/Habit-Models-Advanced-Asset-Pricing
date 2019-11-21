@@ -24,8 +24,10 @@ plot(S,PC_ratio/tsc);% Annulized P/C-curve
 hold on;
 plot(S,PD_ratio/tsc); % Annulized P/D-curve
 ylabel('$P/C,\qquad P/D$','Interpreter','latex');
-legend('PC-Ratio', 'PD-Ratio','Location','northwest')
 xlabel('Surplus Consumption ratio, $S_t$','Interpreter','latex');
+xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
+xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
+legend('PC-Ratio', 'PD-Ratio','Location','northwest')
 hold off;
 saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
 %%
