@@ -20,9 +20,9 @@ load('PD_Claim_workspace','output_lnpda','S','tsc');PD_ratio = output_lnpda;
 load('PC_Claim_workspace','output_lnpca');PC_ratio = output_lnpca;
 %%
 figure;
-plot(S,PC_ratio/tsc);% Annulized P/C-curve
+plot(S,exp(PC_ratio)/tsc);% Annulized P/C-curve
 hold on;
-plot(S,PD_ratio/tsc); % Annulized P/D-curve
+plot(S,exp(PD_ratio)/tsc); % Annulized P/D-curve
 ylabel('$P/C,\qquad P/D$','Interpreter','latex');
 xlabel('Surplus Consumption ratio, $S_t$','Interpreter','latex');
 xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
