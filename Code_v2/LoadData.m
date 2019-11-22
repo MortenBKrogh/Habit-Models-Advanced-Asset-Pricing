@@ -288,7 +288,7 @@ j = j+1;
 end
 
 tab = [bmat(2,:)', R2', bdmat(2,:)',  R2d']
-names = split(num2str(h/12,0));
+names = split(num2str(h/12,0),'formatSpec','%3$i');
 varnames = split(['$\beta_{pc}$ ', '$R^2_{pc}$  ','$\beta_{pd}$ ','$R^2_{od}$'])'
 tab =  array2table(tab,'Rownames',names,'VariableNames',varnames)
 table2latex(tab, '../Tables/LHForercasts.tex')
