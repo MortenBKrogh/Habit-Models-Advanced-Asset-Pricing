@@ -252,6 +252,52 @@ title({'$P/D$', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]},'Interpreter','late
 ylim([1.25 3.5]);
 saveas(gcf,'../Figures/PCPD_chain','epsc');
 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%    Long run regressions based on simulated data     %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clear
+load('PC_Claim_workspace','Erfinterp_pf','alnrtsim_pf','lnrtsim','lnpctsim');
+rfr  = Erfinterp_pf;                 
+rets = lnrtsim - rfr; 
+PCrat = lnpctsim(2:end);
+load('PD_Claim_workspace','alnpctsim_pf');
+PDrat = lnpctsim(2:end);
+j = 1;
+T = length(PCrat);
+Ta = T;
+h= [1 2 3 5 7 10] * 12; 
+while j <= size(h,2)
+k = h(1,j);
+xC = [ones(T-k+1,1), PCrat(1:T-k+1)];   
+yC  = rets(1:T-k+1);%-rfr;
+xD = [ones(T-k+1,1) PDrat(1:T-k+1)];
+yD = rets(1:T-k+1);
+    i = 2;
+while i <= k
+ yC = yC + rets(i:T-k+i);
+ yD = yD + rets(i:T-k+i);
+ i = i+1;
+end    
+if k >= 4
+   xA = [ones(Ta-floor(k/4),1) PDrat(1:Ta-floor(k/4))];
+   yA = rets(2:Ta-floor(k/4)+1);
+   while i <= k/4
+       yA = yA + rets(1+i:Ta-floor(k/4)+i);
+       i = i+1;
+   end
+   ba = xA\yA;
+   baMat(:,j) = ba;
+   R2a(:,j) = (std(xA * ba) / std(yA) )^2;
+end
+b = xC\yC;
+bmat(:,j) = b;
+R2(:,j) = (std(xC * b)/ std(yC) )^2;
+bd = xD\yD;
+bdmat(:,j) = bd;
+R2d(:,j) = (std(xD * bd)/ std(yD) )^2;
+j = j+1;
+end
+%% Moments Table
 load('PD_Claim_workspace','Edc_pf', 'Stdc_pf', 'Erfinterp_pf', 'Shprinterp_pf', 'ShpRinterp_pf', 'Eexrettinterp_pf', 'Stdexrettinterp_pf', 'Ep_d_pf', 'Stdp_d_pf');
 PD_edc = Edc_pf;
 PD_stdc = Stdc_pf;
