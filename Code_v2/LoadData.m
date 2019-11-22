@@ -258,7 +258,7 @@ saveas(gcf,'../Figures/PCPD_chain','epsc');
 clear
 load('PC_Claim_workspace','Erfinterp_pf','alnrtsim_pf','lnrtsim','lnpctsim');
 rfr  = Erfinterp_pf;                 
-rets = lnrtsim - rfr; 
+rets = lnrtsim - rfr/4; 
 PCrat = lnpctsim(2:end);
 load('PD_Claim_workspace','lnpctsim');
 PDrat = lnpctsim(2:end);
@@ -277,18 +277,7 @@ while i <= k
  yC = yC + rets(i:T-k+i);
  yD = yD + rets(i:T-k+i);
  i = i+1;
-end    
-if k >= 4
-   xA = [ones(Ta-floor(k/4),1) PDrat(1:Ta-floor(k/4))];
-   yA = rets(2:Ta-floor(k/4)+1);
-   while i <= k/4
-       yA = yA + rets(1+i:Ta-floor(k/4)+i);
-       i = i+1;
-   end
-   ba = xA\yA;
-   baMat(:,j) = ba;
-   R2a(:,j) = (std(xA * ba) / std(yA) )^2;
-end
+end   
 b = xC\yC;
 bmat(:,j) = b;
 R2(:,j) = (std(xC * b)/ std(yC) )^2;
@@ -297,6 +286,13 @@ bdmat(:,j) = bd;
 R2d(:,j) = (std(xD * bd)/ std(yD) )^2;
 j = j+1;
 end
+
+tab = [bmat(2,:)', R2', bdmat(2,:)',  R2d']
+names = split(num2str(h/12,0));
+varnames = split(['$\beta_{pc}$ ', '$R^2_{pc}$  ','$\beta_{pd}$ ','$R^2_{od}$'])'
+tab =  array2table(tab,'Rownames',names,'VariableNames',varnames)
+table2latex(tab, '../Tables/LHForercasts.tex')
+
 %% Moments Table
 load('PD_Claim_workspace','Edc_pf', 'Stdc_pf', 'Erfinterp_pf', 'Shprinterp_pf', 'ShpRinterp_pf', 'Eexrettinterp_pf', 'Stdexrettinterp_pf', 'Ep_d_pf', 'Stdp_d_pf');
 PD_edc = Edc_pf;
