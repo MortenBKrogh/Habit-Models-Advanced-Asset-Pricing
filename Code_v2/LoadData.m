@@ -260,7 +260,7 @@ load('PC_Claim_workspace','Erfinterp_pf','alnrtsim_pf','lnrtsim','lnpctsim');
 rfr  = Erfinterp_pf;                 
 rets = lnrtsim - rfr; 
 PCrat = lnpctsim(2:end);
-load('PD_Claim_workspace','alnpctsim_pf');
+load('PD_Claim_workspace','lnpctsim');
 PDrat = lnpctsim(2:end);
 j = 1;
 T = length(PCrat);
