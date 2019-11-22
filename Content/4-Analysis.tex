@@ -89,7 +89,8 @@ Examining the expected returns as a function of the surplus consumption ratio, a
 \includegraphics[width=0.45\textwidth]{Figures/PC_PD_Ratio.eps}}
 \end{figure}
 
-From the functionals of surplus consumption ratio reported in \ref{fig:SPCPD}, some basic predictions can be made. We see that when surplus consumption is low, that is in recessionary times, expected returns increases, the intuition is that when times are bad, as consumption falls relative to habit levels, the risk aversion increases, people wants a higher level of compensation per unit of risk - the risk premium rises - note that this must hold true for all levels of $S$ as the risk-free rate is fixed in the model.  
+From the functionals of surplus consumption ratio reported in \ref{fig:SPCPD}, some basic predictions can be made. We see that when surplus consumption is low, that is in recessionary times, expected returns increases, the intuition is that when times are bad, as consumption falls relative to habit levels, the risk aversion increases, people wants a higher level of compensation per unit of risk - the risk premium rises - note that this must hold true for all levels of $S$ as the risk-free rate is fixed in the model. \\
+Furthermore the figure implies that the regression coefficient of $P/C$ or equivalent $P/D$ should be negative. Lower P/C or P/D implies higher values of $\mathbb{E}\left[r_t-r^f\right]$, both driven by the single state. 
 
 
 \subsection{Results}
@@ -109,13 +110,13 @@ As a benchmark we run two additional regressions given:
 Figure \ref{tab:regress1} reports results of the four regressions. The desired property of separability of business cycles does not get a lot of support from this exact result. We see no increase in $R^2$, we find strong statistical evidence supporting rejection of the null-hypothesis for all estimates in all four regressions, this is however to be expected as the sample size of 8331 observations is quite large, it is well established that as the sample size increases the asymptotic variance of the OLS-estimate decreases and thus significance is inevitable as the sample size becomes quite large.
 \input{Tables/RegressionTable1.tex}
 
-However from figure \ref{fig:ErPCPD} we see that the most extreme effect of $S_t$ on expected returns kicks in at an estimated $0.02$, based on this fact we run additional regressions with the same specification as above, where we respecify $\Bar{S}_{REC}=0.02$, the output of which is reported in table \ref{tab:regress2}. This specification of $\Bar{S}_{REC}$ implies that the simulated economy is in recession approximately 2.8\% of the time.
+However from figure \ref{fig:SPCPD-a} we see that the most extreme effect of $S_t$ on expected returns kicks in at an estimated $0.02$, based on this fact we run additional regressions with the same specification as above, where we respecify $\Bar{S}_{REC}=0.02$, the output of which is reported in table \ref{tab:regress2}. This specification of $\Bar{S}_{REC}$ implies that the simulated economy is in recession approximately 2.8\% of the time.
 
 \input{Tables/RegressionTableregsNB.tex}
 
 \input{Tables/RegressionTable2.tex}
 
-
+\input{Ta}
 
 Instead we run a regime-switching linear regression with observable states, remember that from the simulation we obtained the surplus consumption ratio as an observable. In real data one would have to rely on latent state regressions such as a \textit{hidden Markov model}, to determine the latent state as a function of $s_t$.\\
 However we have the simulated series and are able to run the regression straightforward. We run four regressions again with excess stock return as the regressand:
