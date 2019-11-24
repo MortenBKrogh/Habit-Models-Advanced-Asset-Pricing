@@ -288,11 +288,9 @@ j = j+1;
 end
 
 tab = [bmat(2,:)', R2', bdmat(2,:)',  R2d']
-names = split(num2str(h/12,0),'formatSpec','%3$i');
+names = split(char(num2str(h/12,1)));
 varnames = split(['$\beta_{pc}$ ', '$R^2_{pc}$  ','$\beta_{pd}$ ','$R^2_{od}$'])'
 tab =  array2table(tab,'Rownames',names,'VariableNames',varnames)
-table2latex(tab, '../Tables/LHForercasts.tex')
-
 %% Moments Table
 load('PD_Claim_workspace','Edc_pf', 'Stdc_pf', 'Erfinterp_pf', 'Shprinterp_pf', 'ShpRinterp_pf', 'Eexrettinterp_pf', 'Stdexrettinterp_pf', 'Ep_d_pf', 'Stdp_d_pf');
 PD_edc = Edc_pf;
