@@ -3,6 +3,11 @@ name = string(['../Tables/RegressionTable1.tex']);
 if isfile(name)
 delete(name);
 end
+if annual
+   frequency = 'years';
+else
+   frequency = 'months';
+end
 %%
 diary(name);
 diary on
@@ -23,7 +28,7 @@ disp(['\\[-2.1ex] $\left( p_t - c_t \right)_{REC}$ &',num2str(A{5,1,1}(2),4),'& 
 disp(['  & (',num2str(A{10,1,1}(2),2),') & &(',num2str(A{10,1,3}(2),2),') & & & \\ ']);
 disp([' \addlinespace ']);
 disp(['  $\left( p_t - c_t \right)_{EXP}$ &', num2str(A{5,1,1}(3),4),'  &    & &',num2str(A{5,1,4}(2),4),' & &  \\ ']);
-disp(['  & (', num2str(abs(A{10,1,1}(3)),2),') & & &(',num2str(A{10,1,4}(2),2),') & & \\ ']);
+disp(['  & (', num2str(A{10,1,1}(3),2),') & & &(',num2str(A{10,1,4}(2),2),') & & \\ ']);
 disp([' \addlinespace ']);
 disp(['  $\left( p_t - d_t \right)_{REC}$ & &',num2str(A{5,1,2}(2),4),      '& & & ',num2str(A{5,1,5}(2),4),  '  &   \\ ']);
 disp(['                                   & &  (',num2str(A{10,1,2}(2),2),') & & & (',num2str(A{10,1,5}(2),2),') &    \\ ']);
@@ -43,7 +48,7 @@ disp(['\end{tabular} ']);
 disp(['\begin{tablenotes}']);
 disp(['\footnotesize{']);
 disp(['\item[1] Brackets below estimates contains Newey-West corrected standard errors. ']);
-disp(['\item[2] Regressions on ',num2str(abs(A{3,1,1})),' years of simulated data.']);
+disp(['\item[2] Regressions on ',num2str(abs(A{3,1,1})),' ',frequency,' of simulated data.']);
 disp(['\item[3] EXP (REC) denotes expansion (recession)']);
 disp(['}']);
 disp(['\end{tablenotes}']);

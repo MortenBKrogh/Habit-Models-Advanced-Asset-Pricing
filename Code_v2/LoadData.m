@@ -183,7 +183,7 @@ regPCexp1 = nwest(y,x,0);
 regs1 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
 RegressionTable2;
 %% Regressions 2
-rec_sim_02 = zeros(size(astsim,1));
+rec_sim_02 = zeros(size(astsim,1),1);
 for i = 1:size(astsim,1)
     if astsim(i) < log(0.02)
         rec_sim_02(i) = 1;
@@ -191,7 +191,7 @@ for i = 1:size(astsim,1)
         rec_sim_02(i) = 0;
     end 
 end
-rec_sim_02 = rec_sim_02';
+rec_sim_02 = rec_sim_02(2:end);
 %%
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         
@@ -289,7 +289,6 @@ saveas(gcf,name,'epsc');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%    Long run regressions based on simulated data     %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clear
 load('PC_Claim_workspace','Erfinterp_pf','alnrtsim_pf','lnrtsim','lnpctsim');
 rfr  = Erfinterp_pf;                 
 rets = lnrtsim - rfr/4; 

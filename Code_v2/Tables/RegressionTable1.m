@@ -3,6 +3,11 @@ name = string(['../Tables/RegressionTable2.tex']);
 if isfile(name)
 delete(name);
 end
+if annual
+    frequency = 'years';
+else
+    frequency = 'months';
+end
 %%
 diary(name);
 diary on
@@ -43,7 +48,7 @@ disp(['\end{tabular} ']);
 disp(['\begin{tablenotes}']);
 disp(['\footnotesize{']);
 disp(['\item[1] Brackets below estimates contains Newey-West corrected standard errors. ']);
-disp(['\item[2] Regressions on ',num2str(abs(A{3,1,1})),' years of simulated data.']);
+disp(['\item[2] Regressions on ',num2str(abs(A{3,1,1})),' ',frequency,' of simulated data.']);
 disp(['\item[3] EXP (REC) denotes expansion (recession)']);
 disp(['}']);
 disp(['\end{tablenotes}']);
