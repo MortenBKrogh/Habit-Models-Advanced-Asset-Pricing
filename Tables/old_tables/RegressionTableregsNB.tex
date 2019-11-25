@@ -1,0 +1,36 @@
+\begin{table}[H]
+\centering   
+  \caption{Benchmark regressions}           
+  \label{tab:regress1}     
+  \begin{threeparttable}
+\begin{tabular}{@{\hspace{5pt}}l@{\hspace{15pt}}c@{\hspace{5pt}}c} 
+\toprule 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+ & \multicolumn{2}{c}{$\left(r_{t+1}-r^f\right)$} \\ 
+ \cmidrule(rr){2-3}
+ & (1) & (2)\\ 
+\midrule  
+\\[-2.1ex] $ p_t - c_t $ &-0.1516&\\ 
+  & (0.0071) &  \\ 
+ \addlinespace 
+  $p_t - d_t $ & &   -0.137 \\ 
+               & &  (0.0064) \\ 
+ \addlinespace 
+ Constant &0.5206 &0.4814\\ 
+          &(0.023) &(0.021) \\ 
+ \addlinespace 
+\midrule  
+Observations & 8331 & 8331\\
+R$^{2}$ &0.094 & 0.094 \\ 
+Residual Std. Error &0.015 & 0.015 \\ 
+\bottomrule 
+\end{tabular} 
+\begin{tablenotes}
+\footnotesize{
+\item[1] Brackets below estimates contains Newey-West corrected standard errors. 
+\item[2] Regressions on 8331 years of simulated data.
+\item[3] EXP (REC) denotes expansion (recession)
+}
+\end{tablenotes}
+\end{threeparttable}
+\end{table} 

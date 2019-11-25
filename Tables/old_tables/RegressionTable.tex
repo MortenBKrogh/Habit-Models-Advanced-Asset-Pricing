@@ -1,0 +1,48 @@
+\begin{table}[H]
+\centering   
+  \caption{Regressions}           
+  \label{tab:regress}     
+  \begin{threeparttable}
+\begin{tabular}{@{\hspace{5pt}}l@{\hspace{5pt}}cccc} 
+\toprule 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+ & \multicolumn{4}{c}{$\left(r_{t+1}-r^f\right)$} \\ 
+ \cmidrule(rr){2-5}
+ & (1)   &   (2) &   (3) &  (4)\\ 
+\midrule  
+\\[-2.1ex] $\left( p_t - c_t \right)_{REC}$ & $-$0.169& &  \\ 
+  & (0.012) & & & \\ 
+ \addlinespace 
+  $\left( p_t - c_t \right)_{EXP}$ & $-$0.1641 & &  \\ 
+  & (0.0098) & & &\\ 
+ \addlinespace 
+ $p_t - c_t$ &  & $-$0.1516 & & \\
+ & & (0.0071) \\
+ \addlinespace 
+  $\left( p_t - d_t \right)_{REC}$ & & & $-$0.1719&  \\ 
+  & & & (0.016)    &\\ 
+ \addlinespace 
+  $\left( p_t - d_t \right)_{EXP}$ & & & $-$0.1668&  \\ 
+  &  & & (0.012) &\\ 
+ \addlinespace 
+ $p_t - d_t$ & & & & $-$0.1552 \\
+ & & & &  (0.0086)  \\
+ \addlinespace 
+ Constant &0.5611 &0.5206 &0.5736 &0.5352 \\ 
+  &(0.032) &(0.023) &(0.041) &(0.028) \\ 
+ \addlinespace 
+\midrule  
+Observations & 8331 & 8331 & 8331 &8331\\ 
+R$^{2}$ &0.094 & 0.094 & 0.053 &0.052\\ 
+Residual Std. Error &0.015 & 0.015 &0.037 & 0.037  \\ 
+\bottomrule 
+\end{tabular} 
+\begin{tablenotes}
+\footnotesize{
+\item[1] Brackets below estimates contains Newey-West corrected standard errors. 
+\item[2] Regressions on 8331 years of simulated data.
+\item[3] EXP (REC) denotes expansion (recession)
+}
+\end{tablenotes}
+\end{threeparttable}
+\end{table} 
