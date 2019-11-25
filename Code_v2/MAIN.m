@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%      THIS FILE CAN ONLY BE RUN ON A WINDOWS MACHINE DUE SINCE        %%
+%%      THIS FILE CAN ONLY RUN ON A WINDOWS MACHINE SINCE               %%
 %%      WE USE THE GAUSLEGENDRE FUNCTION TO PERFORM THE NUMERICAL       %%
 %%      INTEGRATION, WHICH CALL THE COMPILED QUADLAB FUNCTION.          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
