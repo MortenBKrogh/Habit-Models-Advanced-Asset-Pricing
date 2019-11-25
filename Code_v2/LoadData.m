@@ -452,3 +452,72 @@ labeledMatrix = bwlabel(rec_sim_ss);
 measurements = regionprops(labeledMatrix, 'Area');
 RecessionLengths = [measurements.Area];
 mean(RecessionLengths)/12;
+
+
+%% FORECAST 1-period Expanding-Window
+%%
+clearvars -except rec_sim_ss;
+
+load('PD_Claim_workspace','s_bar','s_max',...
+        'verd','S_bar','sig','gamma','S','stsim','lnrtsim','lnpctsim','Erfinterp_pf');
+    Erfinterp_pf = Erfinterp_pf./12;
+    PD_regress = lnpctsim(2:end,1);              % PD
+    load('PC_Claim_workspace','lnrtsim','lnpctsim')
+    alnrtsim_pf = lnrtsim;
+    PC_regress = lnpctsim(2:end,1);              % PC
+    rec_sim_ss = rec_sim_ss(2:end,1);
+%%
+
+% Initial split 60%
+h = 1;
+lower_Sbar = 0;
+retsHRec = alnrtsim_pf(2:end) .* rec_sim_ss(2:end);     %% Excess Returns Recession
+retsHExp = alnrtsim_pf(2:end) .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
+
+PDRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
+PDRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1);
+PCRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
+PCRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1);
+%%
+a = [retsHRec, PDRegHRec];
+a = a(all(a,2),:);
+ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
+PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Setting Sample Size                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+T = size(a,1);     % Observations
+R = 0.8*size(a,1); % initial estimation period
+P = T-R;           % out-of-sample estimation period
+%%
+%--------------------------------------------------------------------------
+% Expanding window 
+%--------------------------------------------------------------------------
+
+FC_MEAN=zeros(P,1);
+FC_rec=zeros(P,1);
+
+for t=1:P;
+    FC_MEAN(t)=mean(Y(2:R+(t-1)));
+    
+    X_t = PDrecHR(1:R+(t-1)-1,:);        
+    Y_t = ExcRetsRec(2:R+(t-1));              
+    results_t = nwest(Y_t,[X_t ones(R+(t-1)-1,1)], 1);
+    FC_rec(t) = [FC_rec(R+(t-1),:) 1] * results_t.beta;        
+end;
+
+
+
+
+
+regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
+
+a = [retsHExp, PDRegHExp];
+a = a(all(a,2),:);
+ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
+PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
+regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
+
+
