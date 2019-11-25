@@ -133,11 +133,11 @@ To estimate the unconditional mean of the consumption growth, $g$, in the model 
 hence a consistent estimate of the true unconditional mean is given as the sample mean of consumption growth. From this result follows by extension that the unconditional standard deviation is given by $\sigma$ while the consistent estimate is simply the sample standard deviation of the consumption growth, the same result applies to dividend growth.
 
 To determine the correlation between dividend growth and consumption ratio ${\operatorname{corr}(w_t, v_t)}$ or $\rho$ we follow the argumentation of \citet{Campbell1999} the correlation between dividend growth and consumption growth are especially tricky to calibrate as it is very non-robust to horizon changes, hence we fix the correlation to the level chosen by \citet{Campbell1999}, they use $\rho = 0.2$ but notes that with different horizons the value lies between (0.05-0.25).\\
-To estimate the true autocorrelation-coefficient we use the first order sample autocorrelation function of the price-dividend ratio, i.e,
+To estimate the true autocorrelation-coefficient we use the first order sample autocorrelation function of the dividend-price ratio, i.e,
 \begin{align}
-    p_t - d_t = \alpha + \phi \left( p_{t-1} - d_{t-1} \right)+\varepsilon_t
+      d_t - p_t = \alpha + \phi \left( d_{t-1}-p_{t-1} \right)+\varepsilon_t
 \end{align}
-These dynamics of the dividend yield are true only if the best forecast of future dividend yield can be retrieved from an AR(1) model, that this holds true can be seen from equation \eqref{pd_ratio}, stating the the price-dividend ratio is a functional only of the state variable, hence inheriting the dynamics of only one state, the surplus consumption ratio. This hold true for all $t$ thus the effects of $s_t$ on $p_{t+1}-d_{t+1}$, can be retrieved using the information contained in $p_t-d_t$.\\
+These dynamics of the dividend yield are true only if the best forecast of future dividend yield can be retrieved from an AR(1) model, that this holds true can be seen from equation \eqref{pd_ratio}, stating the the price-dividend ratio is a functional only of the state variable, hence inheriting the dynamics of only one state, the surplus consumption ratio. This hold true for all $t$ thus the effects of $s_t$ on $d_{t+1}-p_{t+1}$, can be retrieved using the information contained in $d_t-p_t$.\\
 The local utility curvature, $\gamma$, in the model is not calibrated as per say, instead we rely on existiing literature such as \citet{Campbell1999} and fixes $\gamma = 2$.
 \\
 \newline
