@@ -34,9 +34,9 @@ saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
 load('PD_Claim_workspace','elnr_pf','lnrf_pf');lnrPD = elnr_pf;
 load('PC_Claim_workspace','elnr_pf');lnrPC = elnr_pf;
 figure;
-plot(S,(lnrPC) *tsc*100,'LineWidth',1.5);
+plot(S,lnrPC *tsc*100,'LineWidth',1.5);
 hold on
-plot(S,(lnrPD)*tsc*100,'LineWidth',1.5);
+plot(S,lnrPD*tsc*100,'LineWidth',1.5);
 yline(mean(lnrf_pf)*tsc*100,':');
 xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
 xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');

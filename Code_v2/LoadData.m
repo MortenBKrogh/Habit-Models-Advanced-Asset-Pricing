@@ -130,28 +130,31 @@ else
         'verd','S_bar','sig','gamma','S','stsim','lnrtsim','lnpctsim','Erfinterp_pf');
     Erfinterp_pf = Erfinterp_pf./12;
     PD_regress = lnpctsim(2:end,1);              % PD
+    lnrtsim_PD = lnrtsim;
     load('PC_Claim_workspace','lnrtsim','lnpctsim')
-    alnrtsim_pf = lnrtsim;
+    lnrtsim_PC = lnrtsim;
     PC_regress = lnpctsim(2:end,1);              % PC
     rec_sim_ss = rec_sim_ss(2:end,1);
 end
 %%
 rfr  = Erfinterp_pf;                    % Risk free rate
-rets = alnrtsim_pf - rfr;               % Excess Returns
+Erets_PC = lnrtsim_PC - rfr;               % Excess Returns PC
+Erets_PD = lnrtsim_PD - rfr;
 h    =  1;                              % Forecast Horizon 0 = in-sample regression
-y   = rets(1+h:end,1);                  % Regressand 
+yPC  = Erets_PC(1+h:end,1);                  % Regressand PC
+yPD  = Erets_PD(1+h:end,1);                  % Regressand PD
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%    No business cycle regressions   %%%
 %%% r_(t+h) = alpha + beta p/d_t + eps %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-x   = [ones(length(rets(1:end-h,:)), 1),...  
+x   = [ones(length(PD_regress(1:end-h,1)), 1),...  
     PD_regress(1:end-h,1)];
-regPDnorec = nwest(y,x,0);
+regPDnorec = nwest(yPD,x,0);
 
-x   = [ones(length(rets(1:end-h,:)), 1),  ...       
+x   = [ones(length(PC_regress(1:end-h,1)), 1),  ...       
     PC_regress(1:end-h,1)];
-regPCnorec = nwest(y,x,0);
+regPCnorec = nwest(yPC,x,0);
 
 regsNB = [regPCnorec regPDnorec];
 RegsNoRec
@@ -161,47 +164,50 @@ RegsNoRec
 %%% r_(t+h) = alpha + beta_1 p/d_t*I_rec + beta_2(1-I_rec)p/d_t + eps %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           Full Business cycle                         %
-x   = [ones(length(rets(1:end-h,:)), 1),  ...            
+x   = [ones(length(PD_regress(1:end-h,1)), 1),  ...            
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
-regPDrec = nwest(y,x,0); %% Full BC <- PD
+regPDrec = nwest(yPD,x,0); %% Full BC <- PD
 
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
+x   = [ones(length(PC_regress(1:end-h,1)), 1),  ...         
     rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1), ...  
     (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)]; 
-regPCrec = nwest(y,x,0); %% Full BC <- PC
+regPCrec = nwest(yPC,x,0); %% Full BC <- PC
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           Split Business cycle                        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 lower_Sbar = 0;
-retsHRec = alnrtsim_pf(2:end) .* rec_sim_ss(2:end);     %% Excess Returns Recession
-retsHExp = alnrtsim_pf(2:end) .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
+
+retsHRecPD = yPD .* rec_sim_ss(2:end);     %% Excess Returns Recession
+retsHExpPD = yPD .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
+retsHRecPC = yPC .* rec_sim_ss(2:end);     %% Excess Returns Recession
+retsHExpPC = yPC .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
 
 PDRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
 PDRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1);
 PCRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
 PCRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1);
 
-a = [retsHRec, PDRegHRec];
+a = [retsHRecPD, PDRegHRec];
 a = a(all(a,2),:);
 ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
 PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
 regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
 
-a = [retsHExp, PDRegHExp];
+a = [retsHExpPD, PDRegHExp];
 a = a(all(a,2),:);
 ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
 PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
 regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
 
-a = [retsHExp, PCRegHExp];
+a = [retsHExpPC, PCRegHExp];
 a = a(all(a,2),:);
 ExRetsExp = a(:,1);
 PCExpHR   = [ones(size(a,1),1) a(:,2)];
 regPCexp1 = nwest(ExRetsExp,PCExpHR,0);
 
-a = [retsHRec, PCRegHRec];
+a = [retsHRecPC, PCRegHRec];
 a = a(all(a,2),:);
 ExRecRets = a(:,1);
 PCrecHR   = [ones(size(a,1),1) a(:,2)];
