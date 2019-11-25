@@ -362,12 +362,13 @@ saveas(gcf,name,'epsc');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%    Long run regressions based on simulated data     %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-load('PC_Claim_workspace','Erfinterp_pf','alnrtsim_pf','lnrtsim','lnpctsim');
+load('PC_Claim_workspace','Erfinterp_pf','lnrtsim','lnpctsim');
 rfr  = Erfinterp_pf;                 
-rets = lnrtsim - rfr/4; 
+retsPC = lnrtsim - (rfr/4); 
 PCrat = lnpctsim(2:end);
-load('PD_Claim_workspace','lnpctsim');
+load('PD_Claim_workspace','lnrtsim','lnpctsim')
 PDrat = lnpctsim(2:end);
+retsPD = lnrtsim - (rfr/4); 
 j = 1;
 T = length(PCrat);
 Ta = T;
@@ -375,13 +376,13 @@ h= [1 2 3 5 7 10] * 12;
 while j <= size(h,2)
 k = h(1,j);
 xC = [ones(T-k+1,1), PCrat(1:T-k+1)];   
-yC  = rets(1:T-k+1);%-rfr;
+yC  = retsPC(1:T-k+1);%-rfr;
 xD = [ones(T-k+1,1) PDrat(1:T-k+1)];
-yD = rets(1:T-k+1);
+yD = retsPD(1:T-k+1);
     i = 2;
 while i <= k
- yC = yC + rets(i:T-k+i);
- yD = yD + rets(i:T-k+i);
+ yC = yC + retsPC(i:T-k+i);
+ yD = yD + retsPD(i:T-k+i);
  i = i+1;
 end   
 b = xC\yC;
