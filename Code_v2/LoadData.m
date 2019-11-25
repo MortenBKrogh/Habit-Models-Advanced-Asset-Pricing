@@ -1,3 +1,10 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% RUNNING THIS FILE PRODUCES MOST THE TABLES AND FIGURES IN THE ARTICLE 
+% JENSEN & KROGH (2019).
+% The program relies on running the MAIN.m file according to the
+% description in that file. This is because this program is working upon
+% the 4 workspaces saved when running the MAIN.m program.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 addpath('Functions');
 addpath('Data');
 addpath('Workspaces');
@@ -167,6 +174,7 @@ regPCrec = nwest(y,x,0); %% Full BC <- PC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           Split Business cycle                        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+lower_Sbar = 0;
 retsHRec = alnrtsim_pf(2:end) .* rec_sim_ss(2:end);     %% Excess Returns Recession
 retsHExp = alnrtsim_pf(2:end) .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
 

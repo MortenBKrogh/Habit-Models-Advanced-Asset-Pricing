@@ -1,3 +1,43 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%      THIS FILE CAN ONLY BE RUN ON A WINDOWS MACHINE DUE SINCE        %%
+%%      WE USE THE GAUSLEGENDRE FUNCTION TO PERFORM THE NUMERICAL       %%
+%%      INTEGRATION, WHICH CALL THE COMPILED QUADLAB FUNCTION.          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% This program is able to reproduce results of Campbell & Cochrane (1999)
+% and recalibrate their model to an extended time frame. Then the program
+% defines recessions based on NBER recession data, this allows us to
+% divide the data sample in two parts respectively a recession sample and
+% an expansion sample, which then is used to estimate two regressions to
+% test predictability of excess returns in recessions as well as in
+% expansions. The program is inspired by Campbell & Cochrane (1999) GAUSS
+% code availible at John H. Cochrane's homepage: 
+% https://faculty.chicagobooth.edu/john.cochrane/ 
+% 
+% For reproduction of our results in Jensen & Krogh (2019) the MAIN.m code 
+% needs to be run 4 times with preferences
+%
+% The first 2 runs use Campbell & Cochrane (1999) calibration and solves
+% for both price-consumption and price-dividend.
+% 
+% 1. Run
+%       calib = 0, PD_Claim = 0
+% 2. Run
+%       calib = 0, PD_Claim = 1
+%
+% The next 2 runs uses Jensen & Krogh (2019)'s calibration (Extends the
+% calibration period with 20 years) and then solves for the
+% price-consumption and price-dividend.
+%
+% 3. Run
+%       calib = 1, PD_Claim = 0
+% 4. Run
+%       calib = 1, PD_Claim = 1
+% 
+% The program automatically saves the workspaces of the 4 runs such that
+% the LoadData.m file can be run and changed independently of the MAIN.m
+% file.
+
 clear all
 clc
 format long
