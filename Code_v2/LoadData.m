@@ -147,7 +147,7 @@ x   = [ones(length(rets(1:end-h,:)), 1),  ...
 regPCnorec = nwest(y,x,0);
 
 regsNB = [regPCnorec regPDnorec];
-% RegsNoRec
+RegsNoRec
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                      Business cycle regressions                   %%%

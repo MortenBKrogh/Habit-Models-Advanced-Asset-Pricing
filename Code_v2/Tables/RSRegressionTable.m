@@ -42,7 +42,7 @@ disp(['\bottomrule ']);
 disp(['\end{tabular} ']);
 disp(['\begin{tablenotes}']);
 disp(['\footnotesize{']);
-disp(['\item[1] Brackets below estimates contains Newey-West corrected standard errors. ']);
+disp(['\item[1] Brackets below estimates contains \citet{NW87} corrected standard errors. ']);
 disp(['\item[2] Regressions on ',num2str(abs(A{3,1,3})),' ',frequency,' of simulated data.']);
 disp(['\item[3] EXP (REC) denotes expansion (recession)']);
 disp(['}']);
