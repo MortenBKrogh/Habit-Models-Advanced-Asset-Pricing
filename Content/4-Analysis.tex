@@ -3,13 +3,13 @@
 \subsubsection{Calibrated Model}
 
 \begin{table}[H]
-\center
+\begin{adjustbox}{max width=\textwidth}
 \begin{threeparttable}[b]
 \caption{Parameters of the model}
 \label{tab:ModelCalib}
-\begin{tabular}{@{}llllc@{}}
+\begin{tabular}{@{}lllcc@{}}
 \toprule
- & Parameter                              & Notation         & Calibration     & \citet{Campbell1999}\\ \midrule 
+ & Parameter                              & Notation         & Calibration & \citet{Campbell1999}\\ \midrule 
 \multicolumn{5}{l}{\textit{Calibrated}}                                    \\
  & Mean consumption growth                & $g$              & $0.0134$  & $0.0189$\\
  & Standard deviation of $\Delta c_t$     & $\sigma$         & $0.0152$  & $0.0150$\\
@@ -29,6 +29,7 @@
               \item [2] Calibrated parameters are estimated from data, assumed are chosen arbitrarily on the grounds of existing literature, while implied parameters are calculated from the calibrated/assumed parameters.}
 \end{tablenotes}
 \end{threeparttable}
+\end{adjustbox}
 \end{table}
 
 
@@ -43,7 +44,7 @@ From the calibrated model we simulate a chain of 100.000 monthly draws from the 
 Allowing us to infer about the predictability of excess stock returns, during times of simulated crisis. 
 \newline
 \\
-Based on NCER-recession data, we find that the US economy was in recession approximately 13.4\% of the period spanning January 1950 until December 2018.  In the model a recession implies that present consumption in low relative to previous periods consumption, that is the value of $s_t$ is lower than the steady state value of surplus consumption $\Bar{s}$ - integrating over the density of $s_t$ yields that the simulated economy is in recession during 37\% of all observations, which indicates that $\Bar{s}$ might be misspecified. To correct $\Bar{s}$ we match the empirical business cycle behavior by numerical optimization of the $s_t$ density, such that the empirical and simulated economy is in recession roughly the same amount. The $\Bar{s}$-value matching the empirical business cycle, throughout denoted $\Bar{s}_{rec}$ \textit{or} ($\Bar{S}_{rec}$), is found to be $-3.18$ ($0.0415$). One additional recessions specification we denote as $\bar{s}_{2,rec}$ is chosen as to capture only the most extreme non-linearity of the relationship between surplus consumption and expected returns as presented in figure \ref{fig:ErPCPD}.
+Based on NCER-recession data, we find that the US economy was in recession approximately 13.4\% of the period spanning January 1950 until December 2018.  In the model a recession implies that present consumption in low relative to previous periods consumption, that is the value of $s_t$ is lower than the steady state value of surplus consumption $\Bar{s}$ - integrating over the density of $s_t$ yields that the simulated economy is in recession during 37\% of all observations, which indicates that $\Bar{s}$ might be misspecified. To correct $\Bar{s}$ we match the empirical business cycle behavior by numerical optimization of the $s_t$ density, such that the empirical and simulated economy is in recession roughly the same amount. The $\Bar{s}$-value matching the empirical business cycle, throughout denoted $\Bar{s}_{rec}$ \textit{or} ($\Bar{S}_{rec}$), is found to be $-3.18$ ($0.0415$). One additional recessions specification we denote as $\bar{s}_{2,rec}$ is chosen as to capture only the most extreme non-linearity of the relationship between surplus consumption and expected returns as presented in figure \ref{fig:SPCPD-a}.
 
 \input{Tables/BC.tex}
 
@@ -65,14 +66,32 @@ Having simulated an economy based upon habit formation, and justified our choice
         \item Returns are unpredictable by the price/consumption- or the price/dividend-ratio under expansionary periods?
     \end{enumerate}
 \end{enumerate}
-Examining the expected returns as a function of the surplus consumption ratio, as in figure \ref{fig:ErPCPD}. The model reveals a somewhat linear relationship for high values of the surplus consumption, the relationship however is much more steep and nonlinear when $S_t$ approaches ${S}_{REC}$, the goal is then to exploit this fact when predicting returns.
+Examining the expected returns as a function of the surplus consumption ratio, as in figure \ref{fig:SPCPD-a}. The model reveals a somewhat linear relationship for high values of the surplus consumption, the relationship however is much more steep and nonlinear when $S_t$ approaches ${S}_{REC}$, the goal is then to exploit this fact when predicting returns.
 
+
+\begin{comment}
 \begin{figure}[H]
     \centering
     \caption{Expected returns as a function of $S_t$}
     \includegraphics{Figures/ErPCPD.eps}
     \label{fig:ErPCPD}
 \end{figure}
+\end{comment}
+
+
+\begin{figure}[H]
+\centering
+\caption{Functionals of surplus consumption ratio}
+    \label{fig:SPCPD}
+\subfigure[Expected returns as a function of $S_t$]{\label{fig:SPCPD-a}
+\includegraphics[width=0.45\textwidth]{Figures/ErPCPD.eps}} ~
+\subfigure[$P/C$, $P/D$ as a function of $S_t$]{
+\includegraphics[width=0.45\textwidth]{Figures/PC_PD_Ratio.eps}}
+\end{figure}
+
+From the functionals of surplus consumption ratio reported in \ref{fig:SPCPD}, some basic predictions can be made. We see that when surplus consumption is low, that is in recessionary times, expected returns increases, the intuition is that when times are bad, as consumption falls relative to habit levels, the risk aversion increases, people wants a higher level of compensation per unit of risk - the risk premium rises - note that this must hold true for all levels of $S$ as the risk-free rate is fixed in the model. \\
+Furthermore the figure implies that the regression coefficient of $P/C$ or equivalent $P/D$ should be negative. Lower P/C or P/D implies higher values of $\mathbb{E}\left[r_t-r^f\right]$, both driven by the single state. 
+
 
 \subsection{Results}
 First we estimate the following regressions:
@@ -91,13 +110,13 @@ As a benchmark we run two additional regressions given:
 Figure \ref{tab:regress1} reports results of the four regressions. The desired property of separability of business cycles does not get a lot of support from this exact result. We see no increase in $R^2$, we find strong statistical evidence supporting rejection of the null-hypothesis for all estimates in all four regressions, this is however to be expected as the sample size of 8331 observations is quite large, it is well established that as the sample size increases the asymptotic variance of the OLS-estimate decreases and thus significance is inevitable as the sample size becomes quite large.
 \input{Tables/RegressionTable1.tex}
 
-However from figure \ref{fig:ErPCPD} we see that the most extreme effect of $S_t$ on expected returns kicks in at an estimated $0.02$, based on this fact we run additional regressions with the same specification as above, where we respecify $\Bar{S}_{REC}=0.02$, the output of which is reported in table \ref{tab:regress2}. This specification of $\Bar{S}_{REC}$ implies that the simulated economy is in recession approximately 2.8\% of the time.
+However from figure \ref{fig:SPCPD-a} we see that the most extreme effect of $S_t$ on expected returns kicks in at an estimated $0.02$, based on this fact we run additional regressions with the same specification as above, where we respecify $\Bar{S}_{REC}=0.02$, the output of which is reported in table \ref{tab:regress2}. This specification of $\Bar{S}_{REC}$ implies that the simulated economy is in recession approximately 2.8\% of the time.
 
 \input{Tables/RegressionTableregsNB.tex}
 
 \input{Tables/RegressionTable2.tex}
 
-
+\input{Tables/LHForercasts.tex}
 
 Instead we run a regime-switching linear regression with observable states, remember that from the simulation we obtained the surplus consumption ratio as an observable. In real data one would have to rely on latent state regressions such as a \textit{hidden Markov model}, to determine the latent state as a function of $s_t$.\\
 However we have the simulated series and are able to run the regression straightforward. We run four regressions again with excess stock return as the regressand:
@@ -113,8 +132,10 @@ The results of the four regressions are reported in table \ref{tab:RSregress}, t
 
 Another result worth noting is one that provides evidence in favor of both of our hypothesis, that is the estimated coefficient of determination is much higher in the recession periods reaching 7\% when predicting excess returns using the price-consumption-ratio, than it is in expansionary periods reaching just barely .2\%, using the price-dividend-ratio as the predictor yields a smaller $R^2$ this is to be expected, as the price-dividend is by construction a noisier mapping of the price-consumption-ratio dynamics, containing not only the shock to consumption growth $\sigma$ but also the shock to dividend growth $\sigma_w$.\\
 
-Now in real data it is not plausible to condition the regressand on a future variable like we do with the recession indicator. The reason why it is still not completely unreasonable is the high persistence of $s_t$, remember that $s_t$ is driven by the highly persistent growth rate of consumption, estimating the persistence in our simulation yields an autocorrelation coefficient of $0.9972$.\\
-In real data it would be more reasonable to estimate a transition probability matrix to forecast the underlying business cycle chain, and condition on the recession forecast. Recession forecasts, however, are notoriously unreliable, comtaminating the estimates with very high levels of uncertainty.
+Now in real data it is not plausible to condition the regressand on a future variable like we do with the recession indicator. The reason why it is still not completely unreasonable is the high persistence of $s_t$, remember that $s_t$ is driven by the highly persistent growth rate of consumption, estimating the persistence in our simulation yields an autocorrelation coefficient of $0.9972$. From our monthly simulated series of $s_t$ the mean length of recessionary periods is around 1.2 years based upon the $\bar{s}_{rec}$, while the empirical mean length of recessions is around 0.93 years based on monthly NBER-recession data. Implying that real business cycles is not quite as persistent as in the model, or rather that the surplus consumption ratio might not be the sole determinant of recessions in reality, however a difference in average recession length of 3 months does not seem to bad.
+Now if we redo this exercise on annual simulated data the results differ quite a bit that average recession length is then 4.3 years. Empirically recessions are most often denoted monthly and thus annual recession data is not available to the extend needed here.\\
+
+In real data it would be more reasonable to estimate a transition probability matrix to forecast the underlying business cycle chain, and condition on the recession forecast. Recession forecasts, however, are notoriously unreliable, contaminating the estimates with very high levels of uncertainty.
 
 
 \input{Tables/RSRegressionTable.tex}
