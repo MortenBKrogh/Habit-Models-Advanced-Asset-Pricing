@@ -1,5 +1,5 @@
 A = struct2cell(regs1); 
-if lower_Sbar = 0;
+if lower_Sbar == 0;
 name = string(['../Tables/RegressionTable1.tex']);
 else
     name = string(['../Tables/RegressionTableLowerSbar.tex']);
