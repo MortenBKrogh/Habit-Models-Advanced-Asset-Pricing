@@ -275,19 +275,19 @@ ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
 PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
 regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
 
-a = [retsHExp, PDRegHExp];
+a = [retsHExpPD, PDRegHExp];
 a = a(all(a,2),:);
 ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
 PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
 regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
 
-a = [retsHExp, PCRegHExp];
+a = [retsHExpPC, PCRegHExp];
 a = a(all(a,2),:);
 ExRetsExp = a(:,1);
 PCExpHR   = [ones(size(a,1),1) a(:,2)];
 regPCexp1 = nwest(ExRetsExp,PCExpHR,0);
 
-a = [retsHRec, PCRegHRec];
+a = [retsHRecPC, PCRegHRec];
 a = a(all(a,2),:);
 ExRecRets = a(:,1);
 PCrecHR   = [ones(size(a,1),1) a(:,2)];
