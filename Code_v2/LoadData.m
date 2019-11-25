@@ -153,7 +153,7 @@ regsNB = [regPCnorec regPDnorec];
 %%%                      Business cycle regressions                   %%%
 %%% r_(t+h) = alpha + beta_1 p/d_t*I_rec + beta_2(1-I_rec)p/d_t + eps %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Full Business cycle
+%                           Full Business cycle                         %
 x   = [ones(length(rets(1:end-h,:)), 1),  ...            
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
@@ -164,8 +164,10 @@ x   = [ones(length(rets(1:end-h,:)), 1),  ...
     (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)]; 
 regPCrec = nwest(y,x,0); %% Full BC <- PC
 
-% Splits
-retsHRec = alnrtsim_pf(2:end) .* rec_sim_ss(2:end); %% Excess Returns Recession
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           Split Business cycle                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+retsHRec = alnrtsim_pf(2:end) .* rec_sim_ss(2:end);     %% Excess Returns Recession
 retsHExp = alnrtsim_pf(2:end) .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
 
 PDRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
@@ -175,13 +177,13 @@ PCRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1);
 
 a = [retsHRec, PDRegHRec];
 a = a(all(a,2),:);
-ExcRetsRec = a(:,1); %% <- Excess Returns Recessions only
+ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
 PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
 regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
 
 a = [retsHExp, PDRegHExp];
 a = a(all(a,2),:);
-ExRetsExp = a(:,1); %% <- Excess Returns Expansions onlyu
+ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
 PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
 regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
 
@@ -199,49 +201,7 @@ regPCrec1 = nwest(ExRecRets,PCrecHR,0);
 
 regs1 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
 RegressionTable2;
-%% Regressions 2
-rec_sim_02 = zeros(size(astsim,1),1);
-for i = 1:size(astsim,1)
-    if astsim(i) < log(0.02)
-        rec_sim_02(i) = 1;
-    else
-        rec_sim_02(i) = 0;
-    end 
-end
-if annual == 0
-rec_sim_02 = rec_sim_02(2:end);
-end
 %%
-y   = rets(1+h:end,1);
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-    rec_sim_02(1:end-h,:) .* PC_regress(1:end-h,1), ...
-    (1-rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1)];
-regPCrec2 = nwest(y,x,0);
-
-x   = [ones(length(rets(1:end-h,:)), 1),  ...            
-    rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1), ...  
-    (1-rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
-regPDrec2 = nwest(y,x,0);
-
-x   = [ones(length(rets(1:end-h,:)), 1),  ...        
-    (1-rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1)];
-regPCexp3 = nwest(y,x,0);
-
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-     rec_sim_02(1:end-h,:) .* PC_regress(1:end-h,1)];
-regPCrec3 = nwest(y,x,0);
-
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-     rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1)];
-regPDrec3 = nwest(y,x,0);
-
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-     (1 - rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)];
-regPDexp3 = nwest(y,x,0);
-
-regs2 = [regPCrec2 regPDrec2 regPCrec3 regPCexp3 regPDrec3 regPDexp3];
-RegressionTable1;
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%         Regime Switching model Observable states         %%%
 %%% I_rec_t+h * r_t+h-rfr = alpha + beta (p/d)_t * I_rec_t+h %%%
@@ -265,6 +225,7 @@ xexp  = [ones(length(rets(1:end-h,:)), 1),...
         (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)];
 RegRec_PD = nwest(yrec,xrec,0);
 RegExp_PD = nwest(yexp,xexp,0);
+
 RSregs = [RegRec, RegRec_PD, RegExp, RegExp_PD];
 RSRegressionTable;
 %%
@@ -302,7 +263,6 @@ title({'$P/C$', ['$E(p_t-c_t)$ =',num2str(mean(PCratio),4)]},'Interpreter','late
 subplot(2,1,2)
 plot(PDratio);ylabel('$p_t-d_t$','FontSize',14,'Interpreter','latex');
 title({'$P/D$', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]},'Interpreter','latex');
-ylim([1.25 3.5]);
 saveas(gcf,name,'epsc');
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
