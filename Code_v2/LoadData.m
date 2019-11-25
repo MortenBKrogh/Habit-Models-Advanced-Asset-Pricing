@@ -230,8 +230,8 @@ load('PD_Claim_workspace','s_bar','s_max',...
     lnrtsimPC   = lnrtsim; 
     h=1;
 rfr  = Erfinterp_pf;                    % Risk free rate
-retsPC = PC_regress - rfr;               % Excess Returns
-retsPD = PD_regress - rfr;
+retsPC = lnrtsimPC - rfr;               % Excess Returns
+retsPD = lnrtsimPD - rfr;
 h    =  1;                              % Forecast Horizon 0 = in-sample regression
 y   = rets(1+h:end,1);                  % Regressand 
 rec_sim_02 = zeros(size(stsim,1),1);
