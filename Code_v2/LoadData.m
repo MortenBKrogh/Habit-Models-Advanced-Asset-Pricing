@@ -134,8 +134,6 @@ rets = alnrtsim_pf - rfr;               % Excess Returns
 h    =  1;                              % Forecast Horizon 0 = in-sample regression
 y   = rets(1+h:end,1);                  % Regressand 
 %%
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%    No business cycle regressions   %%%
 %%% r_(t+h) = alpha + beta p/d_t + eps %%%
@@ -155,32 +153,49 @@ regsNB = [regPCnorec regPDnorec];
 %%%                      Business cycle regressions                   %%%
 %%% r_(t+h) = alpha + beta_1 p/d_t*I_rec + beta_2(1-I_rec)p/d_t + eps %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
+% Full Business cycle
 x   = [ones(length(rets(1:end-h,:)), 1),  ...            
     rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1), ...  
     (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
-regPDrec = nwest(y,x,0);
-
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-    rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1)]; 
-regPDrec1 = nwest(y,x,0);
-
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-    (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
-regPDexp1 = nwest(y,x,0);
+regPDrec = nwest(y,x,0); %% Full BC <- PD
 
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         
     rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1), ...  
     (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)]; 
-regPCrec = nwest(y,x,0);
+regPCrec = nwest(y,x,0); %% Full BC <- PC
 
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-    rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1)]; 
-regPCrec1 = nwest(y,x,0);
+% Splits
+retsHRec = alnrtsim_pf(2:end) .* rec_sim_ss(2:end); %% Excess Returns Recession
+retsHExp = alnrtsim_pf(2:end) .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
 
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
-    (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)]; 
-regPCexp1 = nwest(y,x,0);
+PDRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
+PDRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1);
+PCRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
+PCRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1);
+
+a = [retsHRec, PDRegHRec];
+a = a(all(a,2),:);
+ExcRetsRec = a(:,1); %% <- Excess Returns Recessions only
+PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
+regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
+
+a = [retsHExp, PDRegHExp];
+a = a(all(a,2),:);
+ExRetsExp = a(:,1); %% <- Excess Returns Expansions onlyu
+PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
+regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
+
+a = [retsHExp, PCRegHExp];
+a = a(all(a,2),:);
+ExRetsExp = a(:,1);
+PCExpHR   = [ones(size(a,1),1) a(:,2)];
+regPCexp1 = nwest(ExRetsExp,PCExpHR,0);
+
+a = [retsHRec, PCRegHRec];
+a = a(all(a,2),:);
+ExRecRets = a(:,1);
+PCrecHR   = [ones(size(a,1),1) a(:,2)];
+regPCrec1 = nwest(ExRecRets,PCrecHR,0);
 
 regs1 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
 RegressionTable2;
