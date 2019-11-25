@@ -13,7 +13,7 @@ opts.Colors     = get(groot,'defaultAxesColorOrder');
 %%
 PD_Claim_Regressions = 0; % 0 = PC
                           % 1 = PD
-annual = 0;               % 0 = monthly
+annual = 1;               % 0 = monthly
                           % 1 = annual
 
 % momPC = readtable('PC_Claim_Sim_mom.txt');
@@ -191,7 +191,9 @@ for i = 1:size(astsim,1)
         rec_sim_02(i) = 0;
     end 
 end
+if annual == 0
 rec_sim_02 = rec_sim_02(2:end);
+end
 %%
 y   = rets(1+h:end,1);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...         
