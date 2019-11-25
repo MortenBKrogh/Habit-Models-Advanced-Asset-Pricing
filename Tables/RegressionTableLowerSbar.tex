@@ -1,0 +1,42 @@
+\begin{table}[H]
+\centering   
+  \caption{Regressions, $\Bar{S}_{REC} = 0.041542$}           
+  \label{tab:regress1}     
+  \begin{threeparttable}
+\begin{tabular}{@{\hspace{5pt}}l@{\hspace{5pt}}cccccc} 
+\toprule 
+ & \multicolumn{6}{c}{\textit{Dependent variable:}} \\ 
+ & \multicolumn{6}{c}{$\left(r_{t+1}-r^f\right)$} \\ 
+ \cmidrule(rr){2-7}
+ & (1) & (2) & (3) & (4) & (5) & (6) \\ 
+\midrule  
+\\[-2.1ex] $\left( p_t - c_t \right)_{REC}$ &-0.0132& &-0.06462 & & &\\ 
+  & (0.00088) & &(0.007) & & & \\ 
+ \addlinespace 
+  $\left( p_t - c_t \right)_{EXP}$ &-0.01323  &    & &-0.01631 & &  \\ 
+  & (0.00071) & & &(0.00069) & & \\ 
+ \addlinespace 
+  $\left( p_t - d_t \right)_{REC}$ & &-0.01187& & & 0.9433  &   \\ 
+                                   & &  (0.00081) & & & (0.0072) &    \\ 
+ \addlinespace 
+  $\left( p_t - d_t \right)_{EXP}$ & &   -0.01192& & & &-0.01465 \\ 
+                                   & &  (0.00064) & & & &(0.00062) \\ 
+ \addlinespace 
+ Constant &0.07811 &0.0713&0.3121 &0.09658 &0.2645 &0.08797 \\ 
+          &(0.0041) &(0.0037)&(0.033)&(0.0039)&(0.034)&(0.0036) \\ 
+ \addlinespace 
+\midrule  
+Observations & 99999 & 99999&2972 & 96435&2972&96435\\
+R$^{2}$ &0.0083 & 0.0083&0.038&0.0086&0.89&0.0086 \\ 
+Residual Std. Error &0.0015 & 0.0015&0.0043&0.0013&0.0045&0.0013 \\ 
+\bottomrule 
+\end{tabular} 
+\begin{tablenotes}
+\footnotesize{
+\item[1] Brackets below estimates contains \citet{NW87} corrected standard errors. 
+\item[2] Regressions on 99999 months of simulated data.
+\item[3] EXP (REC) denotes expansion (recession)
+}
+\end{tablenotes}
+\end{threeparttable}
+\end{table} 

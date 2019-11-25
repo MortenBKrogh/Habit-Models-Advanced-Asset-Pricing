@@ -1,7 +1,8 @@
-A = struct2cell(regs1); 
 if lower_Sbar == 0;
+    A = struct2cell(regs1); 
 name = string(['../Tables/RegressionTable1.tex']);
 else
+    A = struct2cell(regs2); 
     name = string(['../Tables/RegressionTableLowerSbar.tex']);
 end
 if isfile(name)

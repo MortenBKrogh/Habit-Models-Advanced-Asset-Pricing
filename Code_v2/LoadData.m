@@ -223,12 +223,15 @@ load('PD_Claim_workspace','s_bar','s_max',...
         'verd','S_bar','sig','gamma','S','stsim','lnrtsim','lnpctsim','Erfinterp_pf');
     Erfinterp_pf = Erfinterp_pf./12;
     PD_regress   = lnpctsim(2:end,1);             % PD
+    lnrtsimPD    = lnrtsim;
     load('PC_Claim_workspace','lnrtsim','lnpctsim')
     alnrtsim_pf = lnrtsim;
     PC_regress  = lnpctsim(2:end,1);              % PC
+    lnrtsimPC   = lnrtsim; 
     h=1;
 rfr  = Erfinterp_pf;                    % Risk free rate
-rets = alnrtsim_pf - rfr;               % Excess Returns
+retsPC = PC_regress - rfr;               % Excess Returns
+retsPD = PD_regress - rfr;
 h    =  1;                              % Forecast Horizon 0 = in-sample regression
 y   = rets(1+h:end,1);                  % Regressand 
 rec_sim_02 = zeros(size(stsim,1),1);
@@ -256,15 +259,17 @@ x   = [ones(length(rets(1:end-h,:)), 1),  ...
 regPCrec = nwest(y,x,0); %% Full BC <- PC
 
 
-retsHRec = alnrtsim_pf(2:end) .* rec_sim_02(2:end);     %% Excess Returns Recession
-retsHExp = alnrtsim_pf(2:end) .* (1-rec_sim_02(2:end)); %% Exceess Returns Expansions
+retsHRecPC = retsPC(1+h:end) .* rec_sim_02(1+h:end);     %% Excess Returns Recession
+retsHExpPC = retsPC(1+h:end) .* (1-rec_sim_02(1+h:end)); %% Excess Returns Recession
+retsHRecPD = retsPD(1+h:end) .* rec_sim_02(1+h:end);     %% Excess Returns Recession
+retsHExpPD = retsPD(1+h:end) .* (1-rec_sim_02(1+h:end)); %% Exceess Returns Expansions
 
 PDRegHRec = rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1);
 PDRegHExp =  (1 - rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1);
 PCRegHRec = rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1);
 PCRegHExp =  (1 - rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1);
 
-a = [retsHRec, PDRegHRec];
+a = [retsHRecPD, PDRegHRec];
 a = a(all(a,2),:);
 ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
 PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
@@ -289,7 +294,7 @@ PCrecHR   = [ones(size(a,1),1) a(:,2)];
 regPCrec1 = nwest(ExRecRets,PCrecHR,0);
 
 regs2 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
-RegressionTable1;
+RegressionTable2;
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%         Regime Switching model Observable states         %%%
