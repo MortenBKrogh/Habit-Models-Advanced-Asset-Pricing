@@ -24,7 +24,7 @@ rec_sim_02 = rec_sim_02(2:end);
 end
 %%
 lower_Sbar = 1;
-s_bar_2 = 0.02;
+s_bar_2 = log(0.02);
 x   = [ones(length(rets(1:end-h,:)), 1),  ...            
     rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1), ...  
     (1-rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
