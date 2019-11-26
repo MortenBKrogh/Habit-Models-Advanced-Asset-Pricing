@@ -22,6 +22,8 @@ PD_Claim_Regressions = 0; % 0 = PC
                           % 1 = PD
 annual = 0;               % 0 = monthly
                           % 1 = annual
+Save_Figures = 0;         % 0 = dont save
+                          % 1 = save    
 
 % momPC = readtable('PC_Claim_Sim_mom.txt');
 % momPD = readtable('PD_Claim_Sim_mom.txt');
@@ -94,7 +96,9 @@ heights = heights / (size(astsim, 1) * width);
 % xlim([min(log(S))-0.5 -2]);
 % legend('Histogram','Theoretical Density','Location','northwest')
 % hold off
+if Save_Figures
 %saveas(gcf,'../Figures/DistributionS_t','epsc')
+end
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
@@ -137,10 +141,10 @@ else
     rec_sim_ss = rec_sim_ss(2:end,1);
 end
 %%
-rfr  = Erfinterp_pf;                    % Risk free rate
+rfr  = Erfinterp_pf;                       % Risk free rate
 Erets_PC = lnrtsim_PC - rfr;               % Excess Returns PC
 Erets_PD = lnrtsim_PD - rfr;
-h    =  1;                              % Forecast Horizon 0 = in-sample regression
+h    =  1;                                   % Forecast Horizon 0 = in-sample regression
 yPC  = Erets_PC(1+h:end,1);                  % Regressand PC
 yPD  = Erets_PD(1+h:end,1);                  % Regressand PD
 %%
@@ -157,7 +161,9 @@ x   = [ones(length(PC_regress(1:end-h,1)), 1),  ...
 regPCnorec = nwest(yPC,x,0);
 
 regsNB = [regPCnorec regPDnorec];
+if Save_Figures
 RegsNoRec
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                      Business cycle regressions                   %%%
@@ -177,7 +183,7 @@ regPCrec = nwest(yPC,x,0); %% Full BC <- PC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           Split Business cycle                        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-lower_Sbar = 0;
+lower_Sbar = 0; %% Table purposes only do not change
 
 retsHRecPD = yPD .* rec_sim_ss(2:end);     %% Excess Returns Recession
 retsHExpPD = yPD .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
@@ -192,29 +198,35 @@ PCRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1);
 a = [retsHRecPD, PDRegHRec];
 a = a(all(a,2),:);
 ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
+ExRetsRecPDFC = ExcRetsRec;
 PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
 regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
 
 a = [retsHExpPD, PDRegHExp];
 a = a(all(a,2),:);
-ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
+ExRetsExp = a(:,1); %% <- Excess Returns Expansions only
+ExRetsExpPDFC = ExRetsExp;
 PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
 regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
 
 a = [retsHExpPC, PCRegHExp];
 a = a(all(a,2),:);
 ExRetsExp = a(:,1);
+ExRetsExpPCFC = ExRetsExp;
 PCExpHR   = [ones(size(a,1),1) a(:,2)];
 regPCexp1 = nwest(ExRetsExp,PCExpHR,0);
 
 a = [retsHRecPC, PCRegHRec];
 a = a(all(a,2),:);
 ExRecRets = a(:,1);
+ExRetsRecPCFC = ExRecRets;
 PCrecHR   = [ones(size(a,1),1) a(:,2)];
 regPCrec1 = nwest(ExRecRets,PCrecHR,0);
 
 regs1 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
+if Save_Figures
 RegressionTable2;
+end
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                     Split Business cycle lower s bar                  %
@@ -233,7 +245,8 @@ rfr  = Erfinterp_pf;                    % Risk free rate
 retsPC = lnrtsimPC - rfr;               % Excess Returns
 retsPD = lnrtsimPD - rfr;
 h    =  1;                              % Forecast Horizon 0 = in-sample regression
-y   = rets(1+h:end,1);                  % Regressand 
+yPC  =  retsPC(1+h:end,1);                  % Regressand 
+yPD  =  retsPD(1+h:end,1);
 rec_sim_02 = zeros(size(stsim,1),1);
 for i = 1:size(stsim,1)
     if stsim(i) < log(0.02)
@@ -248,15 +261,15 @@ end
 %%
 lower_Sbar = 1;
 s_bar_2 = log(0.02);
-x   = [ones(length(rets(1:end-h,:)), 1),  ...            
+x   = [ones(length(yPD), 1),  ...            
     rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1), ...  
     (1-rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1)]; 
-regPDrec = nwest(y,x,0); %% Full BC <- PD
+regPDrec = nwest(yPD,x,0); %% Full BC <- PD
 
-x   = [ones(length(rets(1:end-h,:)), 1),  ...         
+x   = [ones(length(yPC), 1),  ...         
     rec_sim_02(1:end-h,:) .* PC_regress(1:end-h,1), ...  
     (1-rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1)]; 
-regPCrec = nwest(y,x,0); %% Full BC <- PC
+regPCrec = nwest(yPC,x,0); %% Full BC <- PC
 
 
 retsHRecPC = retsPC(1+h:end) .* rec_sim_02(1+h:end);     %% Excess Returns Recession
@@ -272,61 +285,63 @@ PCRegHExp =  (1 - rec_sim_02(1:end-h,:)) .* PC_regress(1:end-h,1);
 a = [retsHRecPD, PDRegHRec];
 a = a(all(a,2),:);
 ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
-PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
-regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
+PDrecHR1 = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
+regPDrec1 = nwest(ExcRetsRec,PDrecHR1,0); 
 
 a = [retsHExpPD, PDRegHExp];
 a = a(all(a,2),:);
 ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
-PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
-regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
+PDexpHR1   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
+regPDexp1 = nwest(ExRetsExp,PDexpHR1,0);
 
 a = [retsHExpPC, PCRegHExp];
 a = a(all(a,2),:);
 ExRetsExp = a(:,1);
-PCExpHR   = [ones(size(a,1),1) a(:,2)];
-regPCexp1 = nwest(ExRetsExp,PCExpHR,0);
+PCExpHR1   = [ones(size(a,1),1) a(:,2)];
+regPCexp1 = nwest(ExRetsExp,PCExpHR1,0);
 
 a = [retsHRecPC, PCRegHRec];
 a = a(all(a,2),:);
 ExRecRets = a(:,1);
-PCrecHR   = [ones(size(a,1),1) a(:,2)];
-regPCrec1 = nwest(ExRecRets,PCrecHR,0);
+PCrecHR1   = [ones(size(a,1),1) a(:,2)];
+regPCrec1 = nwest(ExRecRets,PCrecHR1,0);
 
 regs2 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
+if Save_Figures
 RegressionTable2;
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%         Regime Switching model Observable states         %%%
-%%% I_rec_t+h * r_t+h-rfr = alpha + beta (p/d)_t * I_rec_t+h %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1);
-
-yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
-xrec  = [ones(length(rets(1:end-h,:)), 1),  ...         
-        rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1)];
-xexp  = [ones(length(rets(1:end-h,:)), 1),...
-        (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)];
-    
-RegRec = nwest(yrec,xrec,0);
-RegExp = nwest(yexp,xexp,0);
-
-yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1);
-yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
-xrec  = [ones(length(rets(1:end-h,:)), 1),...         
-        rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1)];
-xexp  = [ones(length(rets(1:end-h,:)), 1),...
-        (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)];
-RegRec_PD = nwest(yrec,xrec,0);
-RegExp_PD = nwest(yexp,xexp,0);
-
-RSregs = [RegRec, RegRec_PD, RegExp, RegExp_PD];
-RSRegressionTable;
+end
+% %%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%         Regime Switching model Observable states         %%%
+% %%% I_rec_t+h * r_t+h-rfr = alpha + beta (p/d)_t * I_rec_t+h %%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1);
+% 
+% yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
+% xrec  = [ones(length(rets(1:end-h,:)), 1),  ...         
+%         rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1)];
+% xexp  = [ones(length(rets(1:end-h,:)), 1),...
+%         (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)];
+%     
+% RegRec = nwest(yrec,xrec,0);
+% RegExp = nwest(yexp,xexp,0);
+% 
+% yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1);
+% yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
+% xrec  = [ones(length(rets(1:end-h,:)), 1),...         
+%         rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1)];
+% xexp  = [ones(length(rets(1:end-h,:)), 1),...
+%         (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)];
+% RegRec_PD = nwest(yrec,xrec,0);
+% RegExp_PD = nwest(yexp,xexp,0);
+% 
+% RSregs = [RegRec, RegRec_PD, RegExp, RegExp_PD];
+% if Save_Figures
+% RSRegressionTable;
+% end
 %%
 load('PD_Claim_workspace','elnrtsim','tsc'); ExpRetsPD = elnrtsim;
 load('PC_Claim_workspace','elnrtsim'); ExpRetsPC = elnrtsim;
-%ExpRetsPC = chgfreq(ExpRetsPC,0,tsc,0)
-%ExpRetsPD = chgfreq(ExpRetsPD,0,tsc,0)
 figure;
 subplot(2,1,1)
 plot(ExpRetsPC);title({'$P/C$', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPC),6)]},'Interpreter','latex');
@@ -336,7 +351,9 @@ subplot(2,1,2)
 plot(ExpRetsPD);title({'$P/D$', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPD),6)]},'Interpreter','latex');
 ylabel('$ E_t  (r_{t+1})$','FontSize',14,'interpreter','latex');
 %xlim([-50 8333]);
+if Save_Figures
 saveas(gcf,'../Figures/Excess_Rets','epsc');
+end
 %% Persistence s_t
 x = astsim_pf(1:end-1,:);
 x1 = astsim_pf(2:end,:);
@@ -357,7 +374,9 @@ title({'$P/C$', ['$E(p_t-c_t)$ =',num2str(mean(PCratio),4)]},'Interpreter','late
 subplot(2,1,2)
 plot(PDratio);ylabel('$p_t-d_t$','FontSize',14,'Interpreter','latex');
 title({'$P/D$', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]},'Interpreter','latex');
+if Save_Figures
 saveas(gcf,name,'epsc');
+end
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%    Long run regressions based on simulated data     %%%
@@ -439,10 +458,10 @@ CC_PD_Eer = Eexrettinterp_pf;
 CC_PD_Stder = Stdexrettinterp_pf;
 CC_PD_Epd = Ep_d_pf;
 CC_PD_StdPD = Stdp_d_pf;
+if Save_Figures
 Simulatedmom;
-
+end
 %%
-clearvars -except Rec_s_bar
 load('PC_Claim_workspace','stsim')
 rec_sim_ss = NaN(length(stsim), 1);
 for i = 1:length(stsim)
@@ -458,72 +477,54 @@ labeledMatrix = bwlabel(rec_sim_ss);
 measurements = regionprops(labeledMatrix, 'Area');
 RecessionLengths = [measurements.Area];
 mean(RecessionLengths)/12;
-
-
 %% FORECAST 1-period Expanding-Window
-%%
-clearvars -except rec_sim_ss;
-
-load('PD_Claim_workspace','s_bar','s_max',...
-        'verd','S_bar','sig','gamma','S','stsim','lnrtsim','lnpctsim','Erfinterp_pf');
-    Erfinterp_pf = Erfinterp_pf./12;
-    PD_regress = lnpctsim(2:end,1);              % PD
-    load('PC_Claim_workspace','lnrtsim','lnpctsim')
-    alnrtsim_pf = lnrtsim;
-    PC_regress = lnpctsim(2:end,1);              % PC
-    rec_sim_ss = rec_sim_ss(2:end,1);
-%%
-
-% Initial split 60%
-h = 1;
-lower_Sbar = 0;
-retsHRec = alnrtsim_pf(2:end) .* rec_sim_ss(2:end);     %% Excess Returns Recession
-retsHExp = alnrtsim_pf(2:end) .* (1-rec_sim_ss(2:end)); %% Exceess Returns Expansions
-
-PDRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
-PDRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1);
-PCRegHRec = rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1);
-PCRegHExp =  (1 - rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1);
-%%
-a = [retsHRec, PDRegHRec];
-a = a(all(a,2),:);
-ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
-PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
-%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                       Setting Sample Size                               %
+%%%                       Forecast Measures                             %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-T = size(a,1);     % Observations
-R = 0.8*size(a,1); % initial estimation period
-P = T-R;           % out-of-sample estimation period
-%%
-%--------------------------------------------------------------------------
-% Expanding window 
-%--------------------------------------------------------------------------
-
-FC_MEAN=zeros(P,1);
-FC_rec=zeros(P,1);
-
-for t=1:P;
-    FC_MEAN(t)=mean(Y(2:R+(t-1)));
+SampleSize = 0.05; % startng point 0 = full data [0:1[
+WindowSize = 120;  % 240 = 20 years
+%%%                          Recessions                                 %%%
+init = SampleSize * size(ExRetsRecPDFC,1)+1;
+MaxFC  = size(ExRetsRecPDFC,1)-WindowSize-1;
+% LHS, Excess returns at time t+1
+% RHS, ratios t
+j = 1;
+for i = init:MaxFC
+    b1 = PDrecHR(i:i+WindowSize-1,:)\ExRetsRecPDFC(i:i+WindowSize-1,1);
+    fit = b1(1) * PDrecHR(i+WindowSize,1) + b1(2) * PDrecHR(i+WindowSize,2);
+    PDRecError(j,1) = ExRetsRecPDFC(i+WindowSize,:) - fit;
+    PDRecMeanError(j,1) = ExRetsRecPDFC(i+WindowSize,:) - mean(ExRetsRecPDFC(i:i+WindowSize-1,:));
     
-    X_t = PDrecHR(1:R+(t-1)-1,:);        
-    Y_t = ExcRetsRec(2:R+(t-1));              
-    results_t = nwest(Y_t,[X_t ones(R+(t-1)-1,1)], 1);
-    FC_rec(t) = [FC_rec(R+(t-1),:) 1] * results_t.beta;        
-end;
-
-
-
-
-
-regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
-
-a = [retsHExp, PDRegHExp];
-a = a(all(a,2),:);
-ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
-PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
-regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
-
-
+    b1 = PCrecHR(i:i+WindowSize-1,:)\ExRetsRecPCFC(i:i+WindowSize-1,1);
+    fit = b1(1) * PCrecHR(i+WindowSize,1)+b1(2) * PCrecHR(i+WindowSize,2);
+    PCRecError(j,1) = ExRetsRecPCFC(i+WindowSize,:) - fit;
+    PCRecMeanError(j,1) = ExRetsRecPCFC(i+WindowSize,:) - mean(ExRetsRecPCFC(i:i+WindowSize-1,:));
+    
+    j=j+1;
+end
+%% Expansions
+Init = SampleSize * size(ExRetsExpPDFC,1)+1;
+MaxFC  = size(ExRetsExpPDFC,1)-WindowSize-1;
+j = 1;
+for i = init:MaxFC    
+    b1 = PDexpHR(i:i+WindowSize-1,:)\ExRetsExpPDFC(i:i+WindowSize-1,1);
+    fit = b1(1) * PDexpHR(i+WindowSize,1) + b1(2) * PDexpHR(i+WindowSize,2);
+    PDExpError(j,1) = ExRetsExpPDFC(i+WindowSize,:) - fit;
+    PDExpMeanError(j,1) = ExRetsExpPDFC(i+WindowSize,:) - mean(ExRetsExpPDFC(i:i+WindowSize-1,:));
+    
+    b1 = PCExpHR(i:i+WindowSize-1,:)\ExRetsExpPCFC(i:i+WindowSize-1,1);
+    fit = b1(1) * PCExpHR(i+WindowSize,1) + b1(2) * PCExpHR(i+WindowSize,2);;
+    PCExpError(j,1) = ExRetsExpPCFC(i+WindowSize,:) - fit;
+    PCExpMeanError(j,1) = ExRetsExpPCFC(i+WindowSize,:) - mean(ExRetsExpPCFC(i:i+WindowSize-1,:));
+    
+    j=j+1;
+end
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       ROoS2                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+OoSR2ExpPD = 1-sum(PDExpError.^2)/sum(PDExpMeanError.^2);
+OoSR2ExpPC = 1-sum(PCExpError.^2)/sum(PCExpMeanError.^2);
+OoSR2recPD = 1-sum(PDRecError.^2)/sum(PDRecMeanError.^2);
+OoSR2recPC = 1-sum(PCRecError.^2)/sum(PCRecMeanError.^2);
+OoSR2 = [OoSR2recPC OoSR2recPD OoSR2ExpPC OoSR2ExpPD]

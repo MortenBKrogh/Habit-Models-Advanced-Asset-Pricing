@@ -2,9 +2,11 @@ if lower_Sbar == 0;
     A = struct2cell(regs1); 
 name = string(['../Tables/RegressionTable1.tex']);
     sBar_val = num2str(exp(Rec_s_bar));
+    caption = 'tab:regress1';
 else
     A = struct2cell(regs2); 
     name = string(['../Tables/RegressionTableLowerSbar.tex']);
+    caption = 'tabregress2';
     sBar_val = num2str(0.02);
 end
 if isfile(name)
@@ -22,7 +24,7 @@ diary on
 disp(['\begin{table}[H]']);
 disp(['\centering   ']);
 disp(['  \caption{Regressions, $\Bar{S}_{REC} = ',sBar_val,'$}           ']);
-disp(['  \label{tab:regress1}     ']);
+disp(['  \label{',caption,'}']);
 disp(['  \begin{threeparttable}']);    
 disp(['\begin{tabular}{@{\hspace{5pt}}l@{\hspace{5pt}}cccccc} ']);
 disp(['\toprule ']);
