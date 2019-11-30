@@ -527,4 +527,7 @@ OoSR2ExpPC = 1-sum(PCExpError.^2)/sum(PCExpMeanError.^2);
 OoSR2recPD = 1-sum(PDRecError.^2)/sum(PDRecMeanError.^2);
 OoSR2recPC = 1-sum(PCRecError.^2)/sum(PCRecMeanError.^2);
 OoSR2 = [OoSR2recPC OoSR2recPD OoSR2ExpPC OoSR2ExpPD];
-
+%%
+plot(gamma./exp(stsim))
+yline(mean(gamma./exp(stsim)))
+legend('$\gamma/S_t$','$E(\gamma/S_t)$','Interpreter','latex')
