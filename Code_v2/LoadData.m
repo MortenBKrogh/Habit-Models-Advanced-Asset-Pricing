@@ -51,7 +51,7 @@ else
         'verd','S_bar','sig','gamma','S','astsim_pf','alnrtsim_pf');
 end
 
-%% Matching the empirical density
+%% Matching the empirical receession probability with the models density of s_t
 NBER_REC = importdata('USREC.csv');
 % Define period yyyy-mm-dd
 from = '1950-01-01';
@@ -75,29 +75,28 @@ Rec_s_bar = fzero(@(x) (integral(@q_s,-Inf,x) - rec_emp_percentage), s_bar-0.1);
 Model_Rec = integral(@q_s,-Inf,s_bar);
 Model_Rec_2 = integral(@q_s,-Inf,s_bar_2);
 Match_Rec = integral(@q_s,-Inf,Rec_s_bar);
-%Rec_s_bar = -2.22;
 %%
 load('PC_Claim_workspace','astsim_pf');astsim = astsim_pf;
 [heights location] = hist(astsim, 75);
 width = location(2) - location(1);
 heights = heights / (size(astsim, 1) * width);
 %%
-% warning('off','all'); % fplot doesnt like the integral functions
-% figure;
-% barplot = bar(location, heights,'hist');
-% barplot.FaceColor = [0, 0.4470, 0.7410];
-% hold on
-% fplot(@q_s, [min(log(S)-0.5) s_max+0.25],'Color',[0.8500, 0.3250, 0.0980],'LineWidth',2.5);%title('Stationary Distribution of s');
-% hold on
-% xline(Rec_s_bar,'--','$\bar{s}_{rec}$','Interpreter','latex','FontSize',18);
-% hold on
-% xline(s_bar,'--','$\bar{s}$','Interpreter','latex','FontSize',18);
-% xline(s_bar_2,'--','$\bar{s}_{2,rec}$','Interpreter','latex','FontSize',18);
-% xlim([min(log(S))-0.5 -2]);
-% legend('Histogram','Theoretical Density','Location','northwest')
-% hold off
+warning('off','all'); % fplot doesnt like the integral functions
+figure;
+barplot = bar(location, heights,'hist');
+barplot.FaceColor = [0, 0.4470, 0.7410];
+hold on
+fplot(@q_s, [min(log(S)-0.5) s_max+0.25],'Color',[0.8500, 0.3250, 0.0980],'LineWidth',2.5);%title('Stationary Distribution of s');
+hold on
+xline(Rec_s_bar,'--','$\bar{s}_{rec}$','Interpreter','latex','FontSize',18);
+hold on
+xline(s_bar,'--','$\bar{s}$','Interpreter','latex','FontSize',18);
+xline(s_bar_2,'--','$\bar{s}_{2,rec}$','Interpreter','latex','FontSize',18);
+xlim([min(log(S))-0.5 -2]);
+legend('Histogram','Theoretical Density','Location','northwest')
+hold off
 if Save_Figures
-%saveas(gcf,'../Figures/DistributionS_t','epsc')
+saveas(gcf,'../Figures/DistributionS_t','epsc')
 end
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
@@ -164,7 +163,7 @@ regsNB = [regPCnorec regPDnorec];
 if Save_Figures
 RegsNoRec
 end
-
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                      Business cycle regressions                   %%%
 %%% r_(t+h) = alpha + beta_1 p/d_t*I_rec + beta_2(1-I_rec)p/d_t + eps %%%
@@ -245,7 +244,7 @@ rfr  = Erfinterp_pf;                    % Risk free rate
 retsPC = lnrtsimPC - rfr;               % Excess Returns
 retsPD = lnrtsimPD - rfr;
 h    =  1;                              % Forecast Horizon 0 = in-sample regression
-yPC  =  retsPC(1+h:end,1);                  % Regressand 
+yPC  =  retsPC(1+h:end,1);              % Regressand 
 yPD  =  retsPD(1+h:end,1);
 rec_sim_02 = zeros(size(stsim,1),1);
 for i = 1:size(stsim,1)
@@ -290,7 +289,7 @@ regPDrec1 = nwest(ExcRetsRec,PDrecHR1,0);
 
 a = [retsHExpPD, PDRegHExp];
 a = a(all(a,2),:);
-ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions onlyu
+ExRetsExp = a(:,1);                     %% <- Excess Returns Expansions only
 PDexpHR1   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
 regPDexp1 = nwest(ExRetsExp,PDexpHR1,0);
 
@@ -521,10 +520,11 @@ for i = init:MaxFC
 end
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                       ROoS2                                             %
+%                       R^2 OOS                                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 OoSR2ExpPD = 1-sum(PDExpError.^2)/sum(PDExpMeanError.^2);
 OoSR2ExpPC = 1-sum(PCExpError.^2)/sum(PCExpMeanError.^2);
 OoSR2recPD = 1-sum(PDRecError.^2)/sum(PDRecMeanError.^2);
 OoSR2recPC = 1-sum(PCRecError.^2)/sum(PCRecMeanError.^2);
-OoSR2 = [OoSR2recPC OoSR2recPD OoSR2ExpPC OoSR2ExpPD]
+OoSR2 = [OoSR2recPC OoSR2recPD OoSR2ExpPC OoSR2ExpPD];
+
