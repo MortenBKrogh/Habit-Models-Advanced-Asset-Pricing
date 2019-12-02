@@ -135,9 +135,6 @@ x   = [ones(length(PC_regress(1:end-h,1)), 1),  ...
 regPCnorec = nwest(yPC,x,0);
 
 regsNB = [regPCnorec regPDnorec];
-if Save_Figures
-RegsNoRec
-end
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                      Business cycle regressions                   %%%
