@@ -101,13 +101,16 @@ Furthermore the figure implies that the regression coefficient of $P/C$ or equiv
 
 \subsection{Results}
 First we estimate the following regressions:
-\begin{align*}
-     r_{t+1} - r^{f} &= \alpha + \beta_{REC} \left( p_t - c_t \right) * I_{t,REC} + \beta_{EXP} \left( p_t - c_t \right) * \left(1 - I_{t,REC}\right)  + \varepsilon_{t+1}\\
-      r_{t+1} - r^{f} &= \alpha + \beta_{REC} \left( p_t - d_t \right) * I_{t,REC} + \beta_{EXP} \left( p_t - d_t \right) * \left(1 - I_{t,REC}\right)  + \varepsilon_{t+1}\\
-      r_{t+1} - r^{f} &= \left(\alpha_{REC} + \beta_{REC} \left(p_t - c_t\right)\right)*I_{REC} + \left(1-I_{REC}\right) \left( \alpha_{EXP} + \beta_{EXP}\left(p_t - c_t \right) \right) + \varepsilon_{t+1}\\
-r_{t+1} - r^{f} &= \left(\alpha_{REC} + \beta_{REC} \left(p_t - d_t\right)\right)*I_{REC} + \left(1-I_{REC}\right) \left( \alpha_{EXP} + \beta_{EXP}\left(p_t - d_t \right) \right) + \varepsilon_{t+1}      
-\end{align*}
+\begin{align}
+     r_{t+1} - r^{f} &= \alpha + \beta_{REC} \left( p_t - c_t \right) * I_{t,REC} + \beta_{EXP} \left( p_t - c_t \right) * \left(1 - I_{t,REC}\right)  + \varepsilon_{t+1} \label{23}\\
+      r_{t+1} - r^{f} &= \alpha + \beta_{REC} \left( p_t - d_t \right) * I_{t,REC} + \beta_{EXP} \left( p_t - d_t \right) * \left(1 - I_{t,REC}\right)  + \varepsilon_{t+1} \label{24}\\
+      r_{t+1} - r^{f} &= \left(\alpha_{REC} + \beta_{REC} \left(p_t - c_t\right)\right)*I_{REC}\dots \nonumber\\
+      & + \left(1-I_{REC}\right) \left( \alpha_{EXP}\dots + \beta_{EXP}\left(p_t - c_t \right) \right) + \varepsilon_{t+1} \label{25}\\
+r_{t+1} - r^{f} &= \left(\alpha_{REC} + \beta_{REC} \left(p_t - d_t\right)\right)*I_{REC}\dots \nonumber\\
+& + \left(1-I_{REC}\right) \left( \alpha_{EXP} + \beta_{EXP}\left(p_t - d_t \right) \right) + \varepsilon_{t+1} \label{26}      
+\end{align}
 That is we use the recession indicator to infer the influence of the predictors in respectively recessions and expansions.\\
+The regressions \eqref{25} and \eqref{26} are estimated over two steps; once for expansions and once for recessions. By these 2 pairs of regressions we estimate excess returns with a both with a constant intercept during all business cycle phases and in addition where we allow the intercept to change over business-cycles such that the slope is not the only thing driving predictability differences over recessions and expansions.\\
 As a benchmark we run two additional regressions given:
 \begin{align*}
      r_{t+1} - r^{f} &= \alpha + \beta \left( p_t - c_t \right)  + \varepsilon_{t+1}\\
