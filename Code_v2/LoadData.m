@@ -19,7 +19,7 @@ clc
 opts.Colors     = get(groot,'defaultAxesColorOrder');
 
 %%
-Save_Figures = 0;         % 0 = dont save
+Save_Figures = 1;         % 0 = dont save
                           % 1 = save    
                           
 load('PC_Claim_workspace','s_bar','s_max',...

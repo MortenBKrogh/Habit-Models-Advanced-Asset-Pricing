@@ -12,11 +12,7 @@ end
 if isfile(name)
 delete(name);
 end
-if annual
-   frequency = 'years';
-else
    frequency = 'months';
-end
 %%
 diary(name);
 diary on

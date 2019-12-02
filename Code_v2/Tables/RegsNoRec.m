@@ -3,11 +3,7 @@ name = string(['../Tables/RegressionTableregsNB.tex']);
 if isfile(name)
 delete(name);
 end
-if annual
-    stg = 'years';
-else
-    stg = 'months';
-end
+stg = 'months';
 %%
 diary(name);
 diary on
