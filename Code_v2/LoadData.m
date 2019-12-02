@@ -98,6 +98,16 @@ hold off
 if Save_Figures
 saveas(gcf,'../Figures/DistributionS_t','epsc')
 end
+%% Risk aversion plot
+RA = gamma./exp(stsim);
+mRA = mean(RA);
+figure;
+plot(RA);ylabel('$\gamma/S_t,\qquad$ $\gamma=2$','Interpreter','latex');
+xlabel('$t$','interpreter','latex');
+yline(mean(RA),'--','LineWidth',2);
+legend('$\gamma/S_t$: Risk Aversion',['$\mathbf{E}\gamma/S_t$=',num2str(mRA)],'interpreter','latex')
+xlim([0 100000]);
+saveas(gcf,'../Figures/RA','epsc')
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
@@ -272,9 +282,9 @@ regPCrec = nwest(yPC,x,0); %% Full BC <- PC
 
 
 retsHRecPC = retsPC(1+h:end) .* rec_sim_02(1+h:end);     %% Excess Returns Recession
-retsHExpPC = retsPC(1+h:end) .* (1-rec_sim_02(1+h:end)); %% Excess Returns Recession
+retsHExpPC = retsPC(1+h:end) .* (1-rec_sim_02(1+h:end)); %% Excess Returns Expansions
 retsHRecPD = retsPD(1+h:end) .* rec_sim_02(1+h:end);     %% Excess Returns Recession
-retsHExpPD = retsPD(1+h:end) .* (1-rec_sim_02(1+h:end)); %% Exceess Returns Expansions
+retsHExpPD = retsPD(1+h:end) .* (1-rec_sim_02(1+h:end)); %% Excess Returns Expansions
 
 PDRegHRec = rec_sim_02(1:end-h,:) .* PD_regress(1:end-h,1);
 PDRegHExp =  (1 - rec_sim_02(1:end-h,:)) .* PD_regress(1:end-h,1);
@@ -309,35 +319,6 @@ regs2 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
 if Save_Figures
 RegressionTable2;
 end
-% %%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %%%         Regime Switching model Observable states         %%%
-% %%% I_rec_t+h * r_t+h-rfr = alpha + beta (p/d)_t * I_rec_t+h %%%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1);
-% 
-% yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
-% xrec  = [ones(length(rets(1:end-h,:)), 1),  ...         
-%         rec_sim_ss(1:end-h,:) .* PC_regress(1:end-h,1)];
-% xexp  = [ones(length(rets(1:end-h,:)), 1),...
-%         (1-rec_sim_ss(1:end-h,:)) .* PC_regress(1:end-h,1)];
-%     
-% RegRec = nwest(yrec,xrec,0);
-% RegExp = nwest(yexp,xexp,0);
-% 
-% yrec  = rec_sim_ss(1+h:end,:) .* rets(1+h:end,1);
-% yexp  = (1-rec_sim_ss(1+h:end,:)) .* rets(1+h:end,1); 
-% xrec  = [ones(length(rets(1:end-h,:)), 1),...         
-%         rec_sim_ss(1:end-h,:) .* PD_regress(1:end-h,1)];
-% xexp  = [ones(length(rets(1:end-h,:)), 1),...
-%         (1-rec_sim_ss(1:end-h,:)) .* PD_regress(1:end-h,1)];
-% RegRec_PD = nwest(yrec,xrec,0);
-% RegExp_PD = nwest(yexp,xexp,0);
-% 
-% RSregs = [RegRec, RegRec_PD, RegExp, RegExp_PD];
-% if Save_Figures
-% RSRegressionTable;
-% end
 %%
 load('PD_Claim_workspace','elnrtsim','tsc'); ExpRetsPD = elnrtsim;
 load('PC_Claim_workspace','elnrtsim'); ExpRetsPC = elnrtsim;
