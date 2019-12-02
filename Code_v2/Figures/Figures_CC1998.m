@@ -2,7 +2,7 @@ global Regressions
 %% Figures
 clear
 % Figure 7 in CC1998
-load('CC_PC_Claim_workspace')
+load('PC_Claim_workspace')
 
 Sample = 1:500;
 
@@ -27,9 +27,10 @@ ylabel('$P/C,\qquad P/D$','Interpreter','latex');
 xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
 xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
 xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
-legend('PC-Ratio', 'PD-Ratio','Location','northwest')
+xline(0.02,'--','$\bar{S}_{2,REC}$','Interpreter','latex');
+legend('PC-Ratio', 'PD-Ratio','Location','best')
 hold off;
-%saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
+saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
 %%
 load('PD_Claim_workspace','elnr_pf','lnrf_pf');lnrPD = elnr_pf;
 load('PC_Claim_workspace','elnr_pf');lnrPC = elnr_pf;
@@ -40,7 +41,8 @@ plot(S,lnrPD*tsc*100,'LineWidth',1.5);
 yline(mean(lnrf_pf)*tsc*100,':');
 xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
 xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
+xline(0.02,'--','$\bar{S}_{2,REC}$','Interpreter','latex');
 ylabel('Expected Returns, annual percentage, $E_t ( r_{t+1} )$','Interpreter','latex');
 xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
 legend('Expected Return, Consumption Claim','Expected Return, Dividend Claim','Risk Free Rate','Interpreter','latex','Location','best');
-%saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');
+saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');

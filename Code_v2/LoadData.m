@@ -19,7 +19,7 @@ clc
 opts.Colors     = get(groot,'defaultAxesColorOrder');
 
 %%
-Save_Figures = 1;         % 0 = dont save
+Save_Figures = 0;         % 0 = dont save
                           % 1 = save    
                           
 load('PC_Claim_workspace','s_bar','s_max',...
@@ -84,6 +84,7 @@ xlim([0 100000]);
 if Save_Figures
 saveas(gcf,'../Figures/RA','epsc')
 end
+max(RA)
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
