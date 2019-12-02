@@ -17,39 +17,13 @@ addpath('Tables');
 clear
 clc
 opts.Colors     = get(groot,'defaultAxesColorOrder');
+
 %%
-PD_Claim_Regressions = 0; % 0 = PC
-                          % 1 = PD
-annual = 0;               % 0 = monthly
-                          % 1 = annual
 Save_Figures = 0;         % 0 = dont save
                           % 1 = save    
-
-% momPC = readtable('PC_Claim_Sim_mom.txt');
-% momPD = readtable('PD_Claim_Sim_mom.txt');
-% datPC = readtable('PC_Claim_Sim_dat.txt');
-% datPD = readtable('PD_Claim_Sim_dat.txt');
-% figure;
-% subplot(2,1,1)
-% plot(table2array(datPC(:,4)));title('$P/C$','Interpreter','latex')
-% subplot(2,1,2)
-% plot(table2array(datPD(:,4)));title('$P/D$','Interpreter','latex')
-%%
-% if PD_Claim_Regressions == 0
-%     Moments = momPC;
-%     Data = datPC;
-% else
-%     Moments = momPD;
-%     Data = datPD;
-% end
-
-if PD_Claim_Regressions == 0
-    load('PC_Claim_workspace','s_bar','s_max',...
-        'verd','S_bar','sig','gamma','S','astsim_pf','alnrtsim_pf');
-else
-    load('PD_Claim_workspace','s_bar','s_max',...
-        'verd','S_bar','sig','gamma','S','astsim_pf','alnrtsim_pf');
-end
+                          
+load('PC_Claim_workspace','s_bar','s_max',...
+         'verd','S_bar','sig','gamma','S','astsim_pf','alnrtsim_pf','stsim');
 
 %% Matching the empirical receession probability with the models density of s_t
 NBER_REC = importdata('USREC.csv');
@@ -107,16 +81,14 @@ xlabel('$t$','interpreter','latex');
 yline(mean(RA),'--','LineWidth',2);
 legend('$\gamma/S_t$: Risk Aversion',['$\mathbf{E}\gamma/S_t$=',num2str(mRA)],'interpreter','latex')
 xlim([0 100000]);
+if Save_Figures
 saveas(gcf,'../Figures/RA','epsc')
+end
 %% Redefining recession periods in the simulation
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
 % Recession s_t < Rec_s_bar
-if annual 
-    load('PC_Claim_workspace','astsim_pf');astsim = astsim_pf;
-else
-    load('PC_Claim_workspace','stsim');astsim = stsim;
-end
+load('PC_Claim_workspace','stsim');astsim = stsim;
 rec_sim_ss = NaN(length(astsim), 1);
 for i = 1:length(astsim)
     if astsim(i) < Rec_s_bar
@@ -132,13 +104,6 @@ measurements = regionprops(labeledMatrix, 'Area');
 RecessionLengths = [measurements.Area];
 mean(RecessionLengths)
 %%
-if annual
-    load('PD_Claim_workspace','s_bar','s_max',...
-        'verd','S_bar','sig','gamma','S','astsim','alnrtsim_pf','alnpctsim_pf','Erfinterp_pf');
-    PD_regress = alnpctsim_pf;              % PD
-    load('PC_Claim_workspace','alnrtsim_pf','alnpctsim_pf');
-    PC_regress = alnpctsim_pf;              % PC
-else
     load('PD_Claim_workspace','s_bar','s_max',...
         'verd','S_bar','sig','gamma','S','stsim','lnrtsim','lnpctsim','Erfinterp_pf');
     Erfinterp_pf = Erfinterp_pf./12;
@@ -148,7 +113,6 @@ else
     lnrtsim_PC = lnrtsim;
     PC_regress = lnpctsim(2:end,1);              % PC
     rec_sim_ss = rec_sim_ss(2:end,1);
-end
 %%
 rfr  = Erfinterp_pf;                       % Risk free rate
 Erets_PC = lnrtsim_PC - rfr;               % Excess Returns PC
@@ -264,9 +228,7 @@ for i = 1:size(stsim,1)
         rec_sim_02(i) = 0;
     end 
 end
-if annual == 0
 rec_sim_02 = rec_sim_02(2:end);
-end
 %%
 lower_Sbar = 1;
 s_bar_2 = log(0.02);
@@ -339,20 +301,16 @@ x = astsim_pf(1:end-1,:);
 x1 = astsim_pf(2:end,:);
 autocorrX = x\x1;
 %%
-if annual
-load('PD_Claim_workspace','alnpctsim_pf'); PDratio = alnpctsim_pf;
-load('PC_Claim_workspace','alnpctsim_pf'); PCratio = alnpctsim_pf;
-name = '../Figures/PCPD_chain';
-else
 load('PD_Claim_workspace','lnpctsim'); PDratio = lnpctsim;
 load('PC_Claim_workspace','lnpctsim'); PCratio = lnpctsim;
 name = '../Figures/PCPDMonthly_chain';
-end
 subplot(2,1,1)
 plot(PCratio);ylabel('$p_t-c_t$','FontSize',14,'Interpreter','latex');
 title({'$P/C$', ['$E(p_t-c_t)$ =',num2str(mean(PCratio),4)]},'Interpreter','latex');
+xlim([1 100000]);
 subplot(2,1,2)
 plot(PDratio);ylabel('$p_t-d_t$','FontSize',14,'Interpreter','latex');
+xlim([1 100000]);
 title({'$P/D$', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]},'Interpreter','latex');
 if Save_Figures
 saveas(gcf,name,'epsc');
@@ -493,7 +451,7 @@ for i = init:MaxFC
     PDExpMeanError(j,1) = ExRetsExpPDFC(i+WindowSize,:) - mean(ExRetsExpPDFC(i:i+WindowSize-1,:));
     
     b1 = PCExpHR(i:i+WindowSize-1,:)\ExRetsExpPCFC(i:i+WindowSize-1,1);
-    fit = b1(1) * PCExpHR(i+WindowSize,1) + b1(2) * PCExpHR(i+WindowSize,2);;
+    fit = b1(1) * PCExpHR(i+WindowSize,1) + b1(2) * PCExpHR(i+WindowSize,2);
     PCExpError(j,1) = ExRetsExpPCFC(i+WindowSize,:) - fit;
     PCExpMeanError(j,1) = ExRetsExpPCFC(i+WindowSize,:) - mean(ExRetsExpPCFC(i:i+WindowSize-1,:));
     
@@ -508,7 +466,3 @@ OoSR2ExpPC = 1-sum(PCExpError.^2)/sum(PCExpMeanError.^2);
 OoSR2recPD = 1-sum(PDRecError.^2)/sum(PDRecMeanError.^2);
 OoSR2recPC = 1-sum(PCRecError.^2)/sum(PCRecMeanError.^2);
 OoSR2 = [OoSR2recPC OoSR2recPD OoSR2ExpPC OoSR2ExpPD];
-%%
-plot(gamma./exp(stsim))
-yline(mean(gamma./exp(stsim)))
-legend('$\gamma/S_t$','$E(\gamma/S_t)$','Interpreter','latex')
