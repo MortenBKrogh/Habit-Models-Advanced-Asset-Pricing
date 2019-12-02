@@ -1,36 +1,23 @@
 \begin{table}[H]
-\centering   
-  \caption{Benchmark regressions}           
-  \label{tab:regress1}     
-  \begin{threeparttable}
-\begin{tabular}{@{\hspace{5pt}}l@{\hspace{15pt}}c@{\hspace{5pt}}c} 
-\toprule 
- & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
- & \multicolumn{2}{c}{$\left(r_{t+1}-r^f\right)$} \\ 
- \cmidrule(rr){2-3}
- & (1) & (2)\\ 
-\midrule  
-\\[-2.1ex] $ p_t - c_t $ &-0.01328&\\ 
-  & (0.00067) &  \\ 
- \addlinespace 
-  $p_t - d_t $ & &   -0.01355 \\ 
-               & &  (0.00078) \\ 
- \addlinespace 
- Constant &0.07842 &0.08021\\ 
-          &(0.0038) &(0.0044) \\ 
- \addlinespace 
-\midrule  
-Observations & 99999 & 99999\\
-R$^{2}$ &0.0083 & 0.0047 \\ 
-Residual Std. Error &0.0015 & 0.0032 \\ 
-\bottomrule 
-\end{tabular} 
-\begin{tablenotes}
-\footnotesize{
-\item[1] Brackets below estimates contains \citet{NW87} corrected standard errors. 
-\item[2] Regressions on 99999 months of simulated data.
-\item[3] EXP (REC) denotes expansion (recession)
-}
-\end{tablenotes}
-\end{threeparttable}
-\end{table} 
+ \centering
+   \caption{Benchmark regressions}           
+   \label{tab:regress1}
+ \begin{threeparttable}
+ \begin{tabular}{@{}ccccccc@{}}
+ \toprule
+   \multicolumn{3}{c}{Dividend Claim} && \multicolumn{3}{c}{Consumption Claim} \\ 
+ \addlinespace
+ Constant  & $\beta$  &  $R^2,\%$     && Constant & $\beta$   &  $R^2$,\%      \\
+ \cmidrule(lr){1-3} \cmidrule(lr){5-7}
+ 0.08      & $-$0.014 & 0.47          && 0.078    & $-$0.013  & 0.83           \\ 
+ \addlinespace
+ (0.0044)  & (0.0008) &               && (0.0038) & (0.0007)  &                \\
+ \bottomrule
+ \end{tabular}
+ \begin{tablenotes}\footnotesize{
+ \item[1] Brackets below estimates contains \citet{NW87} corrected standard errors. 
+ \item[2] Regressions on 99999 months of simulated data.
+ }
+ \end{tablenotes}
+ \end{threeparttable}
+ \end{table}

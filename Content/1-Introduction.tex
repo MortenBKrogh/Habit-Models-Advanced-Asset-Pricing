@@ -4,8 +4,17 @@
 % - The model
 % - basic idea
 
-Observing the 
+Predicting the equity premium has a long been a topic of interest for researchers around the world, and early attempts dates back to \cite{Dow1920} whom investigated the influence of dividend ratios. Much later the literature began to consider if consumption could have an effect in asset pricing models predicting the equity premium. The Consumption based asset pricing setup takes the departure in the traditional assumption of a representative agent with power utility and consumption is lognormally distributed. This setup leads to the well known equity premium -, risk-free rate - and the equity volatility puzzles, however by introducing a slow-moving habit to the basic power utility function \cite{Campbell1999} are able to solve many of the puzzles. So when consumption is approaching habit in an economic downturn, the curvature rises leading to falling prices of risky assets and rising expected returns. 
 
+
+The introduction of habits in the the utility function $u \left(C_t, X_t \right)$, captures a fundamental psycholgical feature of human behavior, namely when income rises consumption adapts, but slowly, thus being exposed to stimulus again and again reduces the response.
+
+We follow the approach of \cite{Campbell1999}, and model the consumption growth as an i.i.d. lognormal process, with mean and standard deviation calibrated to data spanning 1950-2019, and thus extends \cite{Campbell1999}'s data period with 25 years of data, hence including both the \textit{>>dot com bubble<<} in 2000 and the \textit{>>Great Financial Crisis<<} in 2007-2009, which might provide the analysis with more nuanced and appropriate information rather than relying upon 25 years old data.
+
+
+
+
+\midrule
 
 A corner area of the consumption based asset pricing is to incorporate habits in an agents preferences, \textit{Habit Formation}. The idea, initiated by \citet{Constantinides_1990}, assumes that marginal utility of consumption rely on consumption relative to stochastic habit process which is related to past consumption, thus utility is a function of both consumption and habits $u \left(C_t, X_t \right)$. This captures a fundamental psychological feature of human behavior, namely when income rises consumption only slowly adapts, thus being exposed to a stimulus again and again reduces the response. 
 
