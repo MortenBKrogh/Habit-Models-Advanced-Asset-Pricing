@@ -23,7 +23,7 @@ In this section
  & Correlation dividends/consumption      & $\rho$           & $0.2000$  & $0.2000$\\
 \multicolumn{5}{l}{\textit{Implied}}                                               \\
  & Subjective discount factor             & $\delta$         & $0.9156$  & $0.8900$\\
- & Steady-state surplus consumption ratio & $\Bar{S}$        & $0.0666$  & $0.5700$\\
+ & Steady-state surplus consumption ratio & $\Bar{S}$        & $0.0666$  & $0.0570$\\
  & Maximum surplus consumption ratio      & $S_{\text{max}}$ & $0.1096$  & $0.0940$\\ \bottomrule
 \end{tabular}
 \begin{tablenotes}
@@ -40,13 +40,16 @@ Compared to the calibration of \citet{Campbell1999}, our calibration suggests a 
 \subsection{Simulation}
 From the calibrated model we simulate a chain of 100.000 monthly draws from the economy yielding 8.332 years of simulated time-series. We find in addition to the series that the procedure is extremely sensitive to the distribution of grid points. We use 10 equally distributed grid-points and an additional 6 just below $s_{max}$, consistent with the approach of \citet{Campbell1999}.
 
+
+The simulated economy behaves well according to most measures, that is it is able to explain the equity-premium puzzle, which is known to cause problems in many models including the much used \textit{power-utility}-model. The \citet{Campbell1999} model solves this by introducing time-varying risk-aversion, this however causes the risk-aversion to diverge when the surplus-consumption ratio is close to 0, causing the model to generate risk-aversion amongst the agents in these periods to be implausibly high, as can be seen in figure \ref{RA} in appendix \ref{App:AFigu}, reporting local utility-curvature coefficients as high as 1230, which is in sharp contrast to empirical estimates of risk aversion in the US found to be between .75 and 2 found by \citet{SLFred2015}.
+
 \input{Tables/SimulatedMom.tex}
 
 
-Allowing us to infer about the predictability of excess stock returns, during times of simulated crisis. 
+The risk-aversion shortcoming of this model is not the subject of our analysis, and hence are not further examined. The remaining series simulated from the model, and their moments of interest as reported in table \ref{tab:simmom} are well behaved, allowing us to examine the predictability of stock returns during times of simulated crisis.
 \newline
 \\
-Based on NBER-recession data, we find that the US economy was in recession approximately 13.4\% of the period spanning January 1950 until December 2018.  In the model a recession implies that present consumption in low relative to previous periods consumption, that is the value of $s_t$ is lower than the steady state value of surplus consumption $\Bar{s}$ - integrating over the density of $s_t$ yields that the simulated economy is in recession during 37\% of all observations, which indicates that $\Bar{s}$ might be misspecified. To correct $\Bar{s}$ we match the empirical business cycle behavior by numerical optimization of the $s_t$ density, such that the empirical and simulated economy is in recession roughly the same amount. The $\Bar{s}$-value matching the empirical business cycle, throughout denoted $\Bar{s}_{rec}$ \textit{or} ($\Bar{S}_{rec}$), is found to be $-3.18$ ($0.0415$). One additional recessions specification we denote as $\bar{s}_{2,rec}$ is chosen as to capture only the most extreme non-linearity of the relationship between surplus consumption and expected returns as presented in figure \ref{fig:SPCPD-a}.
+Based on NBER-recession data, we find that the US economy was in recession approximately 13.4\% of the period spanning January 1950 until December 2018.  In the model a recession implies that present consumption in low relative to habit, that is the value of $s_t$ is lower than the steady state value of surplus consumption $\Bar{s}$ - integrating over the density of $s_t$ yields that the simulated economy is in recession during 37\% of all observations, which indicates that $\Bar{s}$ might be misspecified. To correct $\Bar{s}$ we match the empirical business cycle behavior by numerical optimization of the $s_t$ density shown in figure \ref{fig:DistriSt}, such that the empirical and simulated economy is in recession roughly the same amount. The $\Bar{s}$-value matching the empirical business cycle, throughout denoted $\Bar{s}_{rec}$ \textit{or} ($\Bar{S}_{rec}$), is found to be $-3.18$ ($0.0415$). One additional recession threshold we denote as $\bar{s}_{2,rec}$ is chosen as to capture only the most extreme non-linearity of the relationship between surplus consumption and expected returns as presented in figure \ref{fig:SPCPD-a}.
 
 \input{Tables/BC.tex}
 
@@ -56,6 +59,7 @@ Based on NBER-recession data, we find that the US economy was in recession appro
     \centering
     \caption{Distribution of simulated $s_t$ chain}
     \includegraphics[width=\textwidth]{Figures/DistributionS_t.eps}
+    \fnote{Histogram of the simulated $s_t$ or $\log(S_t)$, along with the continuous time density as derived by \citet{appendix}.}
     \label{fig:DistriSt}
 \end{figure}
 From the constructed surplus consumption threshold $\Bar{s}_{rec}$ for recession, we construct an indicator dummy for recessions. Such that $I_{rec} = 1$ \textit{iff}. $\Bar{s}_{rec} > s_t$ and $I_{rec}=0$ otherwise.
