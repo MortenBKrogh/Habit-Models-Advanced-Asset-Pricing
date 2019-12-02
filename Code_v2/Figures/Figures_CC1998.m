@@ -2,9 +2,9 @@ global Regressions
 %% Figures
 clear
 % Figure 7 in CC1998
-load('PD_Claim_workspace')
+load('CC_PC_Claim_workspace')
 
-Sample = 100:1000;
+Sample = 1:500;
 
 figure;
 subplot(2,1,1)
@@ -29,7 +29,7 @@ xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
 xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
 legend('PC-Ratio', 'PD-Ratio','Location','northwest')
 hold off;
-saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
+%saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
 %%
 load('PD_Claim_workspace','elnr_pf','lnrf_pf');lnrPD = elnr_pf;
 load('PC_Claim_workspace','elnr_pf');lnrPC = elnr_pf;
@@ -43,13 +43,4 @@ xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
 ylabel('Expected Returns, annual percentage, $E_t ( r_{t+1} )$','Interpreter','latex');
 xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
 legend('Expected Return, Consumption Claim','Expected Return, Dividend Claim','Risk Free Rate','Interpreter','latex','Location','best');
-saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');
-%% Regression
-% plot fitted vs actual
-if Regressions == 1
-figure;
-plot(y)
-hold on
-plot(reg.yhat)
-saveas(gcf,string(['Figures/Reg_Fitted_vs_Actual', num2str(calib),'_PD_', num2str(PD_Claim), '.eps']),'eps2c');
-end
+%saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');
