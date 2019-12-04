@@ -1,9 +1,6 @@
 \section{Analysis} \label{sec:Analysis}
-
-This sections begins with calibrating the model parameter in comparison to \cite{Campbell1999}, then we simulate $100.000$ monthly observation...
-
 \subsection{Calibrated Model}
-
+We calibrated the model according to the previous section the calibration is reported in table \ref{tab:ModelCalib}.
 \begin{table}[H]
 \begin{adjustbox}{max width=\textwidth}
 \begin{threeparttable}[b]
@@ -40,7 +37,7 @@ Calibrating the model to the extended data suggests a higher persistence paramet
 From the calibrated model we simulate a chain of 100.000 monthly draws from the economy yielding 8.332 years of simulated time-series. We find in addition to the series that the procedure is extremely sensitive to the distribution of grid points. We use 10 equally distributed grid-points and an additional 6 just below $s_{max}$, consistent with the approach of \citet{Campbell1999}.
 
 
-The simulated economy behaves well according to most measures, that is it is able to explain the equity-premium puzzle, which is known to cause problems in many models including the much used \textit{power-utility}-model. The \citet{Campbell1999} model solves this by introducing time-varying risk-aversion, this however causes the risk-aversion to diverge when the surplus-consumption ratio is close to 0, causing the model to generate risk-aversion amongst the agents in these periods to be implausibly high, as can be seen in figure \ref{RA} in appendix \ref{App:AFigu}, reporting local utility-curvature coefficients as high as 1230, which is in sharp contrast to empirical estimates of risk aversion in the US found to be between .75 and 2 found by \citet{SLFred2015}.
+The simulated economy behaves well according to most measures, that is it is able to explain the equity-premium puzzle, which is known to cause problems in many models including the much used \textit{power-utility}-model. The \citet{Campbell1999} model solves this by introducing time-varying risk-aversion, this however causes the risk-aversion to diverge when the surplus-consumption ratio is close to 0, causing the model to generate risk-aversion amongst the agents in these periods to be implausibly high, as can be seen in figure \ref{RA} in appendix \ref{App:AFigu}, reporting local utility-curvature coefficients as high as 1230, which is in sharp contrast to empirical estimates of risk aversion in the US found to be between .75 and 2 found by \citet{SLFred2015} from the standard \textit{power-utility} model.
 
 \input{Tables/SimulatedMom.tex}
 
@@ -129,9 +126,11 @@ Figure \ref{tab:regress1} reports results of the four regressions. The desired p
 
 \input{Tables/RegressionTable11.tex}
 
-We then run the empirical counterpart to this regression using the same data as we used in the calibration of the model. We use the \textit{30-day} T-bill as the risk-free rate and the NBER \textit{US} recession indicator. 
+We then run the empirical counterpart to this regression using the same data as we used in the calibration of the model. We use the \textit{30-day} T-bill as the risk-free rate and the NBER \textit{US} recession indicator, note that as to remain true to realistic empirical studies the risk-free rate is not considered to be constant for the purpose of this regression. 
 
 \input{Tables/EmpReg.tex}
+
+The slope of the price-dividend ratio during recessions is of the same magnitude as the one estimated from the simulated economy (.035 vs. -0.032) same goes for the constant in receessions. This result follows from column 2 of the consumption claim part of table \ref{tab:regress1}. The expansionary slope coefficient deviates quite a lot, we see how $\beta_{EXP}\approx 0$, implying that during expansions price dividend ratio has zero impact on excess returns. In the model however the correlation between excess returns and the price-dividend ratio is inevitable. We see this clearly from figure \ref{fig:SPCPD}, where even out of recessions the inverse almost linear relationship is quite strong.
 
 
 To examine whether this results holds \textit{out-of-sample}, we conduct a rolling-window forecast over the simulated observations. As the underlying $s_t$-chain leads to realistic economic business cycles and thus non-continous chains of recessions, we stack all recession periods to one sample, this is justified in the model as the state variable $s_t$ behaves consistently and the behavior of the remaining series behaves according to $s_t$, that is we have no structural changes over \textit{t} in the model. \\
@@ -150,7 +149,7 @@ This specification indicates that recessions are defined now as only the most se
 
 \input{Tables/RegressionTableregsNB.tex}
 
-\input{Tables/RegressionTableLowerSbar.tex}
+\input{Tables/RegressionTableLowerSbar1.tex}
 
 \input{Tables/LHForercasts.tex}
 \begin{comment}
