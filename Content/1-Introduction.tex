@@ -4,16 +4,27 @@
 % - The model
 % - basic idea
 
-Predicting the equity premium has a long been a topic of interest for researchers around the world, and early attempts dates back to \cite{Dow1920} whom investigated the influence of dividend ratios. Much later the literature began to consider if consumption could have an effect in asset pricing models predicting the equity premium. The Consumption based asset pricing setup takes the departure in the traditional assumption of a representative agent with power utility and consumption is lognormally distributed. This setup leads to the well known equity premium -, risk-free rate - and the equity volatility puzzles, however by introducing a slow-moving habit to the basic power utility function \cite{Campbell1999} are able to solve many of the puzzles. So when consumption is approaching habit in an economic downturn, the curvature rises leading to falling prices of risky assets and rising expected returns. 
+Predicting the equity premium has a long been a topic of interest for researchers around the world, and early attempts dates back to \cite{Dow1920} whom investigated the influence of dividend ratios. Much later the literature began to consider if a consumption-based approach could have an effect in asset pricing models predicting the equity premium. The Consumption based asset pricing setup takes the departure in the traditional assumption of a representative agent with power utility and consumption is lognormally distributed. This setup leads to the well known equity premium -, risk-free rate - and the equity volatility puzzles, however by introducing a slow-moving habit to the basic power utility function \cite{Campbell1999} and letting the relative risk aversion be time varying makes it possible to match empirical observations such as in economic crisis the expected returns are seen to increase due to investors higher risk aversion in these periods in the model when consumption is approaching habit in an economic downturn, the curvature rises leading to falling prices of risky assets and rising expected returns and hence is able to imitate this process thus solving the equity premium puzzle. 
 
 
 The introduction of habits in the the utility function $u \left(C_t, X_t \right)$, captures a fundamental psycholgical feature of human behavior, namely when income rises consumption adapts, but slowly, thus being exposed to stimulus again and again reduces the response.
 
-We follow the approach of \cite{Campbell1999}, and model the consumption growth as an i.i.d. lognormal process, with mean and standard deviation calibrated to data spanning 1950-2019, and thus extends \cite{Campbell1999}'s data period with 25 years of data, hence including both the \textit{>>dot com bubble<<} in 2000 and the \textit{>>Great Financial Crisis<<} in 2007-2009, which might provide the analysis with more nuanced and appropriate information rather than relying upon 25 years old data.
+We follow the approach of \cite{Campbell1999}, and model the consumption growth as an i.i.d. lognormal process, with mean and standard deviation calibrated to data spanning 1950-2019, and thus extends \cite{Campbell1999}'s data period with 25 years of data, hence including both the \textit{>>dot com bubble<<} in 2000 and the \textit{>>Great Financial Crisis<<} in 2007-2009, which might provide the analysis with more nuanced and appropriate information rather than relying upon 25 years old data for parameter calibration.
+
+
+In the literature of asset pricing, a consensus of unpredictability of returns in recessions is present see \cite{Henkel2011} as an example. This paper is not only replicating the results of \cite{Campbell1999} with a new calibration, but the central contribute to the literature of consumption based asset pricing is the examination of the \cite{Campbell1999} habit models ability to predict asset prices in recession as well as in expansions.
+
+The analysis is conducted by simulating $100.000$ monthly observations of an economy. Then we define recession as when surplus-consumption is below some threshold. One natural way to define the recession based on surplus-consumption is to set the threshold to the steady-state level of the surplus-consumption ratio, however this yields that the simulated economy is in recession around $37$\% of the time which is to compare with empirical observations of the NBER data which states the US economy has been in recession $13$\% of the time in the period 1950-2018. Therefore we integrate over the distribution of the simulated surplus-consumption ratio in order to find the level the surplus-consumption ratio what is empirically observed, this is defined as $\Bar{S}_{rec}$. 
+
+Then we estimate both in-sample and out-of-sample regressions based on two samples of the data, which is split according to our recession indicator. We find \colorbox{yellow!100}{\textcolor{black}{.... SOMETHING SOMETHING ...}}
 
 
 
 
+
+
+
+\begin{comment}
 \midrule
 
 A corner area of the consumption based asset pricing is to incorporate habits in an agents preferences, \textit{Habit Formation}. The idea, initiated by \citet{Constantinides_1990}, assumes that marginal utility of consumption rely on consumption relative to stochastic habit process which is related to past consumption, thus utility is a function of both consumption and habits $u \left(C_t, X_t \right)$. This captures a fundamental psychological feature of human behavior, namely when income rises consumption only slowly adapts, thus being exposed to a stimulus again and again reduces the response. 
@@ -31,11 +42,10 @@ The results show that the model of \citet{Campbell1999} is capable of generating
 
 We utilize the model by letting the model produce synthetic data, and then verify that the generated data in fact illustrate the patterns in empirical data, this includes the level of risk-free rate, equity premium and standard deviation hereof, which the model roughly is able to match. 
 
+\end{comment}
 
 
 
-
-\footnote{The code used for this paper is based upon \cite{Campbell1999}'s GAUSS code out code available at \url{https://github.com/MortenBKrogh/Habit-Models-Advanced-Asset-Pricing}. The code is written in MATLAB 2019b, and is only able to run on a Windows machine due to that \textit{quadlab} file.}
 
 
 

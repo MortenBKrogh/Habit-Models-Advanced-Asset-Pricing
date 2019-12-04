@@ -1,9 +1,6 @@
 \section{Analysis} \label{sec:Analysis}
-
-In this section 
-
 \subsection{Calibrated Model}
-
+We calibrated the model according to the previous section the calibration is reported in table \ref{tab:ModelCalib}.
 \begin{table}[H]
 \begin{adjustbox}{max width=\textwidth}
 \begin{threeparttable}[b]
@@ -34,14 +31,13 @@ In this section
 \end{adjustbox}
 \end{table}
 
-
-Compared to the calibration of \citet{Campbell1999}, our calibration suggests a higher persistence parameter, higher volatility of dividend growth and lower consumption growth, the implied surplus consumption parameters suggests a slightly higher overall surplus consumption. The differences likely stems from the extra 20 years of calibration data. \\
+Calibrating the model to the extended data suggests a higher persistence parameter, higher volatility of dividend growth and lower consumption growth, the implied surplus consumption parameters suggest a slightly higher overall surplus consumption in comparison to \cite{Campbell1999}. The difference is likely to stem from these 25 years of extra data. 
 
 \subsection{Simulation}
 From the calibrated model we simulate a chain of 100.000 monthly draws from the economy yielding 8.332 years of simulated time-series. We find in addition to the series that the procedure is extremely sensitive to the distribution of grid points. We use 10 equally distributed grid-points and an additional 6 just below $s_{max}$, consistent with the approach of \citet{Campbell1999}.
 
 
-The simulated economy behaves well according to most measures, that is it is able to explain the equity-premium puzzle, which is known to cause problems in many models including the much used \textit{power-utility}-model. The \citet{Campbell1999} model solves this by introducing time-varying risk-aversion, this however causes the risk-aversion to diverge when the surplus-consumption ratio is close to 0, causing the model to generate risk-aversion amongst the agents in these periods to be implausibly high, as can be seen in figure \ref{RA} in appendix \ref{App:AFigu}, reporting local utility-curvature coefficients as high as 1230, which is in sharp contrast to empirical estimates of risk aversion in the US found to be between .75 and 2 found by \citet{SLFred2015}.
+The simulated economy behaves well according to most measures, that is it is able to explain the equity-premium puzzle, which is known to cause problems in many models including the much used \textit{power-utility}-model. The \citet{Campbell1999} model solves this by introducing time-varying risk-aversion, this however causes the risk-aversion to diverge when the surplus-consumption ratio is close to 0, causing the model to generate risk-aversion amongst the agents in these periods to be implausibly high, as can be seen in figure \ref{RA} in appendix \ref{App:AFigu}, reporting local utility-curvature coefficients as high as 1230, which is in sharp contrast to empirical estimates of risk aversion in the US found to be between .75 and 2 found by \citet{SLFred2015} from the standard \textit{power-utility} model.
 
 \input{Tables/SimulatedMom.tex}
 
@@ -62,7 +58,7 @@ Based on NBER-recession data, we find that the US economy was in recession appro
     \fnote{Histogram of the simulated $s_t$ or $\log(S_t)$, along with the continuous time density as derived by \citet{appendix}.}
     \label{fig:DistriSt}
 \end{figure}
-From the constructed surplus consumption threshold $\Bar{s}_{rec}$ for recession, we construct an indicator dummy for recessions. Such that $I_{rec} = 1$ \textit{iff}. $\Bar{s}_{rec} > s_t$ and $I_{rec}=0$ otherwise.
+From the constructed surplus consumption threshold $\Bar{s}_{rec}$ for recession, we construct an indicator dummy for recessions. Such that $I_{rec} = 1$ \textit{if}. $\Bar{s}_{rec} > s_t$ and $I_{rec}=0$ otherwise.
 
 Having simulated an economy based upon habit formation, and justified our choice of recession periods of the simulated series, we are able to test the proposed hypothesis:
 \begin{enumerate}
@@ -100,7 +96,9 @@ Furthermore the figure implies that the regression coefficient of $P/C$ or equiv
 
 
 \subsection{Results}
+
 First we estimate the following regressions:
+
 \begin{align}
      r_{t+1} - r^{f} &= \alpha + \beta_{REC} \left( p_t - c_t \right) * I_{t,REC} + \beta_{EXP} \left( p_t - c_t \right) * \left(1 - I_{t,REC}\right)  + \varepsilon_{t+1} \label{23}\\
       r_{t+1} - r^{f} &= \alpha + \beta_{REC} \left( p_t - d_t \right) * I_{t,REC} + \beta_{EXP} \left( p_t - d_t \right) * \left(1 - I_{t,REC}\right)  + \varepsilon_{t+1} \label{24}\\
@@ -109,28 +107,49 @@ First we estimate the following regressions:
 r_{t+1} - r^{f} &= \left(\alpha_{REC} + \beta_{REC} \left(p_t - d_t\right)\right)*I_{REC}\dots \nonumber\\
 & + \left(1-I_{REC}\right) \left( \alpha_{EXP} + \beta_{EXP}\left(p_t - d_t \right) \right) + \varepsilon_{t+1} \label{26}      
 \end{align}
+
+
+
 That is we use the recession indicator to infer the influence of the predictors in respectively recessions and expansions.\\
-The regressions \eqref{25} and \eqref{26} are estimated over two steps; once for expansions and once for recessions. By these 2 pairs of regressions we estimate excess returns with a both with a constant intercept during all business cycle phases and in addition where we allow the intercept to change over business-cycles such that the slope is not the only thing driving predictability differences over recessions and expansions.\\
-As a benchmark we run two additional regressions given:
+
+The regressions \eqref{25} and \eqref{26} are estimated over two steps; once for expansions and once for recessions. By these 2 pairs of regressions we estimate excess returns with a both with a constant intercept during all business cycle phases and in addition where we allow the intercept to change over business-cycles such that the slope is not the only thing driving predictability differences over recessions and expansions.
+
+
+As a benchmark we estimate two additional regressions given by given:
 \begin{align*}
      r_{t+1} - r^{f} &= \alpha + \beta \left( p_t - c_t \right)  + \varepsilon_{t+1}\\
       r_{t+1} - r^{f} &= \alpha + \beta \left( p_t - d_t \right) + \varepsilon_{t+1}
 \end{align*}
+
 Figure \ref{tab:regress1} reports results of the four regressions. The desired property of separability of predictability during phases of the business cycles gains some support from this result. We see a significant increase in $R^2$, we find strong statistical evidence supporting rejection of the null-hypothesis for all estimates in all four regressions, this is however to be expected as a sample size of between 12.000 and 100.000 observations is quite large, it is well established that as the sample size increases the asymptotic variance of the OLS-estimate decreases and thus significance is inevitable as the sample size becomes quite large.
-\input{Tables/RegressionTable1.tex}
+
+
+\input{Tables/RegressionTable11.tex}
+
+We then run the empirical counterpart to this regression using the same data as we used in the calibration of the model. We use the \textit{30-day} T-bill as the risk-free rate and the NBER \textit{US} recession indicator, note that as to remain true to realistic empirical studies the risk-free rate is not considered to be constant for the purpose of this regression. 
+
+\input{Tables/EmpReg.tex}
+
+The slope of the price-dividend ratio during recessions is of the same magnitude as the one estimated from the simulated economy (.035 vs. -0.032) same goes for the constant in receessions. This result follows from column 2 of the consumption claim part of table \ref{tab:regress1}. The expansionary slope coefficient deviates quite a lot, we see how $\beta_{EXP}\approx 0$, implying that during expansions price dividend ratio has zero impact on excess returns. In the model however the correlation between excess returns and the price-dividend ratio is inevitable. We see this clearly from figure \ref{fig:SPCPD}, where even out of recessions the inverse almost linear relationship is quite strong.
+
+
 To examine whether this results holds \textit{out-of-sample}, we conduct a rolling-window forecast over the simulated observations. As the underlying $s_t$-chain leads to realistic economic business cycles and thus non-continous chains of recessions, we stack all recession periods to one sample, this is justified in the model as the state variable $s_t$ behaves consistently and the behavior of the remaining series behaves according to $s_t$, that is we have no structural changes over \textit{t} in the model. \\
 We use the squared forecast errors to estimate the $R^2_{OoS}$ as \citet{CT2005}, the computed $R^2_{OoS}$ is reported in table \ref{tab:R2OS}. 
 
 \input{Tables/ROOS.tex}
 
-The interpretation is that the simple forecast of excess returns using the price-consumption ratio or equivalently price-dividend ratio compared to the no-predictability forecast, the mean-model forecast of excess returns, the simple regression performs better only in recessionary periods, while the mean-model is superior in times of economic prosperity. For our hypothesis this result is good news, in times of expansion price-dividend ratio does not predict excess stock returns out-of-sample, while the opposite remains true in recessions. \\
+The interpretation is that the simple forecast of excess returns using the price-consumption ratio or equivalently price-dividend ratio compared to the no-predictability forecast, the mean-model forecast of excess returns, the simple regression performs better only in recessionary periods, while the mean-model is superior in times of economic prosperity. For our hypothesis this result is good news, in times of expansion price-dividend ratio does not predict excess stock returns out-of-sample, while the opposite remains true in recessions.\\
+
+
 However from figure \ref{fig:SPCPD-a} we see that the most extreme effect of $S_t$ on expected returns kicks in at an estimated $0.02$, based on this fact we run additional regressions with the same specification as above, but with a respecifed $\Bar{S}_{REC}=0.02$ and denote this $\bar{S}_{2,REC}$, the output of which is reported in table \ref{tabregress2}. This specification of $\Bar{S}_{REC}$ implies that the simulated economy is in recession approximately 2.8\% of the time. Corresponding to barely 3.000 observations in this case. \\
 \newline
+
+
 This specification indicates that recessions are defined now as only the most severe times of the simulated economy. The surplus consumption is extremely low, the threshold value of 0.02 indicates relative levels of risk aversion in this periods of at least 100, which is huge, leading to expected  returns of above 17\%. This gives us an idea of the state of the economy. The intuitive predictions based upon the model framework is that we should obtain similar results to those of table \ref{tab:regress1}, however with the effect of price-dividend ratio on excess returns in recessions being much larger and even more predictability in recessions.
 
 \input{Tables/RegressionTableregsNB.tex}
 
-\input{Tables/RegressionTableLowerSbar.tex}
+\input{Tables/RegressionTableLowerSbar1.tex}
 
 \input{Tables/LHForercasts.tex}
 \begin{comment}
@@ -143,6 +162,8 @@ However we have the simulated series and are able to run the regression straight
     \left(r_{t+1} - r^{f}\right)I_{t+1,EXP} &=  \alpha + \beta \left( p_t - c_t \right) \left( 1- I_{REC,t}\right)  + \varepsilon_{t+1}\\
     \left(r_{t+1} - r^{f}\right)I_{t+1,EXP} &=  \alpha + \beta \left( p_t - d_t \right) \left( 1- _{REC,t}\right) x+ \varepsilon_{t+1}
 \end{align*}
+
+
 The results of the four regressions are reported in table \ref{tab:RSregress}, the results are quite interesting. Examining the results reveals that with a regime switching approach as opposed to the previous single state regression, we are able to split the effects of business cycles on the predictability of stock returns. Notice how the coefficients indicating the effects of respectively P/C and P/D ratios on excess returns have switched signs in recession periods, while the constant effect is negative during recessions, indicating the base effect of being in a recession on excess returns is negative. However while not intuitively inappropriate in this context it have to be noted that expected returns are restricted to be positive in this model, therefore mandating that the size of the log P/C and log P/D-ratios must be large enough to offset the negative constant. This restriction is not particular restrictive as the log price consumption-ratio and equivalent log price dividend ratio is seldom below 2, see the simulated chains of log P/C and log P/D in figure \ref{fig:PCPD} in appendix.\\
 
 Another result worth noting is one that provides evidence in favor of both of our hypothesis, that is the estimated coefficient of determination is much higher in the recession periods reaching 7\% when predicting excess returns using the price-consumption-ratio, than it is in expansionary periods reaching just barely .2\%, using the price-dividend-ratio as the predictor yields a smaller $R^2$ this is to be expected, as the price-dividend is by construction a noisier mapping of the price-consumption-ratio dynamics, containing not only the shock to consumption growth $\sigma$ but also the shock to dividend growth $\sigma_w$.\\
@@ -176,8 +197,15 @@ $\mathbb{E}\left[r_t- r^f_t\right] / \sigma\left(r_t - r^f_t,\right)$ & $0.3877$
 \end{table}
 \end{comment}
 
+\subsubsection{Robustness}
+
+
 \subsection{Economic Interpretation}
+
+
 The economic interpretation follows from the model intuition. We see how in times of recession the risk-aversion increases exponentially, this implies that as we set the threshold for recessions lower in the model, the predictability of stock returns during recessions increases. That is the marginal contribution of predictability of the dividend claim in recessions decreases as surplus consumption relative to habit level increases. Using the model implied threshold of ${\BAR{S}}$ leads to little to no difference in predictability over business cycles. The empirically implied threshold leads to statistically significant differences, while lowering the threshold even further magnifies the results. \\
+
+
 People exposed to significant losses, thus fearing further losses, increases the premium they demand for participating in a risky gamble; their risk-premium, this result is well established, but notoriously difficult for models to match. Augmenting the simple \textit{power-utility} model with external habit formation incorporates this feature, but with the cost of a bad-behaved risk-aversion series as can be seen in figure \ref{RA} in appendix \ref{App:AFigu}.
 
 
