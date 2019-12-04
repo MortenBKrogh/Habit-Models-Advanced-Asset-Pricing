@@ -69,7 +69,8 @@
 \usepackage[labelfont=sc,labelsep=period]{caption}   % Format figure captions
 \captionsetup[table]{labelsep=newline}
 \captionsetup[figure]{labelsep=newline}
-\newcommand\fnote[1]{\captionsetup{font=footnotesize, justification=raggedright,singlelinecheck=false}\caption*{#1}}
+\newcommand\fnote[1]{\captionsetup{font=footnotesize, justification=raggedright,singlelinecheck=false}\caption*{\protect{#1}}}
+\usepackage{dirtytalk}
 \usepackage{makecell}
 
 % Define theorem-like commands and a few random function names.
