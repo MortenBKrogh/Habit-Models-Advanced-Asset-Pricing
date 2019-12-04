@@ -32,7 +32,7 @@ a = a(all(a,2),:);
 
 rhv = [ones(length(a),1), log(1 + a(:,1))]; 
 lhv = log(1+ a(:,2));
-Rec_Reg = nwest(lhv,rhv,1);
+Rec_Reg = nwest(lhv,rhv,2);
 prt_reg(Rec_Reg)
 %%
 dpExp = dp .* (1-Rec);
@@ -43,7 +43,7 @@ a = a(all(a,2),:);
 
 rhv = [ones(length(a),1), a(:,1)]; 
 lhv = log(1+a(:,2));
-Exp_Reg = nwest(lhv,rhv,1);
-prt_reg(Exp_Reg)
+Exp_Reg = nwest(lhv,rhv,2);
 %%
-plt_reg(Exp_Reg)
+prt_reg(Exp_Reg)
+prt_reg(Rec_Reg)
