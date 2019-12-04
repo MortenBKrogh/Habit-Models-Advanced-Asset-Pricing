@@ -304,12 +304,12 @@ load('PC_Claim_workspace','lnpctsim'); PCratio = lnpctsim;
 name = '../Figures/PCPDMonthly_chain';
 subplot(2,1,1)
 plot(PCratio);ylabel('$p_t-c_t$','FontSize',14,'Interpreter','latex');
-title({'$P/C$', ['$E(p_t-c_t)$ =',num2str(mean(PCratio),4)]},'Interpreter','latex');
+title({'Consumption Claim', ['$E(p_t-c_t)$ =',num2str(mean(PCratio),4)]},'Interpreter','latex');
 xlim([1 100000]);
 subplot(2,1,2)
 plot(PDratio);ylabel('$p_t-d_t$','FontSize',14,'Interpreter','latex');
 xlim([1 100000]);
-title({'$P/D$', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]},'Interpreter','latex');
+title({'Dividend Claim', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]},'Interpreter','latex');
 if Save_Figures
 saveas(gcf,name,'epsc');
 end
