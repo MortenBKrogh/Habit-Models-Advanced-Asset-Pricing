@@ -284,13 +284,13 @@ load('PD_Claim_workspace','elnrtsim','tsc'); ExpRetsPD = elnrtsim;
 load('PC_Claim_workspace','elnrtsim'); ExpRetsPC = elnrtsim;
 figure;
 subplot(2,1,1)
-plot(ExpRetsPC);title({'$P/C$', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPC),6)]},'Interpreter','latex');
-%xlim([-50 8333])
+plot(ExpRetsPC);title({'Consumption Claim', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPC),6)]},'Interpreter','latex');
+xlim([0 100000]);
 ylabel('$ E_t  (r_{t+1})$','FontSize',14,'interpreter','latex');
 subplot(2,1,2)
-plot(ExpRetsPD);title({'$P/D$', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPD),6)]},'Interpreter','latex');
+plot(ExpRetsPD);title({'Dividend Claim', ['$E( E_t  (r_{t+1}) )$ =',num2str(mean(ExpRetsPD),6)]},'Interpreter','latex');
 ylabel('$ E_t  (r_{t+1})$','FontSize',14,'interpreter','latex');
-%xlim([-50 8333]);
+xlim([0 100000]);
 if Save_Figures
 saveas(gcf,'../Figures/Excess_Rets','epsc');
 end
