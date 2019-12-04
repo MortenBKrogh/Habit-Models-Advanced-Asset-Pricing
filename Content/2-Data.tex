@@ -1,6 +1,15 @@
 \section{Data} \label{sec:Data}
 
-When calibrating the model parameters we use the CRSP U.S. Stock database when calculating the risk-free rate \cite{CRSP:DATA_Bonds_Inflation}, the standard deviation of dividend growth \cite{CRSP:DATA_Annual}, the persistence coefficient \cite{CRSP:DATA_Monthly} and  and Consumption data from FRED. 
+We use data for the re-calibration of the model parameters i.e. mean consumption growth $g$, standard deviation of consumption growth $\sigma$, log risk-free rate $r^f$, persistence coefficient $\phi$, standard deviation of dividend growth $\sigma_w$. We use bonds and stock data from the CRSP U.S. Stock database and consumption data from the Federal Reserve Bank of St. Louis for the calibration. 
+The risk-free rate is calculated by subtracting the inflation from the 90 Day Bill, take log and expectations. For the Persistence coefficient we use the value-weighted return with and without dividends dividing the returns including dividends with returns excluding dividends subtracting 1 and take log, we obtain price-dividend ratio which is used to find the first order autocorrelation coefficient which is annualized. 
 
 
-\cite{FRED:CONSDAT}
+
+
+%The timeseries spans the period 1950 through 2018, we use both monthly, annual and quarterly data for the calibration, hence we need to convert data to the same period before use.
+
+
+% When calibrating the model parameters we use the CRSP U.S. Stock database when calculating the risk-free rate \cite{CRSP:DATA_Bonds_Inflation}, the standard deviation of dividend growth \cite{CRSP:DATA_Annual}, the persistence coefficient \cite{CRSP:DATA_Monthly} and Consumption as well as NBER recession data from \cite{FRED:USREC}. 
+
+
+
