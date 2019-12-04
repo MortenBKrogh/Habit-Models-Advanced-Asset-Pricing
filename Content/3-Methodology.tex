@@ -39,6 +39,7 @@ the first order condition with respect to consumption,
 \end{align*}
 Substituting $X_t$ from \eqref{S_t_Process}:  $(-X_t = S_t)$,
 \begin{align}
+\label{firstDer}
      U_c \left( C_t, X_t \right) = S_t ^{-\gamma} C_t ^{-\gamma}
 \end{align}
 The stochastic discount factor can then be expressed,
@@ -94,7 +95,7 @@ Now to refine the framework one could implement a time-varying risk-free rate as
 However \citet{Campbell1999} argues that that the risk-free rate in US-data exhibits limited variation furthermore extending the model with a time-varying risk-free rate has little to no effect on the results regarding the stock market, therefore the model specification used in this paper assumes a constant risk-free rate, consistent with the model in \citet{Campbell1999}.
 
 \subsection{Pricing a Consumption Claim}
-The actual pricing relations in this part while very simple analytically, are the most comprehensive part computational and numerical, this follows from the fact that the the price-dividend ratio as a function of state-variable $s_t$ are not observable and are thus solved on a grid using the Gauss-Legendre quadrature procedure for numerical integration. \\
+The actual pricing relations in this part while very simple analytically, are the most comprehensive part computational and numerical, this follows from the fact that the the price-dividend ratio is modelled as a function of the state-variable $s_t$ are not observable and are thus solved on a grid using the Gauss-Legendre quadrature procedure for numerical integration. \\
 \newline
 To clarify economical procedure, we will utilize the basic pricing relation that is,
 \begin{align}
@@ -138,9 +139,13 @@ To estimate the true autocorrelation-coefficient we use the first order sample a
       d_t - p_t = \alpha + \phi \left( d_{t-1}-p_{t-1} \right)+\varepsilon_t
 \end{align}
 These dynamics of the dividend yield are true only if the best forecast of future dividend yield can be retrieved from an AR(1) model, that this holds true can be seen from equation \eqref{pd_ratio}, stating the the price-dividend ratio is a functional only of the state variable, hence inheriting the dynamics of only one state, the surplus consumption ratio. This hold true for all $t$ thus the effects of $s_t$ on $d_{t+1}-p_{t+1}$, can be retrieved using the information contained in $d_t-p_t$.\\
-The local utility curvature, $\gamma$, in the model is not calibrated as per say, instead we rely on existiing literature such as \citet{Campbell1999} and fixes $\gamma = 2$.
-\\
-\newline
+
+The local utility curvature, $\gamma$, in the model is not calibrated as per say, instead we rely on existing literature such as \citet{Campbell1999} and fixes $\gamma = 2$. This parameter is different from the $\gamma$ parameter of the \textit{power-utility} model. In the external habit-model specified above $\gamma$ scales the risk-aversion with the surplus consumption ratio, and is not the risk-aversion parameter itself. The risk-aversion of the model follows from equation \eqref{firstDer}, taking the second derivative and multiplying with $\frac{C}{U_C(C_t, S_t)}$ yields the relation
+$$
+\frac{C_t U_{CC}}{U_{C}}=\frac{-\gamma C_t \left( C_t-X_t \right)^{-\gamma-1}}{\left(C_t-X_t\right)^{-\gamma}}=\frac{-\gamma C_t}{C_t-X_t}=\frac{\gamma}{S_t}
+$$
+Where $S_t=(C_t-X_t)/C_t$. Already from this point it is clear that during periods of low $S_t$ risk-aversion in the model will become very large, and as $S\rightarrow 0$, ${\gamma}/{S}\rightarrow \infty$.\\
+
 The subjective discount factor is chosen as to match the risk-free rate as reported in the CRSP-data. 
 Recalling equation \eqref{RFR1} allows for a closed form solution for subjective discount factor given an arbitrary calibration of the risk-free rate, the local utility curvature, the persistence coefficient and the growth rate of dividends/consumption,
 \begin{align}

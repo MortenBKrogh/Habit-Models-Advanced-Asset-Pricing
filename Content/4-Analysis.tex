@@ -53,8 +53,9 @@ Based on NBER-recession data, we find that the US economy was in recession appro
 
 \begin{figure}[H]
     \centering
+    \captionsetup{width=0.6\textwidth}
     \caption{Distribution of simulated $s_t$ chain}
-    \includegraphics[width=\textwidth]{Figures/DistributionS_t.eps}
+    \includegraphics[width=0.6\textwidth]{Figures/DistributionS_t.eps}
     \fnote{Histogram of the simulated $s_t$ or $\log(S_t)$, along with the continuous time density as derived by \citet{appendix}.}
     \label{fig:DistriSt}
 \end{figure}
@@ -92,9 +93,7 @@ Examining the expected returns as a function of the surplus consumption ratio, a
 \end{figure}
 
 From the functionals of surplus consumption ratio reported in figure \ref{fig:SPCPD}, some basic predictions can be made. We see that when surplus consumption is low, that is in recessionary times, expected returns increases, the intuition is that when times are bad, as consumption falls relative to habit levels, the risk aversion increases, people wants a higher level of compensation per unit of risk - the risk premium rises - note that this must hold true for all levels of $S$ as the risk-free rate is fixed in the model. \\
-Furthermore the figure implies that the regression coefficient of $P/C$ or equivalent $P/D$ should be negative. Lower P/C or P/D implies higher values of $\mathbb{E}\left[r_t-r^f\right]$, both driven by the single state.  
-
-
+Furthermore the figure implies that the regression coefficient of $p_t-d_t$ or equivalent $p_t-c_t$ should be negative, i.e Lower price-dividend ratio implies higher values of $\mathbb{E}\left[r_t-r^f\right]$, both driven by the single state $s_t$.  
 \subsection{Results}
 
 First we estimate the following regressions:
@@ -112,8 +111,7 @@ r_{t+1} - r^{f} &= \left(\alpha_{REC} + \beta_{REC} \left(p_t - d_t\right)\right
 
 That is we use the recession indicator to infer the influence of the predictors in respectively recessions and expansions.\\
 
-The regressions \eqref{25} and \eqref{26} are estimated over two steps; once for expansions and once for recessions. By these 2 pairs of regressions we estimate excess returns with a both with a constant intercept during all business cycle phases and in addition where we allow the intercept to change over business-cycles such that the slope is not the only thing driving predictability differences over recessions and expansions.
-
+The regressions \eqref{25} and \eqref{26} are estimated over two steps; once for expansions and once for recessions. By these 2 pairs of regressions we estimate excess returns both with a constant intercept during all business cycle phases and in addition where we allow the intercept to change over business-cycles such that the slope is not the only thing driving predictability differences over recessions and expansions.\\
 
 As a benchmark we estimate two additional regressions given by given:
 \begin{align*}
