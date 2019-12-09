@@ -171,6 +171,7 @@ a = a(all(a,2),:);
 ExcRetsRec = a(:,1);                   %% <- Excess Returns Recessions only
 ExRetsRecPDFC = ExcRetsRec;
 PDrecHR = [ones(size(a,1), 1) a(:,2)]; %% <- PD recession
+LRPDREC = PDrecHR(:,2);
 regPDrec1 = nwest(ExcRetsRec,PDrecHR,0); 
 
 a = [retsHExpPD, PDRegHExp];
@@ -178,6 +179,7 @@ a = a(all(a,2),:);
 ExRetsExp = a(:,1); %% <- Excess Returns Expansions only
 ExRetsExpPDFC = ExRetsExp;
 PDexpHR   = [ones(size(a,1),1) a(:,2)]; %% <- PD Expansion
+LRPDEXP = PDexpHR(:,2);
 regPDexp1 = nwest(ExRetsExp,PDexpHR,0);
 
 a = [retsHExpPC, PCRegHExp];
@@ -185,6 +187,7 @@ a = a(all(a,2),:);
 ExRetsExp = a(:,1);
 ExRetsExpPCFC = ExRetsExp;
 PCExpHR   = [ones(size(a,1),1) a(:,2)];
+LRPCEXP = PCExpHR(:,2);
 regPCexp1 = nwest(ExRetsExp,PCExpHR,0);
 
 a = [retsHRecPC, PCRegHRec];
@@ -192,12 +195,80 @@ a = a(all(a,2),:);
 ExRecRets = a(:,1);
 ExRetsRecPCFC = ExRecRets;
 PCrecHR   = [ones(size(a,1),1) a(:,2)];
+LRPCREC = PCrecHR(:,2);
 regPCrec1 = nwest(ExRecRets,PCrecHR,0);
 
 regs1 = [regPCrec regPDrec regPCrec1 regPCexp1 regPDrec1 regPDexp1];
 if Save_Figures
 RegressionTable2;
 end
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%    Long run regressions based on simulated data     %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+load('PC_Claim_workspace','Erfinterp_pf','lnrtsim','lnpctsim');
+rfr  = Erfinterp_pf;                 
+retsPC = lnrtsim - rfr; 
+PCrat = lnpctsim(2:end);
+load('PD_Claim_workspace','lnrtsim','lnpctsim')
+PDrat = lnpctsim(2:end);
+retsPD = lnrtsim - rfr; 
+
+j = 1;
+T = length(PCrat);
+Texp = length(LRPDEXP);
+Trec = length(LRPDREC);
+Ta = T;
+h= [1 2 3 5 7 10] * 12; 
+while j <= size(h,2)
+k = h(1,j);
+yPDRec = ExRetsRecPDFC(1:Trec-k+1,1);
+yPCRec = ExRetsRecPCFC(1:Trec-k+1,1);
+yPDExp = ExRetsExpPDFC(1:Texp-k+1,1);
+yPCExp = ExRetsExpPCFC(1:Texp-k+1,1);
+xPDRec = [ones(Trec-k+1,1), LRPDREC(1:Trec-k+1)];
+xPCRec = [ones(Trec-k+1,1), LRPCREC(1:Trec-k+1)];
+xPDExp = [ones(Texp-k+1,1), LRPDEXP(1:Texp-k+1)];
+xPCExp = [ones(Texp-k+1,1), LRPCEXP(1:Texp-k+1)];
+xC = [ones(T-k+1,1), PCrat(1:T-k+1)];   
+yC  = retsPC(1:T-k+1);%-rfr;
+xD = [ones(T-k+1,1) PDrat(1:T-k+1)];
+yD = retsPD(1:T-k+1);
+    i = 2;
+while i <= k
+    yPDRec = yPDRec + ExRetsRecPDFC(i:Trec-k+i);
+    yPCRec = yPCRec + ExRetsRecPCFC(i:Trec-k+i);
+    yPDExp = yPDExp + ExRetsExpPDFC(i:Texp-k+i);
+    yPCExp = yPCExp + ExRetsExpPCFC(i:Texp-k+i);
+    yC = yC + retsPC(i:T-k+i);
+    yD = yD + retsPD(i:T-k+i);
+    i = i+1;
+end   
+b = xC\yC;
+bPCRec = xPCRec\yPCRec;
+bPCExp = xPCExp\yPCExp;
+bPDRec = xPDRec\yPDRec;
+bPDExp = xPDExp\yPDExp;
+bmat(:,j) = b;
+bPCRecmat(:,j) = bPCRec;
+bPCExpmat(:,j) = bPCExp;
+bPDRecmat(:,j) = bPDRec;
+bPDExpmat(:,j) = bPDExp;
+R2(:,j) = (std(xC * b)/ std(yC) )^2;
+R2PCRec(:,j) = (std(xPCRec * bPCRec)/ std(yPCRec) )^2;
+R2PCExp(:,j) = (std(xPCExp * bPCExp)/ std(yPCExp) )^2;
+R2PDRec(:,j) = (std(xPDRec * bPDRec)/ std(yPDRec) )^2;
+R2PDExp(:,j) = (std(xPDExp * bPDExp)/ std(yPDExp) )^2;
+bd = xD\yD;
+bdmat(:,j) = bd;
+R2d(:,j) = (std(xD * bd)/ std(yD) )^2;
+j = j+1;
+end
+
+tab = [bmat(2,:)', R2', bdmat(2,:)',  R2d']
+names = split(char(num2str(h/12,1)));
+varnames = split(['$\beta_{pc}$ ', '$R^2_{pc}$  ','$\beta_{pd}$ ','$R^2_{od}$'])'
+tab =  array2table(tab,'Rownames',names,'VariableNames',varnames)
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                     Split Business cycle lower s bar                  %
@@ -313,46 +384,6 @@ title({'Dividend Claim', ['$E(p_t-d_t)$ =',num2str(mean(PDratio),4)]},'Interpret
 if Save_Figures
 saveas(gcf,name,'epsc');
 end
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%    Long run regressions based on simulated data     %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-load('PC_Claim_workspace','Erfinterp_pf','lnrtsim','lnpctsim');
-rfr  = Erfinterp_pf;                 
-retsPC = lnrtsim - (rfr/4); 
-PCrat = lnpctsim(2:end);
-load('PD_Claim_workspace','lnrtsim','lnpctsim')
-PDrat = lnpctsim(2:end);
-retsPD = lnrtsim - (rfr/4); 
-j = 1;
-T = length(PCrat);
-Ta = T;
-h= [1 2 3 5 7 10] * 12; 
-while j <= size(h,2)
-k = h(1,j);
-xC = [ones(T-k+1,1), PCrat(1:T-k+1)];   
-yC  = retsPC(1:T-k+1);%-rfr;
-xD = [ones(T-k+1,1) PDrat(1:T-k+1)];
-yD = retsPD(1:T-k+1);
-    i = 2;
-while i <= k
- yC = yC + retsPC(i:T-k+i);
- yD = yD + retsPD(i:T-k+i);
- i = i+1;
-end   
-b = xC\yC;
-bmat(:,j) = b;
-R2(:,j) = (std(xC * b)/ std(yC) )^2;
-bd = xD\yD;
-bdmat(:,j) = bd;
-R2d(:,j) = (std(xD * bd)/ std(yD) )^2;
-j = j+1;
-end
-
-tab = [bmat(2,:)', R2', bdmat(2,:)',  R2d']
-names = split(char(num2str(h/12,1)));
-varnames = split(['$\beta_{pc}$ ', '$R^2_{pc}$  ','$\beta_{pd}$ ','$R^2_{od}$'])'
-tab =  array2table(tab,'Rownames',names,'VariableNames',varnames)
 %% Moments Table
 load('PD_Claim_workspace','Edc_pf', 'Stdc_pf', 'Erfinterp_pf', 'Shprinterp_pf', 'ShpRinterp_pf', 'Eexrettinterp_pf', 'Stdexrettinterp_pf', 'Ep_d_pf', 'Stdp_d_pf');
 PD_edc = Edc_pf;
