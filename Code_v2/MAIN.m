@@ -37,7 +37,11 @@
 % The program automatically saves the workspaces of the 4 runs such that
 % the LoadData.m file can be run and changed independently of the MAIN.m
 % file.
-
+% 
+% Note: to extend the analysis with a term-structure, that is varying bond
+% returns the parameter B needs to be recalibrated. For example following 
+% Vasconcelos (2009), we can set b = .009, see equation (15) and (16) in 
+% Campbell Cochrane (1999)
 clear all
 clc
 format long
@@ -96,7 +100,7 @@ if calib == 1
     phi=Pars.Phi^(1/tsc);
     gamma=2;
     rhow = 0.2;
-    B=0;
+    B=0; 
     verd=0;
     ann=0;
     sig_w = Pars.sigma_w/sqrt(tsc);
