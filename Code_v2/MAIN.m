@@ -15,7 +15,7 @@
 % https://faculty.chicagobooth.edu/john.cochrane/ 
 % 
 % For reproduction of our results in Jensen & Krogh (2019) the MAIN.m code 
-% needs to be run 4 times with preferences
+% needs to run 4 times with different settings as specified below.
 %
 % The first 2 runs use Campbell & Cochrane (1999) calibration and solves
 % for both price-consumption and price-dividend.
