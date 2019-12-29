@@ -48,8 +48,24 @@ legend('Expected Return, Consumption Claim','Expected Return, Dividend Claim','R
 Maturities = [1,3,7,10,20]*12;
 figure;
 plot(S,BondYields_PD(:,Maturities)*100,'LineWidth',1.5);
-hold on
-plot(S,BondYields_PD(:,Maturities)*100,'LineWidth',1.5);
+%hold on
+%plot(S,BondYields_PD(:,Maturities)*100,'LineWidth',1.5);
 xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
 ylabel('Bond yields','Interpreter','latex');
 legend('1 year','3 years','7 years','10 years', '20 years','Interpreter','latex','Location','best');
+%% Yield curves different S
+Mats = string(S);
+Chosen = [1,3,5,7,10];
+Mats = Mats(Chosen);
+figure;
+% subplot(2,1,1)
+plot(1:240, BondYields_PD(Chosen,:)*100,'LineWidth',1.5);%title('Dividend-Claim','interpreter','latex');
+ylabel('Bond Yields,   Term-structure','Interpreter','latex');
+yline(0,'--')
+% subplot(2,1,2)
+% title('PC')
+% plot(1:240, BondYields_PC(Chosen,:)*100,'LineWidth',1.5);title('Dividend-Claim','interpreter','latex');
+% xlabel('Maturity','Interpreter','latex');
+% ylabel('Term Structure','Interpreter','latex');
+leg = legend(Mats,'location','best');
+title(leg,'Surplus Consumption Ratio')
