@@ -16,9 +16,9 @@ hold off
 
 
 %%
-load('PD_Claim_workspace','output_lnpda','S','tsc');PD_ratio = output_lnpda;
-load('PC_Claim_workspace','output_lnpca');PC_ratio = output_lnpca;
-%%
+load('PD_Claim_workspace');PD_ratio = output_lnpda;lnrPD = elnr_pf;BondYields_PD = lny_pf;
+load('PC_Claim_workspace');PC_ratio = output_lnpca;lnrPC = elnr_pf;BondYields_PC = lny_pf;
+%% PC/PD 
 figure;
 plot(S,exp(PC_ratio)/tsc,'LineWidth',1.5);% Annulized P/C-curve
 hold on;
@@ -30,19 +30,26 @@ xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
 xline(0.02,'--','$\bar{S}_{2,REC}$','Interpreter','latex');
 legend('PC-Ratio', 'PD-Ratio','Location','best')
 hold off;
-saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
-%%
-load('PD_Claim_workspace','elnr_pf','lnrf_pf');lnrPD = elnr_pf;
-load('PC_Claim_workspace','elnr_pf');lnrPC = elnr_pf;
+%saveas(gcf,string(['../Figures/PC_PD_Ratio']),'eps2c');
+%% Stock Returns
 figure;
 plot(S,lnrPC *tsc*100,'LineWidth',1.5);
 hold on
 plot(S,lnrPD*tsc*100,'LineWidth',1.5);
-yline(mean(lnrf_pf)*tsc*100,':');
+plot(S,lnrf_pf*tsc*100,':k');
 xline(exp(Rec_s_bar),'--','$\bar{S}_{REC}$','Interpreter','latex');
 xline(S_max,'--','$\bar{S}_{MAX}$','Interpreter','latex');
 xline(0.02,'--','$\bar{S}_{2,REC}$','Interpreter','latex');
 ylabel('Expected Returns, annual percentage, $E_t ( r_{t+1} )$','Interpreter','latex');
 xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
 legend('Expected Return, Consumption Claim','Expected Return, Dividend Claim','Risk Free Rate','Interpreter','latex','Location','best');
-saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');
+%saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');
+%% Bond Returns
+Maturities = [1,3,7,10,20]*12;
+figure;
+plot(S,BondYields_PD(:,Maturities)*100,'LineWidth',1.5);
+hold on
+plot(S,BondYields_PD(:,Maturities)*100,'LineWidth',1.5);
+xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
+ylabel('Bond yields','Interpreter','latex');
+legend('1 year','3 years','7 years','10 years', '20 years','Interpreter','latex','Location','best');
