@@ -6,7 +6,7 @@ function [er elnr sdr sdlnr lnrf lnrf1 lny elnrcb sdlnrcb slpmv] = finders(sg)
 % consumer asset vector.                                                   %
 % ----------------------------------------------------------------------- %
 
-global g gamma sig phi s maxcb s_bar delta tsc lnpcb matur PD_Claim
+global B g gamma sig phi s maxcb s_bar delta tsc lnpcb matur PD_Claim
 
 % Medium-Variance Boundary Slope                              %
 %                                                                         %
@@ -73,15 +73,19 @@ for i=1:size(sg,1)
     sdlnr(i) = GaussLegendre(@intelnr2,abs(sig)*(-8),abs(sig)*8,40);
     
     % Bonds
-    matur = maxcb*tsc; elnrcb(i,1) = lnrf(i);
+    matur = maxcb*tsc; 
+    foo = matur;
+    elnrcb(i,1) = lnrf(i);
     
+    if B
     while matur >= 2
         elnrcb(i,matur) = GaussLegendre(@intelnrcb,abs(sig)*(-8),abs(sig)*8, 40); 
         sdlnrcb(i,matur) = GaussLegendre(@intelnr2,abs(sig)*(-8),abs(sig)*8, 40); 
         sdlnrcb(i,matur) = (sdlnrcb(i,matur) - elnrcb(i,matur).^2).^(.5);
         matur = matur - 1;
     end
-    
+    end
+    matur = foo;
 end
 end
 

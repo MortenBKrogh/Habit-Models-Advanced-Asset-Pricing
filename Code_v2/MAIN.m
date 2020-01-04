@@ -62,7 +62,7 @@ calib=1;           % 0 - Campbell & Cochrane (1999)
                    % 1 - Krogh & Jensen (2019)
 
 % Solution method:
-PD_Claim = 1;      % 0 = Consumption Claim
+PD_Claim = 0;      % 0 = Consumption Claim
                    % 1 = Dividend Claim
                    % Run with both = 0 and =1 before generating figures and
                    % tables and regressions
@@ -100,7 +100,7 @@ if calib == 1
     phi=Pars.Phi^(1/tsc);
     gamma=2;
     rhow = 0.2;
-    B=0.009; 
+    B=0.011; 
     verd=0;
     ann=0;
     sig_w = Pars.sigma_w/sqrt(tsc);

@@ -45,13 +45,14 @@ xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
 legend('Expected Return, Consumption Claim','Expected Return, Dividend Claim','Risk Free Rate','Interpreter','latex','Location','best');
 %saveas(gcf,string(['../Figures/ErPCPD']),'eps2c');
 %% Bond Returns
+BondRets_PD = elnrcb_pf;
 Maturities = [1,3,7,10,20]*12;
 figure;
-plot(S,BondYields_PD(:,Maturities)*100,'LineWidth',1.5);
+plot(S,BondRets_PD(:,Maturities),'LineWidth',1.5);
 %hold on
 %plot(S,BondYields_PD(:,Maturities)*100,'LineWidth',1.5);
 xlabel('Surplus Consumption ratio, $S$','Interpreter','latex');
-ylabel('Bond yields','Interpreter','latex');
+ylabel('Bond Returns','Interpreter','latex');
 legend('1 year','3 years','7 years','10 years', '20 years','Interpreter','latex','Location','best');
 %% Yield curves different S
 Mats = string(S);
