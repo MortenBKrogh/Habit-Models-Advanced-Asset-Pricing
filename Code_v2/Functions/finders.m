@@ -75,10 +75,11 @@ for i=1:size(sg,1)
     % Bonds
     matur = maxcb*tsc; elnrcb(i,1) = lnrf(i);
     
-    for k = 2:matur
-        elnrcb(i,k) = GaussLegendre(@intelnrcb,abs(sig)*(-8),abs(sig)*8, 40); 
-        sdlnrcb(i,k) = GaussLegendre(@intelnr2,abs(sig)*(-8),abs(sig)*8, 40); 
-        sdlnrcb(i,k) = (sdlnrcb(i,k) - elnrcb(i,k).^2).^(.5);
+    while matur >= 2
+        elnrcb(i,matur) = GaussLegendre(@intelnrcb,abs(sig)*(-8),abs(sig)*8, 40); 
+        sdlnrcb(i,matur) = GaussLegendre(@intelnr2,abs(sig)*(-8),abs(sig)*8, 40); 
+        sdlnrcb(i,matur) = (sdlnrcb(i,matur) - elnrcb(i,matur).^2).^(.5);
+        matur = matur - 1;
     end
     
 end
