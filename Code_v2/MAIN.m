@@ -100,7 +100,7 @@ if calib == 1
     phi=Pars.Phi^(1/tsc);
     gamma=2;
     rhow = 0.2;
-    B=0; 
+    B=0.009; 
     verd=0;
     ann=0;
     sig_w = Pars.sigma_w/sqrt(tsc);
