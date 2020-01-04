@@ -39,6 +39,7 @@ idx_to   = find(NBER_REC.textdata(:,1)==string(to)) - 1;
 rec_emp_percentage = sum(NBER_REC.data(idx_from:idx_to,1)) / length(NBER_REC.data(idx_from:idx_to,1));
 rec_emp_percentagetotal = sum(NBER_REC.data(1:end,1)) / length(NBER_REC.data(1:end,1));
 
+% Empiracal mean recession length
 labeledMatrix = bwlabel(NBER_REC.data(idx_from:idx_to,1));
 measurements = regionprops(labeledMatrix, 'Area');
 RecessionLengths = [measurements.Area];
@@ -85,7 +86,7 @@ if Save_Figures
 saveas(gcf,'../Figures/RA','epsc')
 end
 max(RA)
-%% Redefining recession periods in the simulation
+%% Model Recession indicator
 % such that the frequency of recession in the simulation corresponds to the
 % empirical frequency of recessions:
 % Recession s_t < Rec_s_bar
@@ -98,8 +99,8 @@ for i = 1:length(astsim)
         rec_sim_ss(i) = 0;
     end
 end
+% Summary recessions: length and percentage: S_rec = -3.1811 
 rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss);
-%%
 labeledMatrix = bwlabel(rec_sim_ss);
 measurements = regionprops(labeledMatrix, 'Area');
 RecessionLengths = [measurements.Area];
@@ -428,7 +429,8 @@ CC_PD_StdPD = Stdp_d_pf;
 if Save_Figures
 Simulatedmom;
 end
-%%
+%% RECESSION summary:
+% Recession percentage
 load('PC_Claim_workspace','stsim')
 rec_sim_ss = NaN(length(stsim), 1);
 for i = 1:length(stsim)
@@ -439,7 +441,7 @@ for i = 1:length(stsim)
     end
 end
 rec_sim_ss_percentage = sum(rec_sim_ss(:)==1) / length(rec_sim_ss);
-%%
+% Mean recessionary length, graphic toolbox needed
 labeledMatrix = bwlabel(rec_sim_ss);
 measurements = regionprops(labeledMatrix, 'Area');
 RecessionLengths = [measurements.Area];
